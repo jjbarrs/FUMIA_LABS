@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <title>Lab0 - Tutorial de configuración y autocalificación | FUMIA Labs</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        .cmd-output {
+            color: #cccccc;
+        }
+
+        /* Files Block styling */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 1rem;
+        }
+
+        .files-content ul {
+            list-style: none;
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .files-content li {
+            position: relative;
+            padding: 0.25rem 0;
+            color: #24292f;
+        }
+
+        .dark-mode .files-content li {
+            color: #c9d1d9;
+        }
+
+        .files-content li::before {
+            content: "📄";
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #ddf4ff;
+            border-left: 4px solid #0969da;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #1c2d41;
+            border-left-color: #58a6ff;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="" class="nav-link active" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</span>
+            </div>
+            
+            <h1 data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</h1>
+            <br>
+            <p class="subtitle" data-es="Fecha de entrega: Jueves, 12 de febrero, 11:55 PM" data-en="Due: Thursday, Feb 12, 11:55 PM">Fecha de entrega: Jueves, 12 de febrero, 11:55 PM</p>
+            
+            <div class="lab-content">
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#introduction" data-es="Introducción" data-en="Introduction">Introducción</a></li>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#python" data-es="Python" data-en="Python">Python</a></li>
+                        <li><a href="#autograding" data-es="Autocalificación" data-en="Autograding">Autocalificación</a></li>
+                        <li><a href="#q1" data-es="Q1: Adición" data-en="Q1: Addition">Q1: Adición</a></li>
+                        <li><a href="#q2" data-es="Q2: Función buyLotsOfFruit" data-en="Q2: buyLotsOfFruit function">Q2: Función buyLotsOfFruit</a></li>
+                        <li><a href="#q3" data-es="Q3: Función shopSmart" data-en="Q3: shopSmart function">Q3: Función shopSmart</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section-anchor">
+                    <h2 data-es="Introducción" data-en="Introduction">Introducción</h2>
+                    <p data-es="Los proyectos en esta clase usan Python 3." data-en="Projects in this class use Python 3.">
+                        Los proyectos en esta clase usan Python 3.
+                    </p>
+                    <p data-es="El Proyecto 0 cubrirá lo siguiente:" data-en="Project 0 will cover the following:">
+                        El Proyecto 0 cubrirá lo siguiente:
+                    </p>
+                    <ul>
+                        <li data-es="Instrucciones sobre cómo configurar Python" data-en="Instructions on how to set up Python">Instrucciones sobre cómo configurar Python</li>
+                        <li data-es="Ejemplos de flujo de trabajo" data-en="Workflow examples">Ejemplos de flujo de trabajo</li>
+                        <li data-es="Un mini-tutorial de Python" data-en="A mini-Python tutorial">Un mini-tutorial de Python</li>
+                        <li data-es="Calificación del proyecto: Cada lanzamiento de proyecto incluye su autocalificador que puedes ejecutar localmente para depurar. Cuando envías, se ejecuta el mismo autocalificador." data-en="Project grading: Every project's release includes its autograder that you can run locally to debug. When you submit, the same autograder is ran.">Calificación del proyecto: Cada lanzamiento de proyecto incluye su autocalificador que puedes ejecutar localmente para depurar. Cuando envías, se ejecuta el mismo autocalificador.</li>
+                    </ul>
+
+                    <p>
+                        <strong data-es="Archivos para Editar y Enviar:" data-en="Files to Edit and Submit:">Archivos para Editar y Enviar:</strong>
+                        <span data-es=" Completarás porciones de " data-en=" You will fill in portions of "> Completarás porciones de </span>
+                        <code>addition.py</code>, <code>buyLotsOfFruit.py</code>, <span data-es="y" data-en="and">y</span> <code>shopSmart.py</code>
+                        <span data-es=" en " data-en=" in "> en </span><code>tutorial.zip</code>
+                        <span data-es=" durante la asignación. Una vez que hayas completado la asignación, enviarás estos archivos a Gradescope (por ejemplo, puedes subir todos los archivos .py en la carpeta). Por favor, no cambies los otros archivos en esta distribución." data-en=" during the assignment. Once you have completed the assignment, you will submit these files to Gradescope (for instance, you can upload all .py files in the folder). Please do not change the other files in this distribution."> durante la asignación. Una vez que hayas completado la asignación, enviarás estos archivos a Gradescope (por ejemplo, puedes subir todos los archivos .py en la carpeta). Por favor, no cambies los otros archivos en esta distribución.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Evaluación:" data-en="Evaluation:">Evaluación:</strong>
+                        <span data-es=" Tu código será autocalificado para corrección técnica. Por favor, no cambies los nombres de ninguna función o clase proporcionada dentro del código, o causarás estragos en el autocalificador. Sin embargo, la corrección de tu implementación — no los juicios del autocalificador — será el juez final de tu puntuación. Si es necesario, revisaremos y calificaremos las asignaciones individualmente para asegurar que recibas el crédito debido por tu trabajo." data-en=" Your code will be autograded for technical correctness. Please do not change the names of any provided functions or classes within the code, or you will wreak havoc on the autograder. However, the correctness of your implementation — not the autograder's judgements — will be the final judge of your score. If necessary, we will review and grade assignments individually to ensure that you receive due credit for your work."> Tu código será autocalificado para corrección técnica. Por favor, no cambies los nombres de ninguna función o clase proporcionada dentro del código, o causarás estragos en el autocalificador. Sin embargo, la corrección de tu implementación — no los juicios del autocalificador — será el juez final de tu puntuación. Si es necesario, revisaremos y calificaremos las asignaciones individualmente para asegurar que recibas el crédito debido por tu trabajo.</span>
+                    </p>
+                </section>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    <p>
+                        <span data-es="Puedes descargar los archivos a usar en este laboratorio desde este " data-en="You can download the files to be used in this lab from this ">Puedes descargar los archivos a usar en este laboratorio desde este </span>
+                        <a href="https://inst.eecs.berkeley.edu/~cs188/fa25/assets/projects/tutorial.zip" target="_blank" data-es="enlace" data-en="link">enlace</a>.
+                    </p>
+                </section>
+
+                <!-- Python -->
+                <section id="python" class="section-anchor">
+                    <h2 data-es="Python" data-en="Python">Python</h2>
+                    <p data-es="A lo largo del curso necesitarás usar Python para completar tus laboratorios. Por esta razón, aconsejo que si no tienes conocimiento previo de Python, completes el tutorial de Python proporcionado en este curso. También deberías revisar el tutorial de instalación." data-en="Throughout the course you will need to use Python to complete your labs. For this reason, I advise that if you have no prior knowledge of Python, you complete the Python tutorial provided in this course. You should also check out the installation tutorial.">
+                        A lo largo del curso necesitarás usar Python para completar tus laboratorios. Por esta razón, aconsejo que si no tienes conocimiento previo de Python, completes el tutorial de Python proporcionado en este curso. También deberías revisar el tutorial de instalación.
+                    </p>
+                    <p>
+                        <a href="../../tutorials/materials/index.html" data-es="Tutorial de Python" data-en="Python Tutorial">Tutorial de Python</a>
+                    </p>
+                </section>
+
+                <!-- Autograding -->
+                <section id="autograding" class="section-anchor">
+                    <h2 data-es="Autocalificación" data-en="Autograding">Autocalificación</h2>
+                    <p data-es="Para familiarizarte con el autocalificador, te pediremos que codifiques, pruebes y envíes tu código después de resolver las tres preguntas." data-en="To get you familiarized with the autograder, we will ask you to code, test, and submit your code after solving the three questions.">
+                        Para familiarizarte con el autocalificador, te pediremos que codifiques, pruebes y envíes tu código después de resolver las tres preguntas.
+                    </p>
+
+                    <p>
+                        <span data-es="Puedes descargar todos los archivos asociados al tutorial del autocalificador como un archivo zip: " data-en="You can download all of the files associated the autograder tutorial as a zip archive: ">Puedes descargar todos los archivos asociados al tutorial del autocalificador como un archivo zip: </span>
+                        <code>tutorial.zip</code><span data-es=". Descomprime este archivo y examina su contenido:" data-en=". Unzip this file and examine its contents:">. Descomprime este archivo y examina su contenido:</span>
+                    </p>
+
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos del Tutorial" data-en="Tutorial Files">Archivos del Tutorial</div>
+                        <div class="files-content">
+                            <ul>
+                                <li>addition.py</li>
+                                <li>autograder.py</li>
+                                <li>buyLotsOfFruit.py</li>
+                                <li>grading.py</li>
+                                <li>projectParams.py</li>
+                                <li>shop.py</li>
+                                <li>shopSmart.py</li>
+                                <li>testClasses.py</li>
+                                <li>testParser.py</li>
+                                <li>test_cases</li>
+                                <li>tutorialTestClasses.py</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p data-es="Esto contiene varios archivos que editarás o ejecutarás:" data-en="This contains a number of files you'll edit or run:">
+                        Esto contiene varios archivos que editarás o ejecutarás:
+                    </p>
+                    <ul>
+                        <li><code>addition.py</code>: <span data-es="archivo fuente para la pregunta 1" data-en="source file for question 1">archivo fuente para la pregunta 1</span></li>
+                        <li><code>buyLotsOfFruit.py</code>: <span data-es="archivo fuente para la pregunta 2" data-en="source file for question 2">archivo fuente para la pregunta 2</span></li>
+                        <li><code>shop.py</code>: <span data-es="archivo fuente para la pregunta 3" data-en="source file for question 3">archivo fuente para la pregunta 3</span></li>
+                        <li><code>shopSmart.py</code>: <span data-es="archivo fuente para la pregunta 3" data-en="source file for question 3">archivo fuente para la pregunta 3</span></li>
+                        <li><code>autograder.py</code>: <span data-es="script de autocalificación (ver abajo)" data-en="autograding script (see below)">script de autocalificación (ver abajo)</span></li>
+                    </ul>
+
+                    <p data-es="y otros que puedes ignorar:" data-en="and others you can ignore:">
+                        y otros que puedes ignorar:
+                    </p>
+                    <ul>
+                        <li><code>test_cases</code>: <span data-es="directorio contiene los casos de prueba para cada pregunta" data-en="directory contains the test cases for each question">directorio contiene los casos de prueba para cada pregunta</span></li>
+                        <li><code>grading.py</code>: <span data-es="código del autocalificador" data-en="autograder code">código del autocalificador</span></li>
+                        <li><code>testClasses.py</code>: <span data-es="código del autocalificador" data-en="autograder code">código del autocalificador</span></li>
+                        <li><code>tutorialTestClasses.py</code>: <span data-es="clases de prueba para este proyecto en particular" data-en="test classes for this particular project">clases de prueba para este proyecto en particular</span></li>
+                        <li><code>projectParams.py</code>: <span data-es="parámetros del proyecto" data-en="project parameters">parámetros del proyecto</span></li>
+                    </ul>
+
+                    <p>
+                        <span data-es="El comando " data-en="The command ">El comando </span>
+                        <code>python autograder.py</code>
+                        <span data-es=" califica tu solución para los tres problemas. Si lo ejecutamos antes de editar cualquier archivo, obtenemos una página o dos de salida:" data-en=" grades your solution to all three problems. If we run it before editing any files we get a page or two of output:"> califica tu solución para los tres problemas. Si lo ejecutamos antes de editar cualquier archivo, obtenemos una página o dos de salida:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">$ python autograder.py</span>
+<span class="cmd-output">Starting on MM-YY at XX:XX:XX
+
+Question q1
+===========
+*** FAIL: test_cases/q1/addition1.test
+***     add(a, b) must return the sum of a and b
+***     student result: "0"
+***     correct result: "2"
+*** FAIL: test_cases/q1/addition2.test
+***     add(a, b) must return the sum of a and b
+***     student result: "0"
+***     correct result: "5"
+*** FAIL: test_cases/q1/addition3.test
+***     add(a, b) must return the sum of a and b
+***     student result: "0"
+***     correct result: "7.9"
+*** Tests failed.
+
+### Question q1: 0/1 ###
+
+
+Question q2
+===========
+*** FAIL: test_cases/q2/food_price1.test
+***     buyLotsOfFruit must compute the correct cost of the order
+***     student result: "0.0"
+***     correct result: "12.25"
+*** FAIL: test_cases/q2/food_price2.test
+***     buyLotsOfFruit must compute the correct cost of the order
+***     student result: "0.0"
+***     correct result: "14.75"
+*** FAIL: test_cases/q2/food_price3.test
+***     buyLotsOfFruit must compute the correct cost of the order
+***     student result: "0.0"
+***     correct result: "6.4375"
+*** Tests failed.
+
+### Question q2: 0/1 ###
+
+
+Question q3
+===========
+Welcome to shop1 fruit shop
+Welcome to shop2 fruit shop
+*** FAIL: test_cases/q3/select_shop1.test
+***     shopSmart(order, shops) must select the cheapest shop
+***     student result: "None"
+***     correct result: "&lt;FruitShop: shop1&gt;"
+Welcome to shop1 fruit shop
+Welcome to shop2 fruit shop
+*** FAIL: test_cases/q3/select_shop2.test
+***     shopSmart(order, shops) must select the cheapest shop
+***     student result: "None"
+***     correct result: "&lt;FruitShop: shop2&gt;"
+Welcome to shop1 fruit shop
+Welcome to shop2 fruit shop
+Welcome to shop3 fruit shop
+*** FAIL: test_cases/q3/select_shop3.test
+***     shopSmart(order, shops) must select the cheapest shop
+***     student result: "None"
+***     correct result: "&lt;FruitShop: shop3&gt;"
+*** Tests failed.
+
+### Question q3: 0/1 ###
+
+
+Finished at XX:XX:XX
+
+Provisional grades
+==================
+Question q1: 0/1
+Question q2: 0/1
+Question q3: 0/1
+------------------
+Total: 0/3
+
+Your grades are NOT yet registered.  To register your grades, make sure
+to follow your instructor's guidelines to receive credit on your project.</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Para cada una de las tres preguntas, esto muestra los resultados de las pruebas de esa pregunta, la calificación de la pregunta y un resumen final al final. Debido a que aún no has resuelto las preguntas, todas las pruebas fallan. A medida que resuelvas cada pregunta, puedes encontrar que algunas pruebas pasan mientras otras fallan. Cuando todas las pruebas pasen para una pregunta, obtienes la puntuación completa." data-en="For each of the three questions, this shows the results of that question's tests, the questions grade, and a final summary at the end. Because you haven't yet solved the questions, all the tests fail. As you solve each question you may find some tests pass while other fail. When all tests pass for a question, you get full marks.">
+                        Para cada una de las tres preguntas, esto muestra los resultados de las pruebas de esa pregunta, la calificación de la pregunta y un resumen final al final. Debido a que aún no has resuelto las preguntas, todas las pruebas fallan. A medida que resuelvas cada pregunta, puedes encontrar que algunas pruebas pasan mientras otras fallan. Cuando todas las pruebas pasen para una pregunta, obtienes la puntuación completa.
+                    </p>
+
+                    <p data-es="Mirando los resultados de la pregunta 1, puedes ver que ha fallado tres pruebas con el mensaje de error "add(a, b) must return the sum of a and b". La respuesta que tu código da es siempre 0, pero la respuesta correcta es diferente. Arreglaremos eso en la siguiente sección." data-en="Looking at the results for question 1, you can see that it has failed three tests with the error message "add(a, b) must return the sum of a and b". The answer your code gives is always 0, but the correct answer is different. We'll fix that in the next tab.">
+                        Mirando los resultados de la pregunta 1, puedes ver que ha fallado tres pruebas con el mensaje de error "add(a, b) must return the sum of a and b". La respuesta que tu código da es siempre 0, pero la respuesta correcta es diferente. Arreglaremos eso en la siguiente sección.
+                    </p>
+                </section>
+
+                <!-- Q1: Addition -->
+                <section id="q1" class="section-anchor">
+                    <h2 data-es="Q1: Adición" data-en="Q1: Addition">Q1: Adición</h2>
+                    <p>
+                        <span data-es="Abre " data-en="Open ">Abre </span><code>addition.py</code>
+                        <span data-es=" y mira la definición de " data-en=" and look at the definition of "> y mira la definición de </span><code>add</code>:
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">addition.py</div>
+                        <div class="code-content">
+                            <pre>def add(a, b):
+    "Return the sum of a and b"
+    "*** YOUR CODE HERE ***"
+    return 0</pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Las pruebas llamaron a esto con a y b establecidos en diferentes valores, pero el código siempre devolvió cero. Modifica esta definición para leer:" data-en="The tests called this with a and b set to different values, but the code always returned zero. Modify this definition to read:">
+                        Las pruebas llamaron a esto con a y b establecidos en diferentes valores, pero el código siempre devolvió cero. Modifica esta definición para leer:
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">addition.py</div>
+                        <div class="code-content">
+                            <pre>def add(a, b):
+    "Return the sum of a and b"
+    print("Passed a = %s and b = %s, returning a + b = %s" % (a, b, a + b))
+    return a + b</pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Ahora vuelve a ejecutar el autocalificador (omitiendo los resultados de las preguntas 2 y 3):" data-en="Now rerun the autograder (omitting the results for questions 2 and 3):">Ahora vuelve a ejecutar el autocalificador (omitiendo los resultados de las preguntas 2 y 3):</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">$ python autograder.py -q q1</span>
+<span class="cmd-output">Starting on MM-YY at XX:XX:XX
+
+Question q1
+===========
+
+*** PASS: test_cases/q1/addition1.test
+***     add(a,b) returns the sum of a and b
+*** PASS: test_cases/q1/addition2.test
+***     add(a,b) returns the sum of a and b
+*** PASS: test_cases/q1/addition3.test
+***     add(a,b) returns the sum of a and b
+
+### Question q1: 1/1 ###
+
+
+Finished at XX:XX:XX
+
+Provisional grades
+==================
+Question q1: 1/1
+------------------
+Total: 1/1</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Ahora pasas todas las pruebas, obteniendo la puntuación completa para la pregunta 1. Observa las nuevas líneas "Passed a=…" que aparecen antes de "*** PASS: …". Estas son producidas por la declaración print en add. Puedes usar declaraciones print como esa para generar información útil para la depuración." data-en="You now pass all tests, getting full marks for question 1. Notice the new lines "Passed a=…" which appear before "*** PASS: …". These are produced by the print statement in add. You can use print statements like that to output information useful for debugging.">
+                        Ahora pasas todas las pruebas, obteniendo la puntuación completa para la pregunta 1. Observa las nuevas líneas "Passed a=…" que aparecen antes de "*** PASS: …". Estas son producidas por la declaración print en add. Puedes usar declaraciones print como esa para generar información útil para la depuración.
+                    </p>
+                </section>
+
+                <!-- Q2: buyLotsOfFruit -->
+                <section id="q2" class="section-anchor">
+                    <h2 data-es="Q2: Función buyLotsOfFruit" data-en="Q2: buyLotsOfFruit function">Q2: Función buyLotsOfFruit</h2>
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>buyLotsOfFruit(orderList)</code>
+                        <span data-es=" en " data-en=" function in "> en </span>
+                        <code>buyLotsOfFruit.py</code>
+                        <span data-es=" que toma una lista de tuplas (fruta, numLibras) y devuelve el costo de tu lista. Si hay alguna fruta en la lista que no aparece en fruitPrices, debe imprimir un mensaje de error y devolver None. Por favor, no cambies la variable fruitPrices." data-en=" which takes a list of (fruit,numPounds) tuples and returns the cost of your list. If there is some fruit in the list which doesn't appear in fruitPrices it should print an error message and return None. Please do not change the fruitPrices variable."> que toma una lista de tuplas (fruta, numLibras) y devuelve el costo de tu lista. Si hay alguna fruta en la lista que no aparece en fruitPrices, debe imprimir un mensaje de error y devolver None. Por favor, no cambies la variable fruitPrices.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Ejecuta " data-en="Run ">Ejecuta </span>
+                        <code>python autograder.py</code>
+                        <span data-es=" hasta que la pregunta 2 pase todas las pruebas y obtengas la puntuación completa. Cada prueba confirmará que buyLotsOfFruit(orderList) devuelve la respuesta correcta dadas varias entradas posibles. Por ejemplo, " data-en=" until question 2 passes all tests and you get full marks. Each test will confirm that buyLotsOfFruit(orderList) returns the correct answer given various possible inputs. For example, "> hasta que la pregunta 2 pase todas las pruebas y obtengas la puntuación completa. Cada prueba confirmará que buyLotsOfFruit(orderList) devuelve la respuesta correcta dadas varias entradas posibles. Por ejemplo, </span>
+                        <code>test_cases/q2/food_price1.test</code>
+                        <span data-es=" prueba si:" data-en=" tests whether:"> prueba si:</span>
+                    </p>
+
+                    <div class="note-box">
+                        <p>
+                            <span data-es="Costo de " data-en="Cost of ">Costo de </span>
+                            <code>[('apples', 2.0), ('pears', 3.0), ('limes', 4.0)]</code>
+                            <span data-es=" es " data-en=" is "> es </span>
+                            <code>12.25</code>
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Q3: shopSmart -->
+                <section id="q3" class="section-anchor">
+                    <h2 data-es="Q3: Función shopSmart" data-en="Q3: shopSmart function">Q3: Función shopSmart</h2>
+                    <p>
+                        <span data-es="Completa la función " data-en="Fill in the function ">Completa la función </span>
+                        <code>shopSmart(orderList, fruitShops)</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>shopSmart.py</code><span data-es=", que toma un orderList (como el tipo pasado a FruitShop.getPriceOfOrder) y una lista de FruitShop y devuelve el FruitShop donde tu pedido cuesta la menor cantidad en total. No cambies el nombre del archivo o los nombres de las variables, por favor. Ten en cuenta que proporcionaremos la implementación de shop.py como un archivo de "soporte", por lo que no necesitas enviar el tuyo." data-en=", which takes an orderList (like the kind passed in to FruitShop.getPriceOfOrder) and a list of FruitShop and returns the FruitShop where your order costs the least amount in total. Don't change the file name or variable names, please. Note that we will provide the shop.py implementation as a "support" file, so you don't need to submit yours.">, que toma un orderList (como el tipo pasado a FruitShop.getPriceOfOrder) y una lista de FruitShop y devuelve el FruitShop donde tu pedido cuesta la menor cantidad en total. No cambies el nombre del archivo o los nombres de las variables, por favor. Ten en cuenta que proporcionaremos la implementación de shop.py como un archivo de "soporte", por lo que no necesitas enviar el tuyo.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Ejecuta " data-en="Run ">Ejecuta </span>
+                        <code>python autograder.py</code>
+                        <span data-es=" hasta que la pregunta 3 pase todas las pruebas y obtengas la puntuación completa. Cada prueba confirmará que shopSmart(orderList, fruitShops) devuelve la respuesta correcta dadas varias entradas posibles. Por ejemplo, con las siguientes definiciones de variables:" data-en=" until question 3 passes all tests and you get full marks. Each test will confirm that shopSmart(orderList,fruitShops) returns the correct answer given various possible inputs. For example, with the following variable definitions:"> hasta que la pregunta 3 pase todas las pruebas y obtengas la puntuación completa. Cada prueba confirmará que shopSmart(orderList, fruitShops) devuelve la respuesta correcta dadas varias entradas posibles. Por ejemplo, con las siguientes definiciones de variables:</span>
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">Python</div>
+                        <div class="code-content">
+                            <pre>orders1 = [('apples', 1.0), ('oranges', 3.0)]
+orders2 = [('apples', 3.0)]
+dir1 = {'apples': 2.0, 'oranges': 1.0}
+shop1 =  shop.FruitShop('shop1',dir1)
+dir2 = {'apples': 1.0, 'oranges': 5.0}
+shop2 = shop.FruitShop('shop2', dir2)
+shops = [shop1, shop2]</pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <code>test_cases/q3/select_shop1.test</code>
+                        <span data-es=" prueba si: " data-en=" tests whether: "> prueba si: </span>
+                        <code>shopSmart.shopSmart(orders1, shops) == shop1</code>
+                    </p>
+
+                    <p data-es="y " data-en="and ">y </p>
+
+                    <p>
+                        <code>test_cases/q3/select_shop2.test</code>
+                        <span data-es=" prueba si: " data-en=" tests whether: "> prueba si: </span>
+                        <code>shopSmart.shopSmart(orders2, shops) == shop2</code>
+                    </p>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p>
+                        <span data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab0-20123456.zip) que contenga todos los archivos del tutorial completados correctamente. No olvides verificar que completaste el laboratorio correctamente usando el autocalificador que aprendiste a usar en este primer laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab0-20123456.zip) containing all the tutorial files completed correctly. Don't forget to verify that you completed the lab correctly using the autograder you learned to use in this first lab.">El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab0-20123456.zip) que contenga todos los archivos del tutorial completados correctamente. No olvides verificar que completaste el laboratorio correctamente usando el autocalificador que aprendiste a usar en este primer laboratorio.</span>
+                    </p>
+                    <br>
+                    <p>
+                        <span data-es="FECHA DE ENTREGA: 12/02/2026, 11:55 PM" data-en="ASSIGNMENT DUE DATE: 12/02/2026, 11:55 PM">FECHA DE ENTREGA: 12/02/2026, 11:55 PM</span>
+                    </p>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
