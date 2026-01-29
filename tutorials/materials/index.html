@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalación de Material | FUMIA Labs</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+    <style>
+        .tutorial-content {
+            line-height: 1.8;
+        }
+        .tutorial-content h2 {
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.875rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+        .tutorial-content h3 {
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .tutorial-content h4 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .tutorial-content h5 {
+            margin-top: 1.25rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .tutorial-content p {
+            margin-bottom: 1rem;
+        }
+        .tutorial-content ul, .tutorial-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        .tutorial-content li {
+            margin-bottom: 0.5rem;
+        }
+        .tutorial-content code {
+            background-color: var(--bg-secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--primary-blue);
+        }
+        .tutorial-content pre {
+            background-color: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+        .tutorial-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+        .tutorial-content a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .tutorial-content a:hover {
+            opacity: 0.8;
+            text-decoration: underline;
+        }
+        .tutorial-content strong {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .note {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+        html.dark-mode .note {
+            background-color: #3a3112;
+            border-left-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2025</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    <li><a href="#" class="nav-link" data-es="Calendario" data-en="Calendar">Calendario</a></li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Proyectos" data-en="Projects">Proyectos</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../labs/lab1" class="nav-link" data-es="PJ 1 - Búsqueda" data-en="PJ 1 - Search">PJ 1 - Búsqueda</a></li>
+                            <li><a href="../../labs/lab2" class="nav-link" data-es="PJ 2 - Búsqueda Multi Agente" data-en="PJ 2 - Multi Agent Search">PJ 2 - Búsqueda Multi Agente</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="#" class="nav-link" data-es="Git y GitHub" data-en="Git and GitHub">Git y GitHub</a></li>
+                            <li><a href="../materials" class="nav-link active" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</span>
+            </div>
+            
+            <h1 data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</h1>
+            
+            <div class="tutorial-content">
+                <p data-es="Los proyectos de esta clase utilizan Python 3. Este tutorial cubre:" data-en="The projects in this class use Python 3. This tutorial covers:">Los proyectos de esta clase utilizan Python 3. Este tutorial cubre:</p>
+                
+                <ul>
+                    <li data-es="Instrucciones sobre cómo configurar Python" data-en="Instructions on how to set up Python">Instrucciones sobre cómo configurar Python</li>
+                    <li data-es="Un tutorial de Python mini" data-en="A mini Python tutorial">Un tutorial de Python mini</li>
+                </ul>
+
+                <h2 id="instalacion-de-python" data-es="Instalación de Python" data-en="Python Installation">Instalación de Python</h2>
+                
+                <p data-es="Necesitan una distribución de Python (3.9 - 3.11) y ya sea pip o conda." data-en="You need a Python distribution (3.9 - 3.11) and either pip or conda.">Necesitan una distribución de Python (3.9 - 3.11) y ya sea <code>pip</code> o <code>conda</code>.</p>
+                
+                <p data-es="Para verificar si cumplen con nuestros requisitos, deben abrir la terminal y ejecutar python -V y ver que la versión sea al menos 3.9. Luego, ejecuten pip -V o conda -V y vean que al menos uno de estos funcione e imprima alguna versión de la herramienta. En algunos sistemas que también tienen Python 2, es posible que deban usar python3 y pip3 en lugar de los mencionados anteriormente." data-en="To verify if you meet our requirements, you should open the terminal and run python -V and see that the version is at least 3.9. Then, run pip -V or conda -V and see that at least one of these works and prints some version of the tool. On some systems that also have Python 2, you may need to use python3 and pip3 instead of those mentioned above.">Para verificar si cumplen con nuestros requisitos, deben abrir la terminal y ejecutar <code>python -V</code> y ver que la versión sea al menos 3.9. Luego, ejecuten <code>pip -V</code> o <code>conda -V</code> y vean que al menos uno de estos funcione e imprima alguna versión de la herramienta. En algunos sistemas que también tienen Python 2, es posible que deban usar <code>python3</code> y <code>pip3</code> en lugar de los mencionados anteriormente.</p>
+                
+                <p data-es="Hay dos formas de instalar Python para este curso, la primera es descargarlo directamente desde el sitio web oficial. La segunda, que recomendamos encarecidamente, es configurar un entorno conda." data-en="There are two ways to install Python for this course, the first is to download it directly from the official website. The second, which we strongly recommend, is to set up a conda environment.">Hay dos formas de instalar Python para este curso, la primera es descargarlo directamente desde el sitio web oficial. La segunda, que recomendamos encarecidamente, es configurar un entorno conda.</p>
+
+                <h3 id="configurando-conda" data-es="Configurando un entorno Conda (Recomendado)" data-en="Setting up a Conda environment (Recommended)">Configurando un entorno Conda (Recomendado)</h3>
+                
+                <p data-es="Para evitar tener dependencias conflictivas entre esta clase y cualquier otro proyecto en el que trabaje, recomendamos configurar un entorno virtual para este curso. Esto facilita la instalación de dependencias y evita la mayoría de los problemas comunes de instalación." data-en="To avoid having conflicting dependencies between this class and any other project you work on, we recommend setting up a virtual environment for this course. This facilitates dependency installation and avoids most common installation problems.">Para evitar tener dependencias conflictivas entre esta clase y cualquier otro proyecto en el que trabaje, recomendamos configurar un entorno virtual para este curso. Esto facilita la instalación de dependencias y evita la mayoría de los problemas comunes de instalación.</p>
+                
+                <ol>
+                    <li data-es="Instalar Miniconda: Miniconda es una herramienta ligera que le permite crear entornos virtuales, así como le da acceso a pip y algunos paquetes esenciales de Python." data-en="Install Miniconda: Miniconda is a lightweight tool that allows you to create virtual environments, as well as gives you access to pip and some essential Python packages."><strong data-es="Instalar Miniconda" data-en="Install Miniconda">Instalar Miniconda</strong>: <a href="https://docs.conda.io/en/latest/miniconda.html" target="_blank">Miniconda</a> <span data-es="es una herramienta ligera que le permite crear entornos virtuales, así como le da acceso a" data-en="is a lightweight tool that allows you to create virtual environments, as well as gives you access to">es una herramienta ligera que le permite crear entornos virtuales, así como le da acceso a</span> <code>pip</code> <span data-es="y algunos paquetes esenciales de Python." data-en="and some essential Python packages.">y algunos paquetes esenciales de Python.</span></li>
+                    <li data-es="Corran conda create -n [nombre de su entorno] python=3.11 en su terminal/Anaconda Prompt" data-en="Run conda create -n [your environment name] python=3.11 in your terminal/Anaconda Prompt"><span data-es="Corran" data-en="Run">Corran</span> <code>conda create -n [nombre de su entorno] python=3.11</code> <span data-es="en su terminal/Anaconda Prompt" data-en="in your terminal/Anaconda Prompt">en su terminal/Anaconda Prompt</span></li>
+                    <li data-es="Activen el entorno con conda activate [nombre de su entorno]. Ahora que están en el entorno, cualquier dependencia que instalen solo será accesible dentro de su entorno virtual." data-en="Activate the environment with conda activate [your environment name]. Now that you are in the environment, any dependency you install will only be accessible within your virtual environment."><span data-es="Activen el entorno con" data-en="Activate the environment with">Activen el entorno con</span> <code>conda activate [nombre de su entorno]</code>. <span data-es="Ahora que están en el entorno, cualquier dependencia que instalen solo será accesible dentro de su entorno virtual." data-en="Now that you are in the environment, any dependency you install will only be accessible within your virtual environment.">Ahora que están en el entorno, cualquier dependencia que instalen solo será accesible dentro de su entorno virtual.</span></li>
+                </ol>
+                
+                <p data-es="Ahora que tienen un entorno virtual configurado, asegúrense de activarlo antes de instalar cualquier dependencia o ejecutar su proyecto. Si alguna vez olvidan el nombre de su entorno, ejecuten conda env list para obtener una lista completa de los entornos que han creado." data-en="Now that you have a virtual environment set up, make sure to activate it before installing any dependencies or running your project. If you ever forget the name of your environment, run conda env list to get a complete list of the environments you have created.">Ahora que tienen un entorno virtual configurado, asegúrense de activarlo antes de instalar cualquier dependencia o ejecutar su proyecto. Si alguna vez olvidan el nombre de su entorno, ejecuten <code>conda env list</code> para obtener una lista completa de los entornos que han creado.</p>
+
+                <h3 id="descargando-python" data-es="Descargando Python directamente" data-en="Downloading Python directly">Descargando Python directamente</h3>
+                
+                <div class="note">
+                    <p><strong data-es="Nota" data-en="Note">Nota</strong>: <span data-es="Este método es más probable que cause problemas de dependencia, y también es más difícil resolver esos problemas cuando surgen." data-en="This method is more likely to cause dependency problems, and it is also more difficult to resolve those problems when they arise.">Este método es más probable que cause problemas de dependencia, y también es más difícil resolver esos problemas cuando surgen.</span></p>
+                </div>
+                
+                <ol>
+                    <li>
+                        <span data-es="Instalar Python 3.11:" data-en="Install Python 3.11:">Instalar Python 3.11:</span>
+                        <ul>
+                            <li data-es="Para Windows y MacOS, recomendamos usar un instalador gráfico oficial: descarguen e instalen Python 3.11." data-en="For Windows and MacOS, we recommend using an official graphical installer: download and install Python 3.11."><span data-es="Para Windows y MacOS, recomendamos usar un instalador gráfico oficial: descarguen e instalen" data-en="For Windows and MacOS, we recommend using an official graphical installer: download and install">Para Windows y MacOS, recomendamos usar un instalador gráfico oficial: descarguen e instalen</span> <a href="https://www.python.org/downloads/" target="_blank">Python 3.11</a>.</li>
+                            <li data-es="Para Linux, usen un administrador de paquetes para instalar Python 3.11." data-en="For Linux, use a package manager to install Python 3.11.">Para Linux, usen un administrador de paquetes para instalar Python 3.11.</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <span data-es="Instalar Pip:" data-en="Install Pip:">Instalar Pip:</span>
+                        <ul>
+                            <li data-es="Para Windows y MacOS, ejecuten python -m ensurepip --upgrade." data-en="For Windows and MacOS, run python -m ensurepip --upgrade."><span data-es="Para Windows y MacOS, ejecuten" data-en="For Windows and MacOS, run">Para Windows y MacOS, ejecuten</span> <code>python -m ensurepip --upgrade</code>.</li>
+                            <li data-es="Para Linux, usen un administrador de paquetes para instalar Pip para Python 3." data-en="For Linux, use a package manager to install Pip for Python 3.">Para Linux, usen un administrador de paquetes para instalar Pip para Python 3.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h2 id="instalacion-dependencias" data-es="Instalación de Dependencias" data-en="Dependencies Installation">Instalación de Dependencias</h2>
+                
+                <p data-es="Algunos proyectos tienen dependencias adicionales. Es importante instalarlas ahora para que si hay un problema con la instalación de Python, no tengamos que volver o volver a hacer la instalación más tarde." data-en="Some projects have additional dependencies. It is important to install them now so that if there is a problem with the Python installation, we do not have to go back or redo the installation later.">Algunos proyectos tienen dependencias adicionales. Es importante instalarlas ahora para que si hay un problema con la instalación de Python, no tengamos que volver o volver a hacer la instalación más tarde.</p>
+                
+                <p data-es="Las librerías que necesitarán para este curso son:" data-en="The libraries you will need for this course are:">Las librerías que necesitarán para este curso son:</p>
+                
+                <ul>
+                    <li><a href="https://numpy.org/" target="_blank"><code>numpy</code></a>: <span data-es="Una librería de Python que proporciona soporte para arreglos y matrices multidimensionales, junto con una colección de funciones matemáticas de alto nivel para operar en estos arreglos." data-en="A Python library that provides support for multidimensional arrays and matrices, along with a collection of high-level mathematical functions to operate on these arrays.">Una librería de Python que proporciona soporte para arreglos y matrices multidimensionales, junto con una colección de funciones matemáticas de alto nivel para operar en estos arreglos.</span></li>
+                    <li><a href="https://matplotlib.org/" target="_blank"><code>matplotlib</code></a>: <span data-es="Una librería de Python para trazar gráficos 2D." data-en="A Python library for plotting 2D graphs.">Una librería de Python para trazar gráficos 2D.</span></li>
+                </ul>
+                
+                <p data-es="Para instalar estas dependencias, ejecuten:" data-en="To install these dependencies, run:">Para instalar estas dependencias, ejecuten:</p>
+                
+                <pre><code>pip install numpy
+pip install matplotlib</code></pre>
+                
+                <p data-es="Para comprobar que todo está funcionando, ingresen al intérprete de Python:" data-en="To check that everything is working, enter the Python interpreter:">Para comprobar que todo está funcionando, ingresen al intérprete de Python:</p>
+                
+                <pre><code>python</code></pre>
+                
+                <p data-es="y ejecuten:" data-en="and run:">y ejecuten:</p>
+                
+                <pre><code>import numpy as np
+import matplotlib.pyplot as plt</code></pre>
+
+                <h3 id="solucion-problemas" data-es="Solución de Problemas" data-en="Troubleshooting">Solución de Problemas</h3>
+                
+                <p data-es="Algunas instalaciones tendrán python3 y pip3 refiriéndose a lo que queremos usar. Además, puede haber múltiples instalaciones de python que pueden complicar qué comandos instalan dónde." data-en="Some installations will have python3 and pip3 referring to what we want to use. Also, there may be multiple python installations that can complicate which commands install where.">Algunas instalaciones tendrán python3 y pip3 refiriéndose a lo que queremos usar. Además, puede haber múltiples instalaciones de python que pueden complicar qué comandos instalan dónde.</p>
+                
+                <p data-es="Pueden verificar la instalación de Python y pip con los siguientes comandos:" data-en="You can verify the Python and pip installation with the following commands:">Pueden verificar la instalación de Python y pip con los siguientes comandos:</p>
+                
+                <pre><code>python -V  # version de python
+pip -V     # version de pip y para que version de python esta instalando
+which python  # ubicacion de python</code></pre>
+                
+                <p data-es="Si hay un error de importación de tkinter, es probable que Python sea atípico y provenga de homebrew. Desinstalen eso e instalen Python desde homebrew con soporte para tkinter, o usen el instalador gráfico recomendado." data-en="If there is a tkinter import error, Python is likely atypical and comes from homebrew. Uninstall that and install Python from homebrew with tkinter support, or use the recommended graphical installer.">Si hay un error de importación de <code>tkinter</code>, es probable que Python sea atípico y provenga de <code>homebrew</code>. Desinstalen eso e instalen Python desde <code>homebrew</code> con soporte para <code>tkinter</code>, o usen el instalador gráfico recomendado.</p>
+                
+                <p data-es="Si necesitan ayuda con la depuración, intenten configurar un entorno conda antes de comunicarse a través de Slack, ya que hacer esto soluciona la mayoría de los errores de instalación." data-en="If you need help with debugging, try setting up a conda environment before communicating through Slack, as doing this solves most installation errors.">Si necesitan ayuda con la depuración, intenten configurar un entorno conda antes de comunicarse a través de Slack, ya que hacer esto soluciona la mayoría de los errores de instalación.</p>
+
+                <h2 id="tutorial-python" data-es="Tutorial de Python" data-en="Python Tutorial">Tutorial de Python</h2>
+                
+                <p data-es="El objetivo de este tutorial es que ustedes puedan aprender sobre lo básico de Python 3, no esperamos que se vuelvan expertos con esta introducción. En este curso no es fundamental que dominen al 100% este lenguaje de programación y realmente solo necesitan conocer lo básico para poder completar satisfactoriamente los proyectos." data-en="The goal of this tutorial is for you to learn about the basics of Python 3, we do not expect you to become experts with this introduction. In this course it is not essential that you master this programming language 100% and you really only need to know the basics to successfully complete the projects.">El objetivo de este tutorial es que ustedes puedan aprender sobre lo básico de Python 3, no esperamos que se vuelvan expertos con esta introducción. En este curso no es fundamental que dominen al 100% este lenguaje de programación y realmente solo necesitan conocer lo básico para poder completar satisfactoriamente los proyectos.</p>
+
+                <h3 id="introduccion" data-es="Introducción" data-en="Introduction">Introducción</h3>
+                
+                <p data-es="Python es un lenguaje de programación multiparadigma y con tipos dinámicos. El código escrito en Python se dice que es similar al pseudocódigo, ya que permite expresar ideas bastante poderosas en muy pocas líneas de código y al mismo tiempo ser bastante leíble. Como ejemplo, aquí hay una implementación del clásico algoritmo quicksort escrito en Python:" data-en="Python is a multi-paradigm programming language with dynamic types. Code written in Python is said to be similar to pseudocode, as it allows you to express quite powerful ideas in very few lines of code while being quite readable. As an example, here is an implementation of the classic quicksort algorithm written in Python:">Python es un lenguaje de programación multiparadigma y con tipos dinámicos. El código escrito en Python se dice que es similar al pseudocódigo, ya que permite expresar ideas bastante poderosas en muy pocas líneas de código y al mismo tiempo ser bastante leíble. Como ejemplo, aquí hay una implementación del clásico algoritmo quicksort escrito en Python:</p>
+                
+                <pre><code>def quicksort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quicksort(left) + middle + quicksort(right)
+
+print(quicksort([3,6,8,10,1,2,1]))</code></pre>
+
+                <h3 id="tipos-datos-basicos" data-es="Tipos de datos básicos" data-en="Basic data types">Tipos de datos básicos</h3>
+                
+                <p data-es="Como en muchos lenguajes, Python tiene un número de tipos de datos básicos incluyendo enteros, floats, booleans y strings. Estos tipos de datos se comportan como lo han visto en otros lenguajes de programación." data-en="Like many languages, Python has a number of basic data types including integers, floats, booleans and strings. These data types behave as you have seen in other programming languages.">Como en muchos lenguajes, Python tiene un número de tipos de datos básicos incluyendo enteros, floats, booleans y strings. Estos tipos de datos se comportan como lo han visto en otros lenguajes de programación.</p>
+
+                <h4 id="numeros" data-es="Números" data-en="Numbers">Números</h4>
+                
+                <p data-es="Los enteros y los floats funcionan como ustedes han visto que funcionan en otros lenguajes:" data-en="Integers and floats work as you have seen them work in other languages:">Los enteros y los floats funcionan como ustedes han visto que funcionan en otros lenguajes:</p>
+                
+                <pre><code>x = 3
+print(type(x))  # type: sirve para obtener el tipo de un objeto
+print(x)
+print(x + 1)
+print(x - 1)
+print(x * 2)
+print(x / 2)    # division exacta
+print(x // 2)   # division entera
+print(x ** 3)   # exponentes
+x += 1
+print(x)
+x *= 2
+print(x)
+y = 2.5
+print(type(y))
+print(y)
+print(y + 1)
+print(y * 2)
+print(y / 2)
+print(y ** 2)</code></pre>
+                
+                <p data-es="Noten que Python no tiene los operadores de incremento unario (x++) o decremento (x—). Python también tiene tipos para manejo de números complejos, todo esto lo pueden ver en la documentación oficial." data-en="Note that Python does not have unary increment (x++) or decrement (x—) operators. Python also has types for handling complex numbers, all of which you can see in the official documentation.">Noten que Python no tiene los operadores de incremento unario (x++) o decremento (x—). Python también tiene tipos para manejo de números complejos, todo esto lo pueden ver en la <a href="https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex" target="_blank" data-es="documentación oficial" data-en="official documentation">documentación oficial</a>.</p>
+
+                <h4 id="booleans" data-es="Booleans" data-en="Booleans">Booleans</h4>
+                
+                <p data-es="Python implementa todos los operadores usuales para hacer lógica booleana, pero usa palabras en Inglés en vez de símbolos (&&, ||, etc.):" data-en="Python implements all the usual operators for Boolean logic, but uses English words instead of symbols (&&, ||, etc.):">Python implementa todos los operadores usuales para hacer lógica booleana, pero usa palabras en Inglés en vez de símbolos (<code>&&</code>, <code>||</code>, etc.):</p>
+                
+                <pre><code>t = True
+f = False
+print(type(t))
+print(t and f)  # AND lógico
+print(t or f)   # OR lógico
+print(not t)    # NOT lógico
+print(t != f)   # XOR lógico</code></pre>
+
+                <h4 id="strings" data-es="Strings" data-en="Strings">Strings</h4>
+                
+                <p data-es="Python tiene buen soporte de strings:" data-en="Python has good string support:">Python tiene buen soporte de strings:</p>
+                
+                <pre><code>hello = 'hello'  # las literales string pueden ser declaradas con apóstofre
+world = "world"  # o comillas, no importa la verdad...
+print(hello)
+print(len(hello))  # con len obtenemos el length del string
+hw = hello + ' ' + world  # concatenación, así como en Java
+print(hw)
+hw12 = '%s %s %d' % (hello, world, 12)  # formato de texto al estilo sprintf
+print(hw12)</code></pre>
+                
+                <p data-es="Los objetos de tipo string tienen un montón de métodos útiles; Por ejemplo:" data-en="String objects have a lot of useful methods; For example:">Los objetos de tipo string tienen un montón de métodos útiles; Por ejemplo:</p>
+                
+                <pre><code>s = 'hello'
+# Pone la letra del principio en mayuscula
+print(s.capitalize())
+# Pasa el string a mayusculas
+print(s.upper())
+# Justifica un string, rellenando con espacios
+print(s.rjust(7))
+# Centra un string, rellanando con espacios
+print(s.center(7))
+# Reemplaza todas las apariciones de un substring por otro
+print(s.replace('l', '(ell)'))
+# Quita todos los caracteres de whitespace del principio y final
+print('  world '.strip())</code></pre>
+                
+                <p data-es="Pueden encontrar una lista de todos los métodos en la documentación." data-en="You can find a list of all methods in the documentation."><span data-es="Pueden encontrar una lista de todos los métodos en la" data-en="You can find a list of all methods in the">Pueden encontrar una lista de todos los métodos en la</span> <a href="https://docs.python.org/3/library/stdtypes.html#string-methods" target="_blank" data-es="documentación" data-en="documentation">documentación</a>.</p>
+
+                <h3 id="contenedores" data-es="Contenedores" data-en="Containers">Contenedores</h3>
+                
+                <p data-es="Python incluye bastantes tipos de contenedores: listas, diccionarios, sets y tuplas." data-en="Python includes several container types: lists, dictionaries, sets and tuples.">Python incluye bastantes tipos de contenedores: listas, diccionarios, sets y tuplas.</p>
+
+                <h4 id="listas" data-es="Listas" data-en="Lists">Listas</h4>
+                
+                <p data-es="Una lista en Python es equivalente a un arreglo en C o Java, pero es dinámico (puede cambiar su tamaño, es decir no es fijo) y puede tener elementos de diferentes tipos:" data-en="A list in Python is equivalent to an array in C or Java, but it is dynamic (can change its size, that is, it is not fixed) and can have elements of different types:">Una lista en Python es equivalente a un arreglo en C o Java, pero es dinámico (puede cambiar su tamaño, es decir no es fijo) y puede tener elementos de diferentes tipos:</p>
+                
+                <pre><code># Crea una lista
+xs = [3, 1, 2]
+print(xs)
+# Para acceder a un elemento de la lista, los indices van de 0 a length - 1
+print(xs[1])
+# Los indices negativos empiezan desde el final de la lista
+print(xs[-1])
+# Las listas pueden contener elementos de diferentes tipos
+xs[2] = 'foo'
+print(xs)
+# Añade un elemento al final de la lista
+xs.append('bar')
+print(xs)
+# Quita y devuelve el último elemento de la lista
+x = xs.pop()
+print(x, xs)
+# para obtener el length de la lista
+print(len(xs))</code></pre>
+                
+                <p data-es="Pueden encontrar más detalles en la documentación de listas." data-en="You can find more details in the list documentation."><span data-es="Pueden encontrar más detalles en la" data-en="You can find more details in the">Pueden encontrar más detalles en la</span> <a href="https://docs.python.org/3/tutorial/datastructures.html#more-on-lists" target="_blank" data-es="documentación de listas" data-en="list documentation">documentación de listas</a>.</p>
+
+                <h5 id="slicing" data-es="Slicing" data-en="Slicing">Slicing</h5>
+                
+                <p data-es="Además de acceder a los elementos de una lista uno a la vez, Python provee una sintaxis para acceder a sublistas, a esto se le conoce como slicing:" data-en="In addition to accessing list elements one at a time, Python provides syntax for accessing sublists, known as slicing:">Además de acceder a los elementos de una lista uno a la vez, Python provee una sintaxis para acceder a sublistas, a esto se le conoce como slicing:</p>
+                
+                <pre><code># Creamos una nueva lista
+nums = [0, 1, 2, 3, 4]
+print(nums)
+# Agarra una sublista desde el indice 2 hasta el indice 3 es decir [2,4)
+print(nums[2:4])
+# Agarra una sublista desde el indice 2 hasta el final de la lista, es decir [2,4]
+print(nums[2:])
+# Agarra una sublista desde el principio de la misma hasta el indice 2 sin incluir, es decir [0,2)
+print(nums[:2])
+# Agarra toda la lista "[0, 1, 2, 3, 4]"
+print(nums[:])
+# El slice puede ser negativo, en este caso agarra desde el principio hasta el penultimo elemento, es decir [0,3]
+print(nums[:-1])
+# Asigna una sublista al slice
+nums[2:4] = [8, 9]
+print(nums)</code></pre>
+
+                <h5 id="ciclos" data-es="Ciclos" data-en="Loops">Ciclos</h5>
+                
+                <p data-es="Pueden iterar sobre los elementos de una lista:" data-en="You can iterate over the elements of a list:">Pueden iterar sobre los elementos de una lista:</p>
+                
+                <pre><code>animals = ['cat', 'dog', 'monkey']
+for animal in animals:
+    print(animal)</code></pre>
+                
+                <p data-es="Si quieren acceso al índice de cada elemento en el body del ciclo, usen la función enumerate:" data-en="If you want access to the index of each element in the loop body, use the enumerate function:">Si quieren acceso al índice de cada elemento en el body del ciclo, usen la función <code>enumerate</code>:</p>
+                
+                <pre><code>animals = ['cat', 'dog', 'monkey']
+for idx, animal in enumerate(animals):
+    print('#%d: %s' % (idx + 1, animal))</code></pre>
+
+                <h5 id="list-comprehensions" data-es="Listas por comprensión" data-en="List comprehensions">Listas por comprensión</h5>
+                
+                <p data-es="Al programar, seguido queremos transformar un tipo de dato en otro. Como un ejemplo simple, consideren el siguiente código que computa números al cuadrado:" data-en="When programming, we often want to transform one data type into another. As a simple example, consider the following code that computes square numbers:">Al programar, seguido queremos transformar un tipo de dato en otro. Como un ejemplo simple, consideren el siguiente código que computa números al cuadrado:</p>
+                
+                <pre><code>nums = [0, 1, 2, 3, 4]
+squares = []
+for x in nums:
+    squares.append(x ** 2)
+print(squares)</code></pre>
+                
+                <p data-es="Pueden hacer esto más simple usando una list comprehension:" data-en="You can make this simpler using a list comprehension:">Pueden hacer esto más simple usando una list comprehension:</p>
+                
+                <pre><code>nums = [0, 1, 2, 3, 4]
+squares = [x ** 2 for x in nums]
+print(squares)</code></pre>
+                
+                <p data-es="Las list comprehensions también pueden tener condiciones:" data-en="List comprehensions can also have conditions:">Las list comprehensions también pueden tener condiciones:</p>
+                
+                <pre><code>nums = [0, 1, 2, 3, 4]
+even_squares = [x ** 2 for x in nums if x % 2 == 0]
+print(even_squares)</code></pre>
+
+                <h4 id="diccionarios" data-es="Diccionarios" data-en="Dictionaries">Diccionarios</h4>
+                
+                <p data-es="Un diccionario guarda pares (llave, valor), similar a un Map en Java o un objeto en Javascript:" data-en="A dictionary stores (key, value) pairs, similar to a Map in Java or an object in Javascript:">Un diccionario guarda pares (llave, valor), similar a un <code>Map</code> en Java o un objeto en Javascript:</p>
+                
+                <pre><code>d = {'cat': 'cute', 'dog': 'furry'}  # Crea un nuevo diccionario con algunos datos
+print(d['cat'])       # Obtén el valor de una llave; imprime "cute"
+print('cat' in d)     # Checa si el diccionario tiene una llave dada; imprime "True"
+d['fish'] = 'wet'     # Asigna un valor a una llave
+print(d['fish'])      # Imprime "wet"
+# print(d['monkey'])  # KeyError: 'monkey' no es una llave de d
+print(d.get('monkey', 'N/A'))  # Obtén el valor con un valor default; imprime "N/A"
+print(d.get('fish', 'N/A'))    # Obtén el valor con un valor default; imprime "wet"
+del d['fish']         # Quita un elemento del diccionario
+print(d.get('fish', 'N/A')) # "fish" ya no es una llave; imprime "N/A"</code></pre>
+                
+                <p data-es="Pueden encontrar todo lo que necesiten saber sobre diccionarios en la documentación." data-en="You can find everything you need to know about dictionaries in the documentation."><span data-es="Pueden encontrar todo lo que necesiten saber sobre diccionarios en la" data-en="You can find everything you need to know about dictionaries in the">Pueden encontrar todo lo que necesiten saber sobre diccionarios en la</span> <a href="https://docs.python.org/3/library/stdtypes.html#dict" target="_blank" data-es="documentación" data-en="documentation">documentación</a>.</p>
+
+                <h5 id="ciclos-dict" data-es="Ciclos" data-en="Loops">Ciclos</h5>
+                
+                <p data-es="Es fácil iterar sobre las llaves en un diccionario:" data-en="It is easy to iterate over the keys in a dictionary:">Es fácil iterar sobre las llaves en un diccionario:</p>
+                
+                <pre><code>d = {'person': 2, 'cat': 4, 'spider': 8}
+for animal in d:
+    legs = d[animal]
+    print('A %s has %d legs' % (animal, legs))</code></pre>
+                
+                <p data-es="Si quieren acceso a las llaves y sus valores correspondientes, usen el método items:" data-en="If you want access to keys and their corresponding values, use the items method:">Si quieren acceso a las llaves y sus valores correspondientes, usen el método <code>items</code>:</p>
+                
+                <pre><code>d = {'person': 2, 'cat': 4, 'spider': 8}
+for animal, legs in d.items():
+    print('A %s has %d legs' % (animal, legs))</code></pre>
+
+                <h5 id="dict-comprehensions" data-es="Diccionarios por comprensión" data-en="Dictionary comprehensions">Diccionarios por comprensión</h5>
+                
+                <p data-es="Estos son similares a list comprehensions, pero les permiten construir diccionarios fácilmente:" data-en="These are similar to list comprehensions, but allow you to easily build dictionaries:">Estos son similares a list comprehensions, pero les permiten construir diccionarios fácilmente:</p>
+                
+                <pre><code>nums = [0, 1, 2, 3, 4]
+even_num_to_square = {x: x ** 2 for x in nums if x % 2 == 0}
+print(even_num_to_square)</code></pre>
+
+                <h4 id="sets" data-es="Sets" data-en="Sets">Sets</h4>
+                
+                <p data-es="Un set es una colección no ordenada de elementos distintos:" data-en="A set is an unordered collection of distinct elements:">Un set es una colección no ordenada de elementos distintos:</p>
+                
+                <pre><code>animals = {'cat', 'dog'}
+print('cat' in animals)   # Checa si un elemento está en un set; imprime "True"
+print('fish' in animals)  # imprime "False"
+animals.add('fish')       # Agrega un elemento a un set
+print('fish' in animals)  # imprime "True"
+print(len(animals))       # Número de elementos en un set; imprime "3"
+animals.add('cat')        # Agregar un elemento que ya está en el set no hace nada
+print(len(animals))       # imprime "3"
+animals.remove('cat')     # Quita un elemento de un set
+print(len(animals))       # imprime "2"</code></pre>
+
+                <h5 id="ciclos-sets" data-es="Ciclos" data-en="Loops">Ciclos</h5>
+                
+                <p data-es="Iterar sobre un set tiene la misma sintaxis que iterar sobre una lista; sin embargo ya que los sets son no ordenados, no pueden hacer suposiciones sobre el orden en el que visitan los elementos del set:" data-en="Iterating over a set has the same syntax as iterating over a list; however since sets are unordered, you cannot make assumptions about the order in which you visit set elements:">Iterar sobre un set tiene la misma sintaxis que iterar sobre una lista; sin embargo ya que los sets son no ordenados, no pueden hacer suposiciones sobre el orden en el que visitan los elementos del set:</p>
+                
+                <pre><code>animals = {'cat', 'dog', 'fish'}
+for idx, animal in enumerate(animals):
+    print('#%d: %s' % (idx + 1, animal))</code></pre>
+
+                <h5 id="set-comprehensions" data-es="Set comprehensions" data-en="Set comprehensions">Set comprehensions</h5>
+                
+                <p data-es="De manera similar a las listas y los diccionarios, podemos construir sets usando set comprehensions:" data-en="Similar to lists and dictionaries, we can build sets using set comprehensions:">De manera similar a las listas y los diccionarios, podemos construir sets usando set comprehensions:</p>
+                
+                <pre><code>from math import sqrt
+nums = {int(sqrt(x)) for x in range(30)}
+print(nums)</code></pre>
+
+                <h4 id="tuplas" data-es="Tuplas" data-en="Tuples">Tuplas</h4>
+                
+                <p data-es="Una tupla es una lista inmutable (ordenada) de valores. Una tupla es en muchas formas similar a una lista; una de las diferencias más importantes es que las tuplas pueden ser utilizadas como llaves en diccionarios y como elementos de sets, mientras que las listas no pueden. Aquí hay un ejemplo trivial:" data-en="A tuple is an immutable (ordered) list of values. A tuple is in many ways similar to a list; one of the most important differences is that tuples can be used as keys in dictionaries and as elements of sets, while lists cannot. Here is a trivial example:">Una tupla es una lista inmutable (ordenada) de valores. Una tupla es en muchas formas similar a una lista; una de las diferencias más importantes es que las tuplas pueden ser utilizadas como llaves en diccionarios y como elementos de sets, mientras que las listas no pueden. Aquí hay un ejemplo trivial:</p>
+                
+                <pre><code>d = {(x, x + 1): x for x in range(10)}  # Crea un diccionario con llaves de tupla
+t = (5, 6)        # Crea una tupla
+print(type(t))    # imprime "&lt;class 'tuple'&gt;"
+print(d[t])       # imprime "5"
+print(d[(1, 2)])  # imprime "1"</code></pre>
+                
+                <p data-es="Pueden leer más sobre tuplas en la documentación." data-en="You can read more about tuples in the documentation."><span data-es="Pueden leer más sobre tuplas en la" data-en="You can read more about tuples in the">Pueden leer más sobre tuplas en la</span> <a href="https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences" target="_blank" data-es="documentación" data-en="documentation">documentación</a>.</p>
+
+                <h3 id="funciones" data-es="Funciones" data-en="Functions">Funciones</h3>
+                
+                <p data-es="Las funciones en Python son definidas usando la keyword def:" data-en="Functions in Python are defined using the def keyword:">Las funciones en Python son definidas usando la keyword <code>def</code>:</p>
+                
+                <pre><code>def sign(x):
+    if x > 0:
+        return 'positive'
+    elif x < 0:
+        return 'negative'
+    else:
+        return 'zero'
+
+for x in [-1, 0, 1]:
+    print(sign(x))</code></pre>
+                
+                <p data-es="Frecuentemente definimos funciones que toman argumentos opcionales keyword, así:" data-en="We will often define functions to take optional keyword arguments, like this:">Frecuentemente definimos funciones que toman argumentos opcionales keyword, así:</p>
+                
+                <pre><code>def hello(name, loud=False):
+    if loud:
+        print('HELLO, %s!' % name.upper())
+    else:
+        print('Hello, %s' % name)
+
+hello('Bob')  # Imprime "Hello, Bob"
+hello('Fred', loud=True)  # Imprime "HELLO, FRED!"</code></pre>
+                
+                <p data-es="Hay mucho más de que hablar sobre funciones de Python en la documentación." data-en="There is a lot more information about Python functions in the documentation."><span data-es="Hay mucho más de que hablar sobre funciones de Python en la" data-en="There is a lot more information about Python functions in the">Hay mucho más de que hablar sobre funciones de Python en la</span> <a href="https://docs.python.org/3/tutorial/controlflow.html#defining-functions" target="_blank" data-es="documentación" data-en="documentation">documentación</a>.</p>
+
+                <h3 id="funciones-lambda" data-es="Funciones Lambda" data-en="Lambda Functions">Funciones Lambda</h3>
+                
+                <p data-es="Python soporta la creación de funciones anónimas (es decir funciones que no están enlazadas a un nombre) en tiempo de ejecución, usando un constructor llamado lambda. Usualmente esto no se usa para funciones complejas, sino para funciones pequeñas:" data-en="Python supports the creation of anonymous functions (i.e. functions that are not bound to a name) at runtime, using a construct called lambda. This is usually not used for complex functions, but for small functions:">Python soporta la creación de funciones anónimas (es decir funciones que no están enlazadas a un nombre) en tiempo de ejecución, usando un constructor llamado <code>lambda</code>. Usualmente esto no se usa para funciones complejas, sino para funciones pequeñas:</p>
+                
+                <pre><code># Función lambda que retorna la suma de sus argumentos
+f = lambda x, y: x + y
+print(f(1, 2))  # Imprime "3"</code></pre>
+
+                <h3 id="clases" data-es="Clases" data-en="Classes">Clases</h3>
+                
+                <p data-es="La sintaxis para definir clases en Python es sencilla:" data-en="The syntax for defining classes in Python is straightforward:">La sintaxis para definir clases en Python es sencilla:</p>
+                
+                <pre><code>class Greeter(object):
+    # Constructor
+    def __init__(self, name):
+        self.name = name  # Crea una variable de instancia
+
+    # Método de instancia
+    def greet(self, loud=False):
+        if loud:
+            print('HELLO, %s!' % self.name.upper())
+        else:
+            print('Hello, %s' % self.name)
+
+g = Greeter('Fred')  # Construye una instancia de la clase Greeter
+g.greet()            # Llama un método de instancia; imprime "Hello, Fred"
+g.greet(loud=True)   # Llama un método de instancia; imprime "HELLO, FRED!"</code></pre>
+                
+                <p data-es="Pueden leer mucho más sobre clases en Python en la documentación." data-en="You can read much more about Python classes in the documentation."><span data-es="Pueden leer mucho más sobre clases en Python en la" data-en="You can read much more about Python classes in the">Pueden leer mucho más sobre clases en Python en la</span> <a href="https://docs.python.org/3/tutorial/classes.html" target="_blank" data-es="documentación" data-en="documentation">documentación</a>.</p>
+
+                <hr style="margin: 3rem 0; border: none; border-top: 1px solid var(--border-color);">
+                
+                <p data-es="Con esto concluimos el tutorial de Python 3, pueden obtener más información en la documentación de Python 3 oficial o incluso seguir el tutorial completo que ellos tienen." data-en="This concludes the Python 3 tutorial, you can get more information in the official Python 3 documentation or even follow the complete tutorial they have."><span data-es="Con esto concluimos el tutorial de Python 3, pueden obtener más información en la" data-en="This concludes the Python 3 tutorial, you can get more information in the">Con esto concluimos el tutorial de Python 3, pueden obtener más información en la</span> <a href="https://docs.python.org/3/" target="_blank" data-es="documentación" data-en="documentation">documentación</a> <span data-es="de Python 3 oficial o incluso seguir el" data-en="of official Python 3 or even follow the">de Python 3 oficial o incluso seguir el</span> <a href="https://docs.python.org/3/tutorial/" target="_blank" data-es="tutorial" data-en="tutorial">tutorial</a> <span data-es="completo que ellos tienen." data-en="complete that they have.">completo que ellos tienen.</span></p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
