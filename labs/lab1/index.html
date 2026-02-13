@@ -3,8 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PJ 1 - Búsqueda | FUMIA Labs</title>
+    <title>Lab1 - Búsqueda parte 1 | FUMIA Labs</title>
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
     <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        .cmd-output {
+            color: #cccccc;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Image placeholder */
+        .image-placeholder {
+            background: #f6f8fa;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #57606a;
+        }
+
+        .dark-mode .image-placeholder {
+            background: #161b22;
+            border-color: #30363d;
+            color: #8b949e;
+        }
+
+        .image-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Hero image section */
+        .hero-image {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+    </style>
     <script>
         // Set theme immediately to prevent flash
         (function() {
@@ -59,7 +403,8 @@
                     <li class="nav-section">
                         <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
                         <ul class="nav-submenu">
-                            <li><a href="lab1" class="nav-link active" data-es="Lab1 - Búsqueda" data-en="Lab1 - Search">Lab1 - Búsqueda</a></li>
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</a></li>
                         </ul>
                     </li>
                     <li class="nav-section">
@@ -77,15 +422,525 @@
             <div class="breadcrumb">
                 <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
                 <span> > </span>
-                <span data-es="PJ 1 - Búsqueda" data-en="PJ 1 - Search">PJ 1 - Búsqueda</span>
+                <span data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</span>
             </div>
             
-            <h1 data-es="PJ 1 - Búsqueda" data-en="PJ 1 - Search">PJ 1 - Búsqueda</h1>
+            <h1 data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</h1>
+            <br>
+            <p class="subtitle" data-es="Fecha de entrega: Jueves, 26 de febrero, 11:55 PM PT" data-en="Due: Thursday, Feb 26, 11:55 PM PT">Fecha de entrega: Jueves, 26 de febrero, 11:55 PM PT</p>
             
             <div class="lab-content">
-                <p data-es="El contenido de este proyecto se agregará próximamente." data-en="Content for this project will be added soon.">
-                    El contenido de este proyecto se agregará próximamente.
-                </p>
+                <!-- Hero Image Placeholder -->
+                <div class="image-placeholder">
+                    <img width="500px" src="../../images/mazeTitle.png" alt="">
+                </div>
+
+                <!-- Introduction Section -->
+                <div class="">
+                    <p data-es="En este proyecto, su agente Pacman encontrará caminos a través de un laberinto, tanto para llegar a una ubicación particular como para recolectar alimentos de manera eficiente. Construirán algoritmos de búsqueda generales y los aplicarán a escenarios de Pacman." data-en="In this project, your Pacman agent will find paths through a maze, both to reach a particular location and to collect food efficiently. You will build general search algorithms and apply them to Pacman scenarios.">
+                        En este proyecto, su agente Pacman encontrará caminos a través de un laberinto, tanto para llegar a una ubicación particular como para recolectar alimentos de manera eficiente. Construirán algoritmos de búsqueda generales y los aplicarán a escenarios de Pacman.
+                    </p>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#python" data-es="Python" data-en="Python">Python</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#pacman" data-es="Pacman!" data-en="Pacman!">Pacman!</a></li>
+                        <li><a href="#q1" data-es="Q1: Encontrar un Punto de Comida Fijo usando Búsqueda en Profundidad" data-en="Q1: Finding a Fixed Food Dot using Depth First Search">Q1: Encontrar un Punto de Comida Fijo usando Búsqueda en Profundidad</a></li>
+                        <li><a href="#q2" data-es="Q2: Búsqueda en Anchura" data-en="Q2: Breadth First Search">Q2: Búsqueda en Anchura</a></li>
+                        <li><a href="#q3" data-es="Q3: Variación de la Función de Costo" data-en="Q3: Varying the Cost Function">Q3: Variación de la Función de Costo</a></li>
+                        <li><a href="#q4" data-es="Q4: Búsqueda A*" data-en="Q4: A* search">Q4: Búsqueda A*</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    <p>
+                        <span data-es="Puedes descargar los archivos a usar en este laboratorio desde este " data-en="You can download the files to be used in this lab from this ">Puedes descargar los archivos a usar en este laboratorio desde este </span>
+                        <a href="https://inst.eecs.berkeley.edu/~cs188/fa25/assets/projects/search.zip" target="_blank" data-es="enlace" data-en="link">enlace</a>.
+                    </p>
+                </section>
+
+                <!-- Python -->
+                <section id="python" class="section-anchor">
+                    <h2 data-es="Python" data-en="Python">Python</h2>
+                    <p data-es="Por favor para tener completo el material para el proyecto por favor visitar el link de Tutorial de Python. Además si no realizó el laboratorio 0 es recomendable realizarlo antes de este ya que de esta manera estará familiarizado con los autogrades de Python." data-en="Please visit the Python Tutorial link to have all the material for the project complete. Also, if you did not complete laboratory 0, it is recommended to do it before this one so you will be familiar with Python autograders.">
+                        Por favor para tener completo el material para el proyecto por favor visitar el link de 
+                        <a href="../../tutorials/materials/index.html" data-es="Tutorial de Python" data-en="Python Tutorial">Tutorial de Python</a>.
+                        Además si no realizó el laboratorio 0 es recomendable realizarlo antes de este ya que de esta manera estará familiarizado con los autogrades de Python.
+                    </p>
+                    <p>
+                        <a href="../../tutorials/materials/index.html" data-es="Tutorial de Python" data-en="Python Tutorial">Tutorial de Python</a>
+                    </p>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que van a editar" data-en="Files you will edit">Archivos que van a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">search.py</span></td>
+                                        <td data-es="Donde se implementarán los algoritmos de búsqueda." data-en="Where search algorithms will be implemented.">Donde se implementarán los algoritmos de búsqueda.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">searchAgents.py</span></td>
+                                        <td data-es="Donde se implementarán los agentes de búsqueda para Pacman." data-en="Where search agents for Pacman will be implemented.">Donde se implementarán los agentes de búsqueda para Pacman.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás necesiten leer" data-en="Files you might need to read">Archivos que quizás necesiten leer</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">pacman.py</span></td>
+                                        <td data-es="El archivo principal que ejecuta juegos de Pacman. Este archivo también describe la interfaz de los agentes de búsqueda." data-en="The main file that runs Pacman games. This file also describes the search agents interface.">El archivo principal que ejecuta juegos de Pacman. Este archivo también describe la interfaz de los agentes de búsqueda.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">game.py</span></td>
+                                        <td data-es="El módulo de juego que define varios elementos del juego utilizados en Pacman." data-en="The game module that defines various game elements used in Pacman.">El módulo de juego que define varios elementos del juego utilizados en Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Estructuras de datos útiles para implementar algoritmos de búsqueda." data-en="Useful data structures for implementing search algorithms.">Estructuras de datos útiles para implementar algoritmos de búsqueda.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que pueden ignorar" data-en="Files you can ignore">Archivos que pueden ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Support files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">graphicsDisplay.py</span></td>
+                                        <td data-es="Gráficos para mostrar el juego de Pacman." data-en="Graphics to display the Pacman game.">Gráficos para mostrar el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Soporte para gráficos." data-en="Graphics support.">Soporte para gráficos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">textDisplay.py</span></td>
+                                        <td data-es="Gráficos para mostrar el juego de Pacman en texto." data-en="Graphics to display the Pacman game in text.">Gráficos para mostrar el juego de Pacman en texto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">ghostAgents.py</span></td>
+                                        <td data-es="Agentes de fantasmas para el juego de Pacman." data-en="Ghost agents for the Pacman game.">Agentes de fantasmas para el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">keyboardAgents.py</span></td>
+                                        <td data-es="Agentes de teclado para el juego de Pacman." data-en="Keyboard agents for the Pacman game.">Agentes de teclado para el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">layout.py</span></td>
+                                        <td data-es="Código para leer archivos de diseño de laberinto y visualizarlos en formato de texto." data-en="Code to read maze layout files and visualize them in text format.">Código para leer archivos de diseño de laberinto y visualizarlos en formato de texto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">autograder.py</span></td>
+                                        <td data-es="Herramienta para ayudar a calificar el proyecto." data-en="Tool to help grade the project.">Herramienta para ayudar a calificar el proyecto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testParser.py</span></td>
+                                        <td data-es="Herramienta para ayudar a escribir pruebas." data-en="Tool to help write tests.">Herramienta para ayudar a escribir pruebas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testClasses.py</span></td>
+                                        <td data-es="Clases de prueba para el autograder." data-en="Test classes for the autograder.">Clases de prueba para el autograder.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">test_cases/</span></td>
+                                        <td data-es="Directorio con archivos de prueba." data-en="Directory with test files.">Directorio con archivos de prueba.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">searchTestClasses.py</span></td>
+                                        <td data-es="Clases de prueba para los algoritmos de búsqueda." data-en="Test classes for search algorithms.">Clases de prueba para los algoritmos de búsqueda.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pacman! -->
+                <section id="pacman" class="section-anchor">
+                    <h2 data-es="Pacman!" data-en="Pacman!">Pacman!</h2>
+                    
+                    <p data-es="Después de clonar el código y cambiar al directorio, debería poder jugar un juego de Pacman escribiendo en la terminal:" data-en="After cloning the code and changing to the directory, you should be able to play a Pacman game by typing in the terminal:">
+                        Después de clonar el código y cambiar al directorio, debería poder jugar un juego de Pacman escribiendo en la terminal:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Pac-Man es una hambrienta esfera amarilla atrapada en un laberinto infinito donde su única misión es devorar todos los puntos para avanzar, mientras esquiva a cuatro fantasmas que lo acechan; sin embargo, el ecosistema cambia cuando consume una píldora de energía, invirtiendo los roles y permitiéndole cazar a sus perseguidores en un ciclo eterno de persecución y supervivencia." data-en="Pac-Man is a hungry yellow sphere trapped in an infinite maze where his only mission is to devour all the dots to advance, while dodging four ghosts that stalk him; however, the ecosystem changes when he consumes a power pellet, inverting the roles and allowing him to hunt his pursuers in an eternal cycle of chase and survival.">
+                        Pac-Man es una hambrienta esfera amarilla atrapada en un laberinto infinito donde su única misión es devorar todos los puntos para avanzar, mientras esquiva a cuatro fantasmas que lo acechan; sin embargo, el ecosistema cambia cuando consume una píldora de energía, invirtiendo los roles y permitiéndole cazar a sus perseguidores en un ciclo eterno de persecución y supervivencia.
+                    </p>
+
+                    <p data-es="Navegar por este mundo de manera eficiente será el primer paso de Pacman para dominar este mundo." data-en="Navigating this world efficiently will be Pacman's first step to mastering this world.">
+                        Navegar por este mundo de manera eficiente será el primer paso de Pacman para dominar este mundo.
+                    </p>
+
+                    <p>
+                        <span data-es="El agente más simple en " data-en="The simplest agent in ">El agente más simple en </span>
+                        <code>searchAgents.py</code>
+                        <span data-es=" se llama " data-en=" is called "> se llama </span>
+                        <code>GoWestAgent</code><span data-es=", que siempre va al Oeste (un agente reactivo trivial). Este agente ocasionalmente puede ganar:" data-en=", which always goes West (a trivial reactive agent). This agent can occasionally win:">, que siempre va al Oeste (un agente reactivo trivial). Este agente ocasionalmente puede ganar:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py --layout testMaze --pacman GoWestAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Pero, las cosas se ponen feas para este agente cuando se requiere girar:" data-en="But, things get ugly for this agent when turning is required:">
+                        Pero, las cosas se ponen feas para este agente cuando se requiere girar:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py --layout tinyMaze --pacman GoWestAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Si Pacman se queda atascado, pueden salir del juego escribiendo " data-en="If Pacman gets stuck, you can exit the game by typing ">Si Pacman se queda atascado, pueden salir del juego escribiendo </span>
+                        <code>CTRL + C</code>
+                        <span data-es=" en su terminal." data-en=" in your terminal."> en su terminal.</span>
+                    </p>
+
+                    <p data-es="Pronto, su agente resolverá no solo tinyMaze, sino cualquier laberinto que deseen." data-en="Soon, your agent will solve not only tinyMaze, but any maze you want.">
+                        Pronto, su agente resolverá no solo tinyMaze, sino cualquier laberinto que deseen.
+                    </p>
+
+                    <p>
+                        <span data-es="Noten que " data-en="Note that ">Noten que </span>
+                        <code>pacman.py</code>
+                        <span data-es=" soporta una serie de opciones que pueden ser expresadas de manera larga (e.g., " data-en=" supports a number of options that can be expressed in long form (e.g., "> soporta una serie de opciones que pueden ser expresadas de manera larga (e.g., </span>
+                        <code>--layout</code><span data-es=") o de manera corta (e.g., " data-en=") or in short form (e.g., ">) o de manera corta (e.g., </span>
+                        <code>-l</code><span data-es="). Pueden ver la lista de todas las opciones y sus valores por defecto a través de:" data-en="). You can see the list of all options and their default values through:">). Pueden ver la lista de todas las opciones y sus valores por defecto a través de:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -h</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Además, todos los comandos que aparecen en este proyecto también aparecen en " data-en="Also, all commands that appear in this project also appear in ">Además, todos los comandos que aparecen en este proyecto también aparecen en </span>
+                        <code>commands.txt</code><span data-es=", para copiar y pegar fácilmente. En UNIX/Mac OS X, incluso pueden ejecutar todos estos comandos en orden con " data-en=", for easy copy and paste. On UNIX/Mac OS X, you can even run all these commands in order with ">, para copiar y pegar fácilmente. En UNIX/Mac OS X, incluso pueden ejecutar todos estos comandos en orden con </span>
+                        <code>bash commands.txt</code>.
+                    </p>
+                </section>
+
+                <!-- Q1: Finding a Fixed Food Dot using Depth First Search -->
+                <section id="q1" class="section-anchor">
+                    <h2 data-es="Q1: Encontrar un Punto de Comida Fijo usando Búsqueda en Profundidad" data-en="Q1: Finding a Fixed Food Dot using Depth First Search">Q1: Encontrar un Punto de Comida Fijo usando Búsqueda en Profundidad</h2>
+                    
+                    <p>
+                        <span data-es="En " data-en="In ">En </span>
+                        <code>searchAgents.py</code><span data-es=", encontrarán un SearchAgent completamente implementado, que planifica una ruta a través del mundo de Pacman y luego ejecuta esa ruta paso a paso. Los algoritmos de búsqueda para formular un plan no están implementados — ese es su trabajo." data-en=", you'll find a fully implemented SearchAgent, which plans out a path through Pacman's world and then executes that path step-by-step. The search algorithms for formulating a plan are not implemented — that's your job.">, encontrarán un SearchAgent completamente implementado, que planifica una ruta a través del mundo de Pacman y luego ejecuta esa ruta paso a paso. Los algoritmos de búsqueda para formular un plan no están implementados — ese es su trabajo.</span>
+                    </p>
+
+                    <p data-es="Primero, prueben que el SearchAgent funciona correctamente ejecutando:" data-en="First, test that the SearchAgent is working correctly by running:">
+                        Primero, prueben que el SearchAgent funciona correctamente ejecutando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l tinyMaze -p SearchAgent -a fn=tinyMazeSearch</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="El comando anterior le dice al SearchAgent que use " data-en="The command above tells the SearchAgent to use ">El comando anterior le dice al SearchAgent que use </span>
+                        <code>tinyMazeSearch</code>
+                        <span data-es=" como su algoritmo de búsqueda, que está implementado en " data-en=" as its search algorithm, which is implemented in "> como su algoritmo de búsqueda, que está implementado en </span>
+                        <code>search.py</code><span data-es=". Pacman debería navegar por el laberinto exitosamente." data-en=". Pacman should navigate the maze successfully.">. Pacman debería navegar por el laberinto exitosamente.</span>
+                    </p>
+
+                    <p data-es="¡Ahora es el momento de escribir funciones de búsqueda genéricas completas para ayudar a Pacman a planificar rutas! El pseudocódigo para los algoritmos de búsqueda que escribirán se puede encontrar en las diapositivas de la clase. Recuerden que un nodo de búsqueda debe contener no solo un estado sino también la información necesaria para reconstruir la ruta (plan) que llega a ese estado." data-en="Now it's time to write full-fledged generic search functions to help Pacman plan routes! Pseudocode for the search algorithms you'll write can be found in the lecture slides. Remember that a search node must contain not only a state but also the information necessary to reconstruct the path (plan) which gets to that state.">
+                        ¡Ahora es el momento de escribir funciones de búsqueda genéricas completas para ayudar a Pacman a planificar rutas! El pseudocódigo para los algoritmos de búsqueda que escribirán se puede encontrar en las diapositivas de la clase. Recuerden que un nodo de búsqueda debe contener no solo un estado sino también la información necesaria para reconstruir la ruta (plan) que llega a ese estado.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota importante:" data-en="Important note:">Nota importante:</strong>
+                        <span data-es="Todas sus funciones de búsqueda deben devolver una lista de acciones que llevarán al agente desde el inicio hasta el objetivo. Estas acciones deben ser movimientos legales (direcciones válidas, sin moverse a través de paredes)." data-en="All of your search functions need to return a list of actions that will lead the agent from the start to the goal. These actions all have to be legal moves (valid directions, no moving through walls).">
+                            Todas sus funciones de búsqueda deben devolver una lista de acciones que llevarán al agente desde el inicio hasta el objetivo. Estas acciones deben ser movimientos legales (direcciones válidas, sin moverse a través de paredes).
+                        </span>
+                    </div>
+
+                    <div class="note-box">
+                        <strong data-es="Nota importante:" data-en="Important note:">Nota importante:</strong>
+                        <span data-es="Asegúrense de usar las estructuras de datos Stack, Queue y PriorityQueue proporcionadas en util.py! Estas implementaciones de estructuras de datos tienen propiedades particulares que son necesarias para la compatibilidad con el autograder." data-en="Make sure to use the Stack, Queue and PriorityQueue data structures provided to you in util.py! These data structure implementations have particular properties which are required for compatibility with the autograder.">
+                            Asegúrense de usar las estructuras de datos Stack, Queue y PriorityQueue proporcionadas en util.py! Estas implementaciones de estructuras de datos tienen propiedades particulares que son necesarias para la compatibilidad con el autograder.
+                        </span>
+                    </div>
+
+                    <p>
+                        <strong data-es="Pista:" data-en="Hint:">Pista:</strong>
+                        <span data-es=" Cada algoritmo es muy similar. Los algoritmos para DFS, BFS, UCS y A* difieren solo en los detalles de cómo se gestiona la frontera. Entonces, concéntrense en hacer que DFS funcione correctamente y el resto debería ser relativamente sencillo. De hecho, una posible implementación requiere solo un único método de búsqueda genérico que se configura con una estrategia de cola específica del algoritmo. (Su implementación no necesita ser de esta forma para recibir crédito completo)." data-en=" Each algorithm is very similar. Algorithms for DFS, BFS, UCS, and A* differ only in the details of how the fringe is managed. So, concentrate on getting DFS right and the rest should be relatively straightforward. Indeed, one possible implementation requires only a single generic search method which is configured with an algorithm-specific queuing strategy. (Your implementation need not be of this form to receive full credit).">
+                            Cada algoritmo es muy similar. Los algoritmos para DFS, BFS, UCS y A* difieren solo en los detalles de cómo se gestiona la frontera. Entonces, concéntrense en hacer que DFS funcione correctamente y el resto debería ser relativamente sencillo. De hecho, una posible implementación requiere solo un único método de búsqueda genérico que se configura con una estrategia de cola específica del algoritmo. (Su implementación no necesita ser de esta forma para recibir crédito completo).
+                        </span>
+                    </p>
+
+                    <p>
+                        <span data-es="Implementen el algoritmo de búsqueda en profundidad (DFS) en la función " data-en="Implement the depth-first search (DFS) algorithm in the ">Implementen el algoritmo de búsqueda en profundidad (DFS) en la función </span>
+                        <code>depthFirstSearch</code>
+                        <span data-es=" en " data-en=" function in "> en </span>
+                        <code>search.py</code><span data-es=". Para hacer que su algoritmo sea completo, escriban la versión de búsqueda en grafos de DFS, que evita expandir cualquier estado ya visitado." data-en=". To make your algorithm complete, write the graph search version of DFS, which avoids expanding any already visited states.">. Para hacer que su algoritmo sea completo, escriban la versión de búsqueda en grafos de DFS, que evita expandir cualquier estado ya visitado.</span>
+                    </p>
+
+                    <p data-es="Su código debería encontrar rápidamente una solución para:" data-en="Your code should quickly find a solution for:">
+                        Su código debería encontrar rápidamente una solución para:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l tinyMaze -p SearchAgent
+python pacman.py -l mediumMaze -p SearchAgent
+python pacman.py -l bigMaze -z .5 -p SearchAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="El tablero de Pacman mostrará una superposición de los estados explorados y el orden en que fueron explorados (rojo más brillante significa exploración más temprana). ¿Es el orden de exploración lo que esperaban? ¿Pacman realmente va a todos los cuadrados explorados en su camino hacia el objetivo?" data-en="The Pacman board will show an overlay of the states explored, and the order in which they were explored (brighter red means earlier exploration). Is the exploration order what you would have expected? Does Pacman actually go to all the explored squares on his way to the goal?">
+                        El tablero de Pacman mostrará una superposición de los estados explorados y el orden en que fueron explorados (rojo más brillante significa exploración más temprana). ¿Es el orden de exploración lo que esperaban? ¿Pacman realmente va a todos los cuadrados explorados en su camino hacia el objetivo?
+                    </p>
+
+                    <p>
+                        <strong data-es="Pista:" data-en="Hint:">Pista:</strong>
+                        <span data-es=" Si usan un Stack como estructura de datos, la solución encontrada por su algoritmo DFS para mediumMaze debería tener una longitud de 130 (siempre que empujen los sucesores a la frontera en el orden proporcionado por getSuccessors; podrían obtener 246 si los empujan en orden inverso). ¿Es esta una solución de costo mínimo? Si no, piensen en qué está haciendo mal la búsqueda en profundidad." data-en=" If you use a Stack as your data structure, the solution found by your DFS algorithm for mediumMaze should have a length of 130 (provided you push successors onto the fringe in the order provided by getSuccessors; you might get 246 if you push them in the reverse order). Is this a least cost solution? If not, think about what depth-first search is doing wrong.">
+                            Si usan un Stack como estructura de datos, la solución encontrada por su algoritmo DFS para mediumMaze debería tener una longitud de 130 (siempre que empujen los sucesores a la frontera en el orden proporcionado por getSuccessors; podrían obtener 246 si los empujan en orden inverso). ¿Es esta una solución de costo mínimo? Si no, piensen en qué está haciendo mal la búsqueda en profundidad.
+                        </span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q1</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q2: Breadth First Search -->
+                <section id="q2" class="section-anchor">
+                    <h2 data-es="Q2: Búsqueda en Anchura" data-en="Q2: Breadth First Search">Q2: Búsqueda en Anchura</h2>
+                    
+                    <p>
+                        <span data-es="Implementen el algoritmo de búsqueda en anchura (BFS) en la función " data-en="Implement the breadth-first search (BFS) algorithm in the ">Implementen el algoritmo de búsqueda en anchura (BFS) en la función </span>
+                        <code>breadthFirstSearch</code>
+                        <span data-es=" en " data-en=" function in "> en </span>
+                        <code>search.py</code><span data-es=". De nuevo, escriban un algoritmo de búsqueda en grafos que evite expandir cualquier estado ya visitado. Prueben su código de la misma manera que lo hicieron para la búsqueda en profundidad." data-en=". Again, write a graph search algorithm that avoids expanding any already visited states. Test your code the same way you did for depth-first search.">. De nuevo, escriban un algoritmo de búsqueda en grafos que evite expandir cualquier estado ya visitado. Prueben su código de la misma manera que lo hicieron para la búsqueda en profundidad.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs
+python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="¿BFS encuentra una solución de costo mínimo? Si no, revisen su implementación." data-en="Does BFS find a least cost solution? If not, check your implementation.">
+                        ¿BFS encuentra una solución de costo mínimo? Si no, revisen su implementación.
+                    </p>
+
+                    <p>
+                        <strong data-es="Pista:" data-en="Hint:">Pista:</strong>
+                        <span data-es=" Si Pacman se mueve demasiado lento para usted, pruebe la opción " data-en=" If Pacman moves too slowly for you, try the option "> Si Pacman se mueve demasiado lento para usted, pruebe la opción </span>
+                        <code>--frameTime 0</code>.
+                    </p>
+
+                    <p>
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es=" Si han escrito su código de búsqueda de manera genérica, su código debería funcionar igualmente bien para el problema de búsqueda del rompecabezas de ocho sin ningún cambio." data-en=" If you've written your search code generically, your code should work equally well for the eight-puzzle search problem without any changes."> Si han escrito su código de búsqueda de manera genérica, su código debería funcionar igualmente bien para el problema de búsqueda del rompecabezas de ocho sin ningún cambio.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python eightpuzzle.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q3: Varying the Cost Function -->
+                <section id="q3" class="section-anchor">
+                    <h2 data-es="Q3: Variación de la Función de Costo" data-en="Q3: Varying the Cost Function">Q3: Variación de la Función de Costo</h2>
+                    
+                    <p>
+                        <span data-es="Mientras que BFS encontrará una ruta con el menor número de acciones hacia el objetivo, podríamos querer encontrar rutas que sean "mejores" en otros sentidos. Consideren " data-en="While BFS will find a fewest-actions path to the goal, we might want to find paths that are "best" in other senses. Consider ">Mientras que BFS encontrará una ruta con el menor número de acciones hacia el objetivo, podríamos querer encontrar rutas que sean "mejores" en otros sentidos. Consideren </span>
+                        <code>mediumDottedMaze</code>
+                        <span data-es=" y " data-en=" and "> y </span>
+                        <code>mediumScaryMaze</code>.
+                    </p>
+
+                    <p data-es="Al cambiar la función de costo, podemos alentar a Pacman a encontrar diferentes rutas. Por ejemplo, podemos cobrar más por pasos peligrosos en áreas llenas de fantasmas o menos por pasos en áreas ricas en comida, y un agente Pacman racional debería ajustar su comportamiento en respuesta." data-en="By changing the cost function, we can encourage Pacman to find different paths. For example, we can charge more for dangerous steps in ghost-ridden areas or less for steps in food-rich areas, and a rational Pacman agent should adjust its behavior in response.">
+                        Al cambiar la función de costo, podemos alentar a Pacman a encontrar diferentes rutas. Por ejemplo, podemos cobrar más por pasos peligrosos en áreas llenas de fantasmas o menos por pasos en áreas ricas en comida, y un agente Pacman racional debería ajustar su comportamiento en respuesta.
+                    </p>
+
+                    <p>
+                        <span data-es="Implementen el algoritmo de búsqueda en grafos de costo uniforme en la función " data-en="Implement the uniform-cost graph search algorithm in the ">Implementen el algoritmo de búsqueda en grafos de costo uniforme en la función </span>
+                        <code>uniformCostSearch</code>
+                        <span data-es=" en " data-en=" function in "> en </span>
+                        <code>search.py</code><span data-es=". Les animamos a revisar " data-en=". We encourage you to look through ">. Les animamos a revisar </span>
+                        <code>util.py</code>
+                        <span data-es=" para algunas estructuras de datos que pueden ser útiles en su implementación. Ahora deberían observar un comportamiento exitoso en los tres diseños siguientes, donde los agentes a continuación son todos agentes UCS que difieren solo en la función de costo que usan (los agentes y funciones de costo están escritos para ustedes):" data-en=" for some data structures that may be useful in your implementation. You should now observe successful behavior in all three of the following layouts, where the agents below are all UCS agents that differ only in the cost function they use (the agents and cost functions are written for you):"> para algunas estructuras de datos que pueden ser útiles en su implementación. Ahora deberían observar un comportamiento exitoso en los tres diseños siguientes, donde los agentes a continuación son todos agentes UCS que difieren solo en la función de costo que usan (los agentes y funciones de costo están escritos para ustedes):</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l mediumMaze -p SearchAgent -a fn=ucs
+python pacman.py -l mediumDottedMaze -p StayEastSearchAgent
+python pacman.py -l mediumScaryMaze -p StayWestSearchAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es=" Deberían obtener costos de ruta muy bajos y muy altos para StayEastSearchAgent y StayWestSearchAgent respectivamente, debido a sus funciones de costo exponenciales (ver searchAgents.py para detalles)." data-en=" You should get very low and very high path costs for the StayEastSearchAgent and StayWestSearchAgent respectively, due to their exponential cost functions (see searchAgents.py for details)."> Deberían obtener costos de ruta muy bajos y muy altos para StayEastSearchAgent y StayWestSearchAgent respectivamente, debido a sus funciones de costo exponenciales (ver searchAgents.py para detalles).</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q3</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q4: A* search -->
+                <section id="q4" class="section-anchor">
+                    <h2 data-es="Q4: Búsqueda A*" data-en="Q4: A* search">Q4: Búsqueda A*</h2>
+                    
+                    <p>
+                        <span data-es="Implementen la búsqueda en grafos A* en la función vacía " data-en="Implement A* graph search in the empty function ">Implementen la búsqueda en grafos A* en la función vacía </span>
+                        <code>aStarSearch</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>search.py</code><span data-es=". A* toma una función heurística como argumento. Las heurísticas toman dos argumentos: un estado en el problema de búsqueda (el argumento principal) y el problema en sí (para información de referencia). La función heurística " data-en=". A* takes a heuristic function as an argument. Heuristics take two arguments: a state in the search problem (the main argument), and the problem itself (for reference information). The ">. A* toma una función heurística como argumento. Las heurísticas toman dos argumentos: un estado en el problema de búsqueda (el argumento principal) y el problema en sí (para información de referencia). La función heurística </span>
+                        <code>nullHeuristic</code>
+                        <span data-es=" en " data-en=" heuristic function in "> en </span>
+                        <code>search.py</code>
+                        <span data-es=" es un ejemplo trivial." data-en=" is a trivial example."> es un ejemplo trivial.</span>
+                    </p>
+
+                    <p data-es="Pueden probar su implementación de A* en el problema original de encontrar una ruta a través de un laberinto a una posición fija usando la heurística de distancia Manhattan (ya implementada como manhattanHeuristic en searchAgents.py)." data-en="You can test your A* implementation on the original problem of finding a path through a maze to a fixed position using the Manhattan distance heuristic (implemented already as manhattanHeuristic in searchAgents.py).">
+                        Pueden probar su implementación de A* en el problema original de encontrar una ruta a través de un laberinto a una posición fija usando la heurística de distancia Manhattan (ya implementada como manhattanHeuristic en searchAgents.py).
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l bigMaze -z .5 -p SearchAgent -a fn=astar,heuristic=manhattanHeuristic</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Deberían ver que A* encuentra la solución óptima ligeramente más rápido que la búsqueda de costo uniforme (alrededor de 549 vs. 620 nodos de búsqueda expandidos en nuestra implementación, pero los empates en prioridad pueden hacer que sus números difieran ligeramente). ¿Qué sucede en " data-en="You should see that A* finds the optimal solution slightly faster than uniform cost search (about 549 vs. 620 search nodes expanded in our implementation, but ties in priority may make your numbers differ slightly). What happens on ">Deberían ver que A* encuentra la solución óptima ligeramente más rápido que la búsqueda de costo uniforme (alrededor de 549 vs. 620 nodos de búsqueda expandidos en nuestra implementación, pero los empates en prioridad pueden hacer que sus números difieran ligeramente). ¿Qué sucede en </span>
+                        <code>openMaze</code>
+                        <span data-es=" para las diversas estrategias de búsqueda?" data-en=" for the various search strategies?"> para las diversas estrategias de búsqueda?</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q4</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p>
+                        <span data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab1-20123456.zip) que contenga todos los archivos del laboratorio completados correctamente. No olvides verificar que completaste el laboratorio correctamente usando el autocalificador que se entrega en este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab1-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab1-20123456.zip) que contenga todos los archivos del laboratorio completados correctamente. No olvides verificar que completaste el laboratorio correctamente usando el autocalificador que se entrega en este laboratorio.</span>
+                    </p>
+                    <br>
+                    <p>
+                        <span data-es="FECHA DE ENTREGA: 26/02/2026, 11:55 PM" data-en="ASSIGNMENT DUE DATE: 26/02/2026, 11:55 PM">FECHA DE ENTREGA: 26/02/2026, 11:55 PM</span>
+                    </p>
+                </section>
             </div>
         </main>
     </div>
