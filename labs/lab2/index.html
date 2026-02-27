@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <title>Lab2 - Búsqueda Avanzada | FUMIA Labs</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        .cmd-output {
+            color: #cccccc;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Grading Table styling */
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .dark-mode .grading-table {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .grading-table th,
+        .grading-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .grading-table th,
+        .dark-mode .grading-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .grading-table th {
+            background: #e6e9ec;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .grading-table th {
+            background: #0d1117;
+            color: #c9d1d9;
+        }
+
+        .grading-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .grading-table td {
+            color: #8b949e;
+        }
+
+        .grading-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Image placeholder */
+        .image-placeholder {
+            background: #f6f8fa;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #57606a;
+        }
+
+        .dark-mode .image-placeholder {
+            background: #161b22;
+            border-color: #30363d;
+            color: #8b949e;
+        }
+
+        .image-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="../lab1/index.html" class="nav-link" data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</span>
+            </div>
+            
+            <h1 data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</h1>
+            <br>
+            
+            <p class="subtitle" data-es="Fecha de entrega: Jueves, 12 de marzo, 11:55 PM PT" data-en="Due: Thursday, Mar 12, 11:55 PM PT">Fecha de entrega: Jueves, 12 de marzo, 11:55 PM PT</p>
+            
+            <div class="lab-content">
+                 <!-- Hero Image Placeholder -->
+                 <div class="image-placeholder">
+                    <img width="500px" src="../../images/mazeTitle.png" alt="">
+                </div>
+
+                <!-- Introduction Section -->
+                <div class="">
+                    <p data-es="En este proyecto, su agente Pacman encontrará caminos a través de un laberinto, tanto para llegar a una ubicación particular como para recolectar alimentos de manera eficiente. Construirán algoritmos de búsqueda generales y los aplicarán a escenarios de Pacman." data-en="In this project, your Pacman agent will find paths through a maze, both to reach a particular location and to collect food efficiently. You will build general search algorithms and apply them to Pacman scenarios.">
+                        En este proyecto, su agente Pacman encontrará caminos a través de un laberinto, tanto para llegar a una ubicación particular como para recolectar alimentos de manera eficiente. Construirán algoritmos de búsqueda generales y los aplicarán a escenarios de Pacman.
+                    </p>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#q5" data-es="Q5: Encontrar Todas las Esquinas" data-en="Q5: Finding All the Corners">Q5: Encontrar Todas las Esquinas</a></li>
+                        <li><a href="#q6" data-es="Q6: Problema de las Esquinas: Heurística" data-en="Q6: Corners Problem: Heuristic">Q6: Problema de las Esquinas: Heurística</a></li>
+                        <li><a href="#q7" data-es="Q7: Comer Todos los Puntos" data-en="Q7: Eating All The Dots">Q7: Comer Todos los Puntos</a></li>
+                        <li><a href="#q8" data-es="Q8: Búsqueda Subóptima" data-en="Q8: Suboptimal Search">Q8: Búsqueda Subóptima</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    
+                    <p data-es="En este laboratorio continuarán utilizando los archivos de Python del laboratorio anterior, solo que modificarán otro archivo, pero si no realizó el laboratorio anterior puede descargar los archivos en el siguiente link:" data-en="In this laboratory you will continue using the Python files from the previous laboratory, only you will modify another file, but if you did not complete the previous laboratory you can download the files at the following link:">
+                        En este laboratorio continuarán utilizando los archivos de Python del laboratorio anterior, solo que modificarán otro archivo, pero si no realizó el laboratorio anterior puede descargar los archivos en el siguiente 
+                        <a href="https://momentaneo.com" target="_blank" data-es="link" data-en="link">link</a><span data-es=". Aquí encontrarán todos los archivos necesarios para completar este proyecto." data-en=". Here you will find all the necessary files to complete this project.">. Aquí encontrarán todos los archivos necesarios para completar este proyecto.</span>
+                    </p>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que van a editar" data-en="Files you will edit">Archivos que van a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">searchAgents.py</span></td>
+                                        <td data-es="Donde se implementarán los agentes de búsqueda para Pacman." data-en="Where search agents for Pacman will be implemented.">Donde se implementarán los agentes de búsqueda para Pacman.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás necesiten leer" data-en="Files you might need to read">Archivos que quizás necesiten leer</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">pacman.py</span></td>
+                                        <td data-es="El archivo principal que ejecuta juegos de Pacman. Este archivo también describe la interfaz de los agentes de búsqueda." data-en="The main file that runs Pacman games. This file also describes the search agents interface.">El archivo principal que ejecuta juegos de Pacman. Este archivo también describe la interfaz de los agentes de búsqueda.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">game.py</span></td>
+                                        <td data-es="El módulo de juego que define varios elementos del juego utilizados en Pacman." data-en="The game module that defines various game elements used in Pacman.">El módulo de juego que define varios elementos del juego utilizados en Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Estructuras de datos útiles para implementar algoritmos de búsqueda." data-en="Useful data structures for implementing search algorithms.">Estructuras de datos útiles para implementar algoritmos de búsqueda.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que pueden ignorar" data-en="Files you can ignore">Archivos que pueden ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Support files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">graphicsDisplay.py</span></td>
+                                        <td data-es="Gráficos para mostrar el juego de Pacman." data-en="Graphics to display the Pacman game.">Gráficos para mostrar el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Soporte para gráficos." data-en="Graphics support.">Soporte para gráficos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">textDisplay.py</span></td>
+                                        <td data-es="Gráficos para mostrar el juego de Pacman en texto." data-en="Graphics to display the Pacman game in text.">Gráficos para mostrar el juego de Pacman en texto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">ghostAgents.py</span></td>
+                                        <td data-es="Agentes de fantasmas para el juego de Pacman." data-en="Ghost agents for the Pacman game.">Agentes de fantasmas para el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">keyboardAgents.py</span></td>
+                                        <td data-es="Agentes de teclado para el juego de Pacman." data-en="Keyboard agents for the Pacman game.">Agentes de teclado para el juego de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">layout.py</span></td>
+                                        <td data-es="Código para leer archivos de diseño de laberinto y visualizarlos en formato de texto." data-en="Code to read maze layout files and visualize them in text format.">Código para leer archivos de diseño de laberinto y visualizarlos en formato de texto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">autograder.py</span></td>
+                                        <td data-es="Herramienta para ayudar a calificar el proyecto." data-en="Tool to help grade the project.">Herramienta para ayudar a calificar el proyecto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testParser.py</span></td>
+                                        <td data-es="Herramienta para ayudar a escribir pruebas." data-en="Tool to help write tests.">Herramienta para ayudar a escribir pruebas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testClasses.py</span></td>
+                                        <td data-es="Clases de prueba para el autograder." data-en="Test classes for the autograder.">Clases de prueba para el autograder.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">test_cases/</span></td>
+                                        <td data-es="Directorio con archivos de prueba." data-en="Directory with test files.">Directorio con archivos de prueba.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">searchTestClasses.py</span></td>
+                                        <td data-es="Clases de prueba para los algoritmos de búsqueda." data-en="Test classes for search algorithms.">Clases de prueba para los algoritmos de búsqueda.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q5: Finding All the Corners -->
+                <section id="q5" class="section-anchor">
+                    <h2 data-es="Q5: Encontrar Todas las Esquinas" data-en="Q5: Finding All the Corners">Q5: Encontrar Todas las Esquinas</h2>
+                    
+                    <p data-es="El verdadero poder de A* solo será evidente con un problema de búsqueda más desafiante. Ahora, es el momento de formular un nuevo problema y diseñar una heurística para él." data-en="The real power of A* will only be apparent with a more challenging search problem. Now, it's time to formulate a new problem and design a heuristic for it.">
+                        El verdadero poder de A* solo será evidente con un problema de búsqueda más desafiante. Ahora, es el momento de formular un nuevo problema y diseñar una heurística para él.
+                    </p>
+
+                    <p>
+                        <span data-es="En los laberintos de esquinas, hay cuatro puntos, uno en cada esquina. Nuestro nuevo problema de búsqueda es encontrar el camino más corto a través del laberinto que toque las cuatro esquinas (ya sea que el laberinto realmente tenga comida allí o no). Nota: para algunos laberintos como " data-en="In corner mazes, there are four dots, one in each corner. Our new search problem is to find the shortest path through the maze that touches all four corners (whether the maze actually has food there or not). Note: for some mazes like ">En los laberintos de esquinas, hay cuatro puntos, uno en cada esquina. Nuestro nuevo problema de búsqueda es encontrar el camino más corto a través del laberinto que toque las cuatro esquinas (ya sea que el laberinto realmente tenga comida allí o no). Nota: para algunos laberintos como </span>
+                        <code>tinyCorners</code><span data-es=", ¡el camino más corto no siempre va primero a la comida más cercana! Pista: el camino más corto a través de tinyCorners toma 28 pasos." data-en=", the shortest path does not always go to the closest food first! Hint: the shortest path through tinyCorners takes 28 steps.">, ¡el camino más corto no siempre va primero a la comida más cercana! Pista: el camino más corto a través de tinyCorners toma 28 pasos.</span>
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Asegúrese de completar la Pregunta 2 (lab1) antes de trabajar en la Pregunta 5, porque la Pregunta 5 se basa en su respuesta para la Pregunta 2." data-en="Make sure to complete Question 2 (lab1) before working on Question 5, because Question 5 builds upon your answer for Question 2.">
+                            Asegúrese de completar la Pregunta 2 (lab1) antes de trabajar en la Pregunta 5, porque la Pregunta 5 se basa en su respuesta para la Pregunta 2.
+                        </span>
+                    </div>
+
+                    <p>
+                        <span data-es="Implementen el problema de búsqueda " data-en="Implement the ">Implementen el problema de búsqueda </span>
+                        <code>CornersProblem</code>
+                        <span data-es=" en " data-en=" search problem in "> en </span>
+                        <code>searchAgents.py</code><span data-es=". Necesitarán elegir una representación de estado que codifique toda la información necesaria para detectar si se han alcanzado las cuatro esquinas. Ahora, su agente de búsqueda debería resolver:" data-en=". You will need to choose a state representation that encodes all the information necessary to detect whether all four corners have been reached. Now, your search agent should solve:">. Necesitarán elegir una representación de estado que codifique toda la información necesaria para detectar si se han alcanzado las cuatro esquinas. Ahora, su agente de búsqueda debería resolver:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l tinyCorners -p SearchAgent -a fn=bfs,prob=CornersProblem
+python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Para recibir crédito completo, necesita definir una representación de estado abstracta que no codifique información irrelevante (como la posición de los fantasmas, dónde está la comida extra, etc.). En particular, no use un GameState de Pacman como estado de búsqueda. Su código será muy, muy lento si lo hace (y también incorrecto)." data-en="To receive full credit, you need to define an abstract state representation that does not encode irrelevant information (like the position of ghosts, where extra food is, etc.). In particular, do not use a Pacman GameState as a search state. Your code will be very, very slow if you do (and also wrong).">
+                        Para recibir crédito completo, necesita definir una representación de estado abstracta que no codifique información irrelevante (como la posición de los fantasmas, dónde está la comida extra, etc.). En particular, no use un GameState de Pacman como estado de búsqueda. Su código será muy, muy lento si lo hace (y también incorrecto).
+                    </p>
+
+                    <p>
+                        <span data-es="Una instancia de la clase " data-en="An instance of the ">Una instancia de la clase </span>
+                        <code>CornersProblem</code>
+                        <span data-es=" representa un problema de búsqueda completo, no un estado particular. Los estados particulares son devueltos por las funciones que escriba, y sus funciones devuelven una estructura de datos de su elección (por ejemplo, tupla, conjunto, etc.) que representa un estado." data-en=" class represents an entire search problem, not a particular state. Particular states are returned by the functions you write, and your functions return a data structure of your choosing (e.g. tuple, set, etc.) that represents a state."> representa un problema de búsqueda completo, no un estado particular. Los estados particulares son devueltos por las funciones que escriba, y sus funciones devuelven una estructura de datos de su elección (por ejemplo, tupla, conjunto, etc.) que representa un estado.</span>
+                    </p>
+
+                    <p data-es="Además, mientras un programa se está ejecutando, recuerde que muchos estados existen simultáneamente, todos en la cola del algoritmo de búsqueda, y deben ser independientes entre sí. En otras palabras, no debe tener solo un estado para todo el objeto CornersProblem; su clase debe poder generar muchos estados diferentes para proporcionar al algoritmo de búsqueda." data-en="Furthermore, while a program is running, remember that many states simultaneously exist, all on the queue of the search algorithm, and they should be independent of each other. In other words, you should not have only one state for the entire CornersProblem object; your class should be able to generate many different states to provide to the search algorithm.">
+                        Además, mientras un programa se está ejecutando, recuerde que muchos estados existen simultáneamente, todos en la cola del algoritmo de búsqueda, y deben ser independientes entre sí. En otras palabras, no debe tener solo un estado para todo el objeto CornersProblem; su clase debe poder generar muchos estados diferentes para proporcionar al algoritmo de búsqueda.
+                    </p>
+
+                    <p>
+                        <strong data-es="Pista 1:" data-en="Hint 1:">Pista 1:</strong>
+                        <span data-es=" Las únicas partes del estado del juego que necesita referenciar en su implementación son la posición inicial de Pacman y la ubicación de las cuatro esquinas." data-en=" The only parts of the game state you need to reference in your implementation are the starting Pacman position and the location of the four corners."> Las únicas partes del estado del juego que necesita referenciar en su implementación son la posición inicial de Pacman y la ubicación de las cuatro esquinas.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Pista 2:" data-en="Hint 2:">Pista 2:</strong>
+                        <span data-es=" Al codificar getSuccessors, asegúrese de agregar hijos a su lista de sucesores con un costo de 1." data-en=" When coding up getSuccessors, make sure to add children to your successors list with a cost of 1."> Al codificar getSuccessors, asegúrese de agregar hijos a su lista de sucesores con un costo de 1.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Nuestra implementación de breadthFirstSearch expande poco menos de 2000 nodos de búsqueda en mediumCorners. Sin embargo, las heurísticas (usadas con la búsqueda A*) pueden reducir la cantidad de búsqueda requerida." data-en="Our implementation of breadthFirstSearch expands just under 2000 search nodes on mediumCorners. However, heuristics (used with A* search) can reduce the amount of searching required.">Nuestra implementación de breadthFirstSearch expande poco menos de 2000 nodos de búsqueda en mediumCorners. Sin embargo, las heurísticas (usadas con la búsqueda A*) pueden reducir la cantidad de búsqueda requerida.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q5</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q6: Corners Problem: Heuristic -->
+                <section id="q6" class="section-anchor">
+                    <h2 data-es="Q6: Problema de las Esquinas: Heurística" data-en="Q6: Corners Problem: Heuristic">Q6: Problema de las Esquinas: Heurística</h2>
+                    
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Asegúrese de completar la Pregunta 4 (lab1) antes de trabajar en la Pregunta 6, porque la Pregunta 6 se basa en su respuesta para la Pregunta 4." data-en="Make sure to complete Question 4 (lab1) before working on Question 6, because Question 6 builds upon your answer for Question 4.">
+                            Asegúrese de completar la Pregunta 4 (lab1) antes de trabajar en la Pregunta 6, porque la Pregunta 6 se basa en su respuesta para la Pregunta 4.
+                        </span>
+                    </div>
+
+                    <p>
+                        <span data-es="Implementen una heurística no trivial y consistente para el " data-en="Implement a non-trivial, consistent heuristic for the ">Implementen una heurística no trivial y consistente para el </span>
+                        <code>CornersProblem</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>cornersHeuristic</code>.
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l mediumCorners -p AStarCornersAgent -z 0.5</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <code>AStarCornersAgent</code>
+                        <span data-es=" es un atajo para" data-en=" is a shortcut for"> es un atajo para</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">-p SearchAgent -a fn=aStarSearch,prob=CornersProblem,heuristic=cornersHeuristic</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Admisibilidad vs. Consistencia:" data-en="Admissibility vs. Consistency:">Admisibilidad vs. Consistencia:</strong>
+                        <span data-es=" Recuerden, las heurísticas son solo funciones que toman estados de búsqueda y devuelven números que estiman el costo al objetivo más cercano. Las heurísticas más efectivas devolverán valores más cercanos a los costos reales del objetivo. Para ser admisible, los valores heurísticos deben ser límites inferiores en el costo real del camino más corto al objetivo más cercano (y no negativos). Para ser consistente, debe cumplir adicionalmente que si una acción tiene costo c, entonces tomar esa acción solo puede causar una caída en la heurística de como máximo c." data-en=" Remember, heuristics are just functions that take search states and return numbers that estimate the cost to a nearest goal. More effective heuristics will return values closer to the actual goal costs. To be admissible, the heuristic values must be lower bounds on the actual shortest path cost to the nearest goal (and non-negative). To be consistent, it must additionally hold that if an action has cost c, then taking that action can only cause a drop in heuristic of at most c."> Recuerden, las heurísticas son solo funciones que toman estados de búsqueda y devuelven números que estiman el costo al objetivo más cercano. Las heurísticas más efectivas devolverán valores más cercanos a los costos reales del objetivo. Para ser admisible, los valores heurísticos deben ser límites inferiores en el costo real del camino más corto al objetivo más cercano (y no negativos). Para ser consistente, debe cumplir adicionalmente que si una acción tiene costo c, entonces tomar esa acción solo puede causar una caída en la heurística de como máximo c.</span>
+                    </p>
+
+                    <p data-es="Recuerden que la admisibilidad no es suficiente para garantizar la corrección en la búsqueda de grafos - necesitan la condición más fuerte de consistencia. Sin embargo, las heurísticas admisibles generalmente también son consistentes, especialmente si se derivan de relajaciones de problemas. Por lo tanto, generalmente es más fácil comenzar pensando en heurísticas admisibles. Una vez que tengan una heurística admisible que funcione bien, pueden verificar si es realmente consistente también. La única forma de garantizar la consistencia es con una prueba. Sin embargo, la inconsistencia a menudo se puede detectar verificando que para cada nodo que expanden, sus nodos sucesores sean iguales o más altos en valor f. Además, si UCS y A* alguna vez devuelven rutas de diferentes longitudes, su heurística es inconsistente. ¡Esto es complicado!" data-en="Remember that admissibility isn't enough to guarantee correctness in graph search – you need the stronger condition of consistency. However, admissible heuristics are usually also consistent, especially if they are derived from problem relaxations. Therefore it is usually easiest to start out by brainstorming admissible heuristics. Once you have an admissible heuristic that works well, you can check whether it is indeed consistent, too. The only way to guarantee consistency is with a proof. However, inconsistency can often be detected by verifying that for each node you expand, its successor nodes are equal or higher in in f-value. Moreover, if UCS and A* ever return paths of different lengths, your heuristic is inconsistent. This stuff is tricky!">
+                        Recuerden que la admisibilidad no es suficiente para garantizar la corrección en la búsqueda de grafos - necesitan la condición más fuerte de consistencia. Sin embargo, las heurísticas admisibles generalmente también son consistentes, especialmente si se derivan de relajaciones de problemas. Por lo tanto, generalmente es más fácil comenzar pensando en heurísticas admisibles. Una vez que tengan una heurística admisible que funcione bien, pueden verificar si es realmente consistente también. La única forma de garantizar la consistencia es con una prueba. Sin embargo, la inconsistencia a menudo se puede detectar verificando que para cada nodo que expanden, sus nodos sucesores sean iguales o más altos en valor f. Además, si UCS y A* alguna vez devuelven rutas de diferentes longitudes, su heurística es inconsistente. ¡Esto es complicado!
+                    </p>
+
+                    <p>
+                        <strong data-es="Heurísticas No Triviales:" data-en="Non-Trivial Heuristics:">Heurísticas No Triviales:</strong>
+                        <span data-es=" Las heurísticas triviales son las que devuelven cero en todas partes (UCS) y la heurística que calcula el costo real de finalización. La primera no le ahorrará tiempo, mientras que la segunda agotará el tiempo del autograder. Quiere una heurística que reduzca el tiempo total de cómputo, aunque para esta tarea el autograder solo verificará el conteo de nodos (además de hacer cumplir un límite de tiempo razonable)." data-en=" The trivial heuristics are the ones that return zero everywhere (UCS) and the heuristic which computes the true completion cost. The former won't save you any time, while the latter will timeout the autograder. You want a heuristic which reduces total compute time, though for this assignment the autograder will only check node counts (aside from enforcing a reasonable time limit)."> Las heurísticas triviales son las que devuelven cero en todas partes (UCS) y la heurística que calcula el costo real de finalización. La primera no le ahorrará tiempo, mientras que la segunda agotará el tiempo del autograder. Quiere una heurística que reduzca el tiempo total de cómputo, aunque para esta tarea el autograder solo verificará el conteo de nodos (además de hacer cumplir un límite de tiempo razonable).</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Su heurística debe ser una heurística consistente, no negativa y no trivial para recibir cualquier punto. Asegúrese de que su heurística devuelva 0 en cada estado objetivo y nunca devuelva un valor negativo. Dependiendo de cuán pocos nodos expanda su heurística, será calificado:" data-en=" Your heuristic must be a non-trivial non-negative consistent heuristic to receive any points. Make sure that your heuristic returns 0 at every goal state and never returns a negative value. Depending on how few nodes your heuristic expands, you'll be graded:"> Su heurística debe ser una heurística consistente, no negativa y no trivial para recibir cualquier punto. Asegúrese de que su heurística devuelva 0 en cada estado objetivo y nunca devuelva un valor negativo. Dependiendo de cuán pocos nodos expanda su heurística, será calificado:</span>
+                    </p>
+
+                    <table class="grading-table">
+                        <thead>
+                            <tr>
+                                <th data-es="Número de nodos expandidos" data-en="Number of nodes expanded">Número de nodos expandidos</th>
+                                <th data-es="Calificación" data-en="Grade">Calificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-es="más de 2000" data-en="more than 2000">más de 2000</td>
+                                <td>0/3</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 2000" data-en="at most 2000">como máximo 2000</td>
+                                <td>1/3</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 1600" data-en="at most 1600">como máximo 1600</td>
+                                <td>2/3</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 1200" data-en="at most 1200">como máximo 1200</td>
+                                <td>3/3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <strong data-es="Recuerden:" data-en="Remember:">Recuerden:</strong>
+                        <span data-es=" ¡Si su heurística es inconsistente, no recibirá crédito, así que tengan cuidado!" data-en=" If your heuristic is inconsistent, you will receive no credit, so be careful!"> ¡Si su heurística es inconsistente, no recibirán crédito, así que tengan cuidado!</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q6</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q7: Eating All The Dots -->
+                <section id="q7" class="section-anchor">
+                    <h2 data-es="Q7: Comer Todos los Puntos" data-en="Q7: Eating All The Dots">Q7: Comer Todos los Puntos</h2>
+                    
+                    <p data-es="Ahora resolveremos un problema de búsqueda difícil: comer toda la comida de Pacman en el menor número de pasos posible. Para esto, necesitaremos una nueva definición de problema de búsqueda que formalice el problema de limpiar la comida: FoodSearchProblem en searchAgents.py (implementado para ustedes). Una solución se define como un camino que recolecta toda la comida en el mundo de Pacman. Para el proyecto actual, las soluciones no tienen en cuenta fantasmas o píldoras de poder; las soluciones solo dependen de la colocación de paredes, comida regular y Pacman. (¡Por supuesto, los fantasmas pueden arruinar la ejecución de una solución! Llegaremos a eso en el próximo proyecto.) Si han escrito sus métodos de búsqueda generales correctamente, A* con una heurística nula (equivalente a la búsqueda de costo uniforme) debería encontrar rápidamente una solución óptima para testSearch sin ningún cambio de código de su parte (costo total de 7)." data-en="Now we'll solve a hard search problem: eating all the Pacman food in as few steps as possible. For this, we'll need a new search problem definition which formalizes the food-clearing problem: FoodSearchProblem in searchAgents.py (implemented for you). A solution is defined to be a path that collects all of the food in the Pacman world. For the present project, solutions do not take into account any ghosts or power pellets; solutions only depend on the placement of walls, regular food and Pacman. (Of course ghosts can ruin the execution of a solution! We'll get to that in the next project.) If you have written your general search methods correctly, A* with a null heuristic (equivalent to uniform-cost search) should quickly find an optimal solution to testSearch with no code change on your part (total cost of 7).">
+                        Ahora resolveremos un problema de búsqueda difícil: comer toda la comida de Pacman en el menor número de pasos posible. Para esto, necesitaremos una nueva definición de problema de búsqueda que formalice el problema de limpiar la comida: FoodSearchProblem en searchAgents.py (implementado para ustedes). Una solución se define como un camino que recolecta toda la comida en el mundo de Pacman. Para el proyecto actual, las soluciones no tienen en cuenta fantasmas o píldoras de poder; las soluciones solo dependen de la colocación de paredes, comida regular y Pacman. (¡Por supuesto, los fantasmas pueden arruinar la ejecución de una solución! Llegaremos a eso en el próximo proyecto.) Si han escrito sus métodos de búsqueda generales correctamente, A* con una heurística nula (equivalente a la búsqueda de costo uniforme) debería encontrar rápidamente una solución óptima para testSearch sin ningún cambio de código de su parte (costo total de 7).
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l testSearch -p AStarFoodSearchAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <code>AStarFoodSearchAgent</code>
+                        <span data-es=" es un atajo para" data-en=" is a shortcut for"> es un atajo para</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">-p SearchAgent -a fn=astar,prob=FoodSearchProblem,heuristic=foodHeuristic</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Deberían encontrar que UCS comienza a ralentizarse incluso para el aparentemente simple tinySearch. Como referencia, nuestra implementación toma 2.5 segundos para encontrar un camino de longitud 27 después de expandir 5057 nodos de búsqueda." data-en="You should find that UCS starts to slow down even for the seemingly simple tinySearch. As a reference, our implementation takes 2.5 seconds to find a path of length 27 after expanding 5057 search nodes.">Deberían encontrar que UCS comienza a ralentizarse incluso para el aparentemente simple tinySearch. Como referencia, nuestra implementación toma 2.5 segundos para encontrar un camino de longitud 27 después de expandir 5057 nodos de búsqueda.</span>
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Asegúrese de completar la Pregunta 4 antes de trabajar en la Pregunta 7, porque la Pregunta 7 se basa en su respuesta para la Pregunta 4." data-en="Make sure to complete Question 4 before working on Question 7, because Question 7 builds upon your answer for Question 4.">
+                            Asegúrese de completar la Pregunta 4 antes de trabajar en la Pregunta 7, porque la Pregunta 7 se basa en su respuesta para la Pregunta 4.
+                        </span>
+                    </div>
+
+                    <p>
+                        <span data-es="Completen " data-en="Fill in ">Completen </span>
+                        <code>foodHeuristic</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>searchAgents.py</code>
+                        <span data-es=" con una heurística consistente para el FoodSearchProblem. Prueben su agente en el tablero trickySearch:" data-en=" with a consistent heuristic for the FoodSearchProblem. Try your agent on the trickySearch board:"> con una heurística consistente para el FoodSearchProblem. Prueben su agente en el tablero trickySearch:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l trickySearch -p AStarFoodSearchAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Nuestro agente UCS encuentra la solución óptima en aproximadamente 13 segundos, explorando más de 16,000 nodos." data-en="Our UCS agent finds the optimal solution in about 13 seconds, exploring over 16,000 nodes.">
+                        Nuestro agente UCS encuentra la solución óptima en aproximadamente 13 segundos, explorando más de 16,000 nodos.
+                    </p>
+
+                    <p data-es="Cualquier heurística consistente, no negativa y no trivial recibirá 1 punto. Asegúrese de que su heurística devuelva 0 en cada estado objetivo y nunca devuelva un valor negativo. Dependiendo de cuán pocos nodos expanda su heurística, obtendrá puntos adicionales:" data-en="Any non-trivial non-negative consistent heuristic will receive 1 point. Make sure that your heuristic returns 0 at every goal state and never returns a negative value. Depending on how few nodes your heuristic expands, you'll get additional points:">
+                        Cualquier heurística consistente, no negativa y no trivial recibirá 1 punto. Asegúrese de que su heurística devuelva 0 en cada estado objetivo y nunca devuelva un valor negativo. Dependiendo de cuán pocos nodos expanda su heurística, obtendrá puntos adicionales:
+                    </p>
+
+                    <table class="grading-table">
+                        <thead>
+                            <tr>
+                                <th data-es="Número de nodos expandidos" data-en="Number of nodes expanded">Número de nodos expandidos</th>
+                                <th data-es="Calificación" data-en="Grade">Calificación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-es="más de 15000" data-en="more than 15000">más de 15000</td>
+                                <td>1/4</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 15000" data-en="at most 15000">como máximo 15000</td>
+                                <td>2/4</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 12000" data-en="at most 12000">como máximo 12000</td>
+                                <td>3/4</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 9000" data-en="at most 9000 (full credit; medium)">como máximo 9000</td>
+                                <td>4/4 (<span data-es="crédito completo; medio" data-en="full credit; medium">crédito completo; medio</span>)</td>
+                            </tr>
+                            <tr>
+                                <td data-es="como máximo 7000" data-en="at most 7000 (optional extra credit; hard)">como máximo 7000</td>
+                                <td>5/4 (<span data-es="crédito extra opcional; difícil" data-en="optional extra credit; hard">crédito extra opcional; difícil</span>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p>
+                        <strong data-es="Recuerden:" data-en="Remember:">Recuerden:</strong>
+                        <span data-es=" ¡Si su heurística es inconsistente, no recibirá crédito, así que tengan cuidado! ¿Pueden resolver mediumSearch en poco tiempo? Si es así, estamos muy, muy impresionados, o su heurística es inconsistente." data-en=" If your heuristic is inconsistent, you will receive no credit, so be careful! Can you solve mediumSearch in a short time? If so, we're either very, very impressed, or your heuristic is inconsistent."> ¡Si su heurística es inconsistente, no recibirán crédito, así que tengan cuidado! ¿Pueden resolver mediumSearch en poco tiempo? Si es así, estamos muy, muy impresionados, o su heurística es inconsistente.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q7</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q8: Suboptimal Search -->
+                <section id="q8" class="section-anchor">
+                    <h2 data-es="Q8: Búsqueda Subóptima" data-en="Q8: Suboptimal Search">Q8: Búsqueda Subóptima</h2>
+                    
+                    <p data-es="A veces, incluso con A* y una buena heurística, encontrar el camino óptimo a través de todos los puntos es difícil. En estos casos, todavía nos gustaría encontrar un camino razonablemente bueno, rápidamente. En esta sección, escribirán un agente que siempre come codiciosamente el punto más cercano. ClosestDotSearchAgent está implementado para ustedes en searchAgents.py, pero le falta una función clave que encuentra un camino hacia el punto más cercano." data-en="Sometimes, even with A* and a good heuristic, finding the optimal path through all the dots is hard. In these cases, we'd still like to find a reasonably good path, quickly. In this section, you'll write an agent that always greedily eats the closest dot. ClosestDotSearchAgent is implemented for you in searchAgents.py, but it's missing a key function that finds a path to the closest dot.">
+                        A veces, incluso con A* y una buena heurística, encontrar el camino óptimo a través de todos los puntos es difícil. En estos casos, todavía nos gustaría encontrar un camino razonablemente bueno, rápidamente. En esta sección, escribirán un agente que siempre come codiciosamente el punto más cercano. ClosestDotSearchAgent está implementado para ustedes en searchAgents.py, pero le falta una función clave que encuentra un camino hacia el punto más cercano.
+                    </p>
+
+                    <p>
+                        <span data-es="Implementen la función " data-en="Implement the function ">Implementen la función </span>
+                        <code>findPathToClosestDot</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>searchAgents.py</code><span data-es=". Nuestro agente resuelve este laberinto (¡subóptimamente!) en menos de un segundo con un costo de camino de 350:" data-en=". Our agent solves this maze (suboptimally!) in under a second with a path cost of 350:">. Nuestro agente resuelve este laberinto (¡subóptimamente!) en menos de un segundo con un costo de camino de 350:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -l bigSearch -p ClosestDotSearchAgent -z .5</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <strong data-es="Pista:" data-en="Hint:">Pista:</strong>
+                        <span data-es=" La forma más rápida de completar findPathToClosestDot es completar el AnyFoodSearchProblem, al que le falta su prueba de objetivo. Luego, resuelvan ese problema con una función de búsqueda apropiada. ¡La solución debería ser muy corta!" data-en=" The quickest way to complete findPathToClosestDot is to fill in the AnyFoodSearchProblem, which is missing its goal test. Then, solve that problem with an appropriate search function. The solution should be very short!"> La forma más rápida de completar findPathToClosestDot es completar el AnyFoodSearchProblem, al que le falta su prueba de objetivo. Luego, resuelvan ese problema con una función de búsqueda apropiada. ¡La solución debería ser muy corta!</span>
+                    </p>
+
+                    <p data-es="Su ClosestDotSearchAgent no siempre encontrará el camino más corto posible a través del laberinto. Asegúrense de entender por qué e intenten encontrar un pequeño ejemplo donde ir repetidamente al punto más cercano no resulte en encontrar el camino más corto para comer todos los puntos." data-en="Your ClosestDotSearchAgent won't always find the shortest possible path through the maze. Make sure you understand why and try to come up with a small example where repeatedly going to the closest dot does not result in finding the shortest path for eating all the dots.">
+                        Su ClosestDotSearchAgent no siempre encontrará el camino más corto posible a través del laberinto. Asegúrense de entender por qué e intenten encontrar un pequeño ejemplo donde ir repetidamente al punto más cercano no resulte en encontrar el camino más corto para comer todos los puntos.
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder." data-en=" Please run the below command to see if your implementation passes all the autograder test cases."> Por favor ejecuten el siguiente comando para ver si su implementación pasa todos los casos de prueba del autograder.</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q8</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab2-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab2-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">
+                        El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab2-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="FECHA LÍMITE DE ENTREGA:" data-en="ASSIGNMENT DUE DATE:">FECHA LÍMITE DE ENTREGA:</strong>
+                        <span data-es="12/03/2026, 11:55 PM" data-en="12/03/2026, 11:55 PM">12/03/2026, 11:55 PM</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
