@@ -492,6 +492,7 @@
                         <li><a href="#q6" data-es="Q6: Problema de las Esquinas: Heurística" data-en="Q6: Corners Problem: Heuristic">Q6: Problema de las Esquinas: Heurística</a></li>
                         <li><a href="#q7" data-es="Q7: Comer Todos los Puntos" data-en="Q7: Eating All The Dots">Q7: Comer Todos los Puntos</a></li>
                         <li><a href="#q8" data-es="Q8: Búsqueda Subóptima" data-en="Q8: Suboptimal Search">Q8: Búsqueda Subóptima</a></li>
+                        <li><a href="#tips" data-es="Ayudas y Consejos" data-en="Tips and Advice">Ayudas y Consejos</a></li>
                         <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
                     </ul>
                 </div>
@@ -957,6 +958,85 @@ python pacman.py -l mediumCorners -p SearchAgent -a fn=bfs,prob=CornersProblem</
                             <pre><span class="cmd-prompt">python autograder.py -q q8</span></pre>
                         </div>
                     </div>
+                </section>
+
+                <!-- Tips and Advice -->
+                <section id="tips" class="section-anchor">
+                    <h2 data-es="Ayudas y Consejos" data-en="Tips and Advice">Ayudas y Consejos</h2>
+                    
+                    <h3 data-es="Si aún no terminas el Lab2:" data-en="If you haven't finished Lab2 yet:">Si aún no terminas el Lab2:</h3>
+                    
+                    <ol>
+                        <li>
+                            <p data-es="Asegúrate de completar el Laboratorio 1 de forma correcta para garantizar que los errores no sean de las implementaciones de Q1 a Q4." data-en="Make sure to complete Laboratory 1 correctly to ensure that errors are not from the Q1 to Q4 implementations.">
+                                Asegúrate de completar el Laboratorio 1 de forma correcta para garantizar que los errores no sean de las implementaciones de Q1 a Q4.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <span data-es="Revisa " data-en="Check ">Revisa </span>
+                                <code>util.py</code><span data-es=", en ese archivo se encuentran métodos que puedes utilizar! Como por ejemplo:" data-en=", in that file you will find methods you can use! For example:">, en ese archivo se encuentran métodos que puedes utilizar! Como por ejemplo:</span>
+                            </p>
+                            <div class="code-block">
+                                <div class="code-header">Python</div>
+                                <div class="code-content">
+                                    <pre>manhattanDistance( xy1, xy2 )</pre>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <p>
+                                <strong data-es="Nunca sobreestimes:" data-en="Never overestimate:">Nunca sobreestimes:</strong>
+                                <span data-es=" si tu heurística no es admisible, A* puede dar rutas incorrectas y perderás todos los puntos de esa pregunta." data-en=" if your heuristic is not admissible, A* may give incorrect paths and you will lose all points for that question."> si tu heurística no es admisible, A* puede dar rutas incorrectas y perderás todos los puntos de esa pregunta.</span>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <span data-es="Usa " data-en="Use ">Usa </span>
+                                <code>mazeDistance</code>
+                                <span data-es=" en lugar de Manhattan cuando haya paredes relevantes — es más preciso y sigue siendo admisible." data-en=" instead of Manhattan when there are relevant walls — it's more accurate and still admissible."> en lugar de Manhattan cuando haya paredes relevantes — es más preciso y sigue siendo admisible.</span>
+                            </p>
+                        </li>
+                    </ol>
+
+                    <h3 data-es="Si ya terminaste el Lab2 y quieres conseguir los puntos extra:" data-en="If you already finished Lab2 and want to get extra points:">Si ya terminaste el Lab2 y quieres conseguir los puntos extra:</h3>
+                    
+                    <ol>
+                        <li>
+                            <p>
+                                <strong>Q6: Corners Heuristic</strong>
+                                <span data-es=" (meta: ≤1200 nodos):" data-en=" (goal: ≤1200 nodes):"> (meta: ≤1200 nodos):</span>
+                            </p>
+                            <p data-es="El objetivo es llegar a 3/3, expandiendo menos de 1200 nodos. La clave está en usar una heurística que estime bien el costo real sin sobreestimar." data-en="The goal is to reach 3/3, expanding less than 1200 nodes. The key is to use a heuristic that estimates the real cost well without overestimating.">
+                                El objetivo es llegar a 3/3, expandiendo menos de 1200 nodos. La clave está en usar una heurística que estime bien el costo real sin sobreestimar.
+                            </p>
+                            <p>
+                                <strong data-es="Tip:" data-en="Tip:">Tip:</strong>
+                                <span data-es=" Usa ALGO sobre las esquinas no visitadas + la distancia de Pacman a la esquina más cercana. Esto es admisible y muy consistente." data-en=" Use SOMTHING on unvisited corners + Pacman's distance to the nearest corner. This is admissible and very consistent."> Usa ALGO sobre las esquinas no visitadas + la distancia de Pacman a la esquina más cercana. Esto es admisible y muy consistente.</span>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                <strong>Q7: Food Heuristic</strong>
+                                <span data-es=" (meta: ≤7000 nodos = crédito extra 5/4):" data-en=" (goal: ≤7000 nodes = extra credit 5/4):"> (meta: ≤7000 nodos = crédito extra 5/4):</span>
+                            </p>
+                            <p data-es="Este es el más difícil. Para el extra credit necesitas expandir menos de 7000 nodos en trickySearch." data-en="This is the most difficult one. For extra credit you need to expand less than 7000 nodes in trickySearch.">
+                                Este es el más difícil. Para el extra credit necesitas expandir menos de 7000 nodos en <code>trickySearch</code>.
+                            </p>
+                            <p>
+                                <strong data-es="Tip principal:" data-en="Main tip:">Tip principal:</strong>
+                                <span data-es=" Una heurística muy efectiva combina:" data-en=" A very effective heuristic combines:"> Una heurística muy efectiva combina:</span>
+                            </p>
+                            <ul>
+                                <li data-es="La distancia real (usando mazeDistance) entre Pacman y la comida más lejana." data-en="The real distance (using mazeDistance) between Pacman and the farthest food.">La distancia real (usando <code>mazeDistance</code>) entre Pacman y la comida más lejana.</li>
+                                <li data-es="O bien el diámetro del MST sobre todas las comidas restantes." data-en="Or the diameter of the MST over all remaining foods.">O bien el diámetro del MST sobre todas las comidas restantes.</li>
+                            </ul>
+                            <p>
+                                <strong data-es="Tip Cache:" data-en="Cache Tip:">Tip Cache:</strong>
+                                <span data-es=" revisa los comentarios en SearchAgent.py porque mazeDistance usa BFS internamente, así que es costoso. Para optimizar, usa problem.heuristicInfo como caché para no recalcular las mismas distancias." data-en=" check the comments in SearchAgent.py because mazeDistance uses BFS internally, so it's expensive. To optimize, use problem.heuristicInfo as a cache to avoid recalculating the same distances."> revisa los comentarios en SearchAgent.py porque <code>mazeDistance</code> usa BFS internamente, así que es costoso. Para optimizar, usa <code>problem.heuristicInfo</code> como caché para no recalcular las mismas distancias.</span>
+                            </p>
+                        </li>
+                    </ol>
                 </section>
 
                 <!-- Submission -->
