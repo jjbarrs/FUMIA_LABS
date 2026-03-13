@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab3 - Agentes Multi-Agente | FUMIA Labs</title>
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Image placeholder */
+        .image-placeholder {
+            background: #f6f8fa;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #57606a;
+        }
+
+        .dark-mode .image-placeholder {
+            background: #161b22;
+            border-color: #30363d;
+            color: #8b949e;
+        }
+
+        .image-placeholder svg {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Hints section styling */
+        .hints-section {
+            background: #ddf4ff;
+            border-left: 4px solid #0969da;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .hints-section {
+            background: #1c2d41;
+            border-left-color: #58a6ff;
+        }
+
+        .hints-section h4 {
+            margin-top: 0;
+            color: #0969da;
+        }
+
+        .dark-mode .hints-section h4 {
+            color: #58a6ff;
+        }
+
+        .hints-section ul {
+            margin-bottom: 0;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="../lab1/index.html" class="nav-link" data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</a></li>
+                            <li><a href="../lab2/index.html" class="nav-link" data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</span>
+            </div>
+            
+            <h1 data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</h1>
+            <br>
+            
+            <p class="subtitle" data-es="Fecha de entrega: Domingo, 29 de marzo, 11:55 PM PT" data-en="Due: Sunday, Mar 29, 11:55 PM PT">Fecha de entrega: Domingo, 29 de marzo, 11:55 PM PT</p>
+            
+            <div class="lab-content">
+                <!-- Hero Image Placeholder -->
+                <div class="image-placeholder">
+                    <img width="500px" src="pacman_multi_agent.png" alt="">
+                </div>
+
+                <!-- Introduction Section -->
+                
+                    <p data-es="Pacman, ahora con fantasmas. Minimax, Expectimax, Evaluación" data-en="Pacman, now with ghosts. Minimax, Expectimax, Evaluation">
+                        Pacman, ahora con fantasmas. Minimax, Expectimax, Evaluación
+                    </p>
+                
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#introduction" data-es="Introducción" data-en="Introduction">Introducción</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#multi-agent" data-es="Pacman Multi-Agente" data-en="Multi-Agent Pacman">Pacman Multi-Agente</a></li>
+                        <li><a href="#q1" data-es="Q1: Agente Reflejo" data-en="Q1: Reflex Agent">Q1: Agente Reflejo</a></li>
+                        <li><a href="#q2" data-es="Q2: Minimax" data-en="Q2: Minimax">Q2: Minimax</a></li>
+                        <li><a href="#q3" data-es="Q3: Poda Alpha-Beta" data-en="Q3: Alpha-Beta Pruning">Q3: Poda Alpha-Beta</a></li>
+                        <li><a href="#q4" data-es="Q4: Expectimax" data-en="Q4: Expectimax">Q4: Expectimax</a></li>
+                        <li><a href="#q5" data-es="Q5: Función de Evaluación" data-en="Q5: Evaluation Function">Q5: Función de Evaluación</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    
+                    <p data-es="En este laboratorio, deben descargar los archivos base desde este link:" data-en="In this lab, you must download the base files from this link:">
+                        En este laboratorio, deben descargar los archivos base desde este 
+                        
+                    </p>
+                    <a href="https://inst.eecs.berkeley.edu/~cs188/fa25/assets/projects/multiagent.zip" target="_blank" data-es="link" data-en="link">link</a>.
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section-anchor">
+                    <h2 data-es="Introducción" data-en="Introduction">Introducción</h2>
+                    
+                    <p data-es="En este proyecto, diseñarán agentes para la versión clásica de Pacman, incluyendo fantasmas. En el camino, implementarán búsqueda minimax y expectimax e intentarán diseñar funciones de evaluación." data-en="In this project, you will design agents for the classic version of Pacman, including ghosts. Along the way, you will implement both minimax and expectimax search and try your hand at evaluation function design.">
+                        En este proyecto, diseñarán agentes para la versión clásica de Pacman, incluyendo fantasmas. En el camino, implementarán búsqueda minimax y expectimax e intentarán diseñar funciones de evaluación.
+                    </p>
+
+                    <p data-es="La base de código no ha cambiado mucho del proyecto anterior, pero por favor comiencen con una instalación nueva, en lugar de mezclar archivos del proyecto 1." data-en="The code base has not changed much from the previous project, but please start with a fresh installation, rather than intermingling files from project 1.">
+                        La base de código no ha cambiado mucho del proyecto anterior, pero por favor comiencen con una instalación nueva, en lugar de mezclar archivos del proyecto 1.
+                    </p>
+
+                    <p data-es="Como en Lab1 y Lab2, este Laboratorio incluye un autograder para que califiquen sus respuestas en su máquina. Esto se puede ejecutar en todas las preguntas con el comando:" data-en="As in Lab1 and Lab2, this Laboratory includes an autograder for you to grade your answers on your machine. This can be run on all questions with the command:">
+                        Como en Lab1 y Lab2, este Laboratorio incluye un autograder para que califiquen sus respuestas en su máquina. Esto se puede ejecutar en todas las preguntas con el comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una pregunta particular, como q2, con:" data-en="It can be run for one particular question, such as q2, by:">
+                        Se puede ejecutar para una pregunta particular, como q2, con:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una prueba particular con comandos de la forma:" data-en="It can be run for one particular test by commands of the form:">
+                        Se puede ejecutar para una prueba particular con comandos de la forma:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q2/0-small-tree</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Por defecto, el autograder muestra gráficos con la opción " data-en="By default, the autograder displays graphics with the ">Por defecto, el autograder muestra gráficos con la opción </span>
+                        <code>-t</code><span data-es=", pero no con la opción " data-en=" option, but doesn't with the ">, pero no con la opción </span>
+                        <code>-q</code><span data-es=". Pueden forzar los gráficos usando la bandera " data-en=" option. You can force graphics by using the ">. Pueden forzar los gráficos usando la bandera </span>
+                        <code>--graphics</code><span data-es=", o forzar sin gráficos usando la bandera " data-en=" flag, or force no graphics by using the ">, o forzar sin gráficos usando la bandera </span>
+                        <code>--no-graphics</code>.
+                    </p>
+
+                    <p data-es="Vea el tutorial del autograder en el Proyecto 0 para más información sobre el uso del autograder." data-en="See the autograder tutorial in Project 0 for more information about using the autograder.">
+                        Vea el tutorial del autograder en el Proyecto 0 para más información sobre el uso del autograder.
+                    </p>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que van a editar" data-en="Files you'll edit">Archivos que van a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">multiAgents.py</span></td>
+                                        <td data-es="Donde residirán todos sus agentes de búsqueda multi-agente." data-en="Where all of your multi-agent search agents will reside.">Donde residirán todos sus agentes de búsqueda multi-agente.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás quieran revisar" data-en="Files you might want to look at">Archivos que quizás quieran revisar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">pacman.py</span></td>
+                                        <td data-es="El archivo principal que ejecuta juegos de Pacman. Este archivo también describe un tipo Pacman GameState, que usarán extensivamente en este proyecto." data-en="The main file that runs Pacman games. This file also describes a Pacman GameState type, which you will use extensively in this project.">El archivo principal que ejecuta juegos de Pacman. Este archivo también describe un tipo Pacman GameState, que usarán extensivamente en este proyecto.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">game.py</span></td>
+                                        <td data-es="La lógica detrás de cómo funciona el mundo de Pacman. Este archivo describe varios tipos de soporte como AgentState, Agent, Direction y Grid." data-en="The logic behind how the Pacman world works. This file describes several supporting types like AgentState, Agent, Direction, and Grid.">La lógica detrás de cómo funciona el mundo de Pacman. Este archivo describe varios tipos de soporte como AgentState, Agent, Direction y Grid.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Estructuras de datos útiles para implementar algoritmos de búsqueda. No necesitan usar estas para este proyecto, pero pueden encontrar útiles otras funciones definidas aquí." data-en="Useful data structures for implementing search algorithms. You don't need to use these for this project, but may find other functions defined here to be useful.">Estructuras de datos útiles para implementar algoritmos de búsqueda. No necesitan usar estas para este proyecto, pero pueden encontrar útiles otras funciones definidas aquí.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos de soporte que pueden ignorar" data-en="Supporting files you can ignore">Archivos de soporte que pueden ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Support files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">graphicsDisplay.py</span></td>
+                                        <td data-es="Gráficos para Pacman" data-en="Graphics for Pacman">Gráficos para Pacman</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Soporte para gráficos de Pacman" data-en="Support for Pacman graphics">Soporte para gráficos de Pacman</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">textDisplay.py</span></td>
+                                        <td data-es="Gráficos ASCII para Pacman" data-en="ASCII graphics for Pacman">Gráficos ASCII para Pacman</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">ghostAgents.py</span></td>
+                                        <td data-es="Agentes para controlar fantasmas" data-en="Agents to control ghosts">Agentes para controlar fantasmas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">keyboardAgents.py</span></td>
+                                        <td data-es="Interfaces de teclado para controlar Pacman" data-en="Keyboard interfaces to control Pacman">Interfaces de teclado para controlar Pacman</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">layout.py</span></td>
+                                        <td data-es="Código para leer archivos de diseño y almacenar sus contenidos" data-en="Code for reading layout files and storing their contents">Código para leer archivos de diseño y almacenar sus contenidos</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">autograder.py</span></td>
+                                        <td data-es="Autograder del proyecto" data-en="Project autograder">Autograder del proyecto</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testParser.py</span></td>
+                                        <td data-es="Analiza archivos de prueba y solución del autograder" data-en="Parses autograder test and solution files">Analiza archivos de prueba y solución del autograder</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testClasses.py</span></td>
+                                        <td data-es="Clases de prueba generales de autograding" data-en="General autograding test classes">Clases de prueba generales de autograding</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">test_cases/</span></td>
+                                        <td data-es="Directorio que contiene los casos de prueba para cada pregunta" data-en="Directory containing the test cases for each question">Directorio que contiene los casos de prueba para cada pregunta</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">multiagentTestClasses.py</span></td>
+                                        <td data-es="Clases de prueba de autograding específicas del Proyecto 3" data-en="Project 3 specific autograding test classes">Clases de prueba de autograding específicas del Proyecto 3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Multi-Agent Pacman -->
+                <section id="multi-agent" class="section-anchor">
+                    <h2 data-es="Pacman Multi-Agente" data-en="Multi-Agent Pacman">Pacman Multi-Agente</h2>
+                    
+                    <p data-es="Primero, jueguen un juego de Pacman clásico ejecutando el siguiente comando:" data-en="First, play a game of classic Pacman by running the following command:">
+                        Primero, jueguen un juego de Pacman clásico ejecutando el siguiente comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="y usen las teclas de flecha para moverse. Ahora, ejecuten el ReflexAgent proporcionado en multiAgents.py:" data-en="and using the arrow keys to move. Now, run the provided ReflexAgent in multiAgents.py:">
+                        y usen las teclas de flecha para moverse. Ahora, ejecuten el ReflexAgent proporcionado en multiAgents.py:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ReflexAgent</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Noten que juega bastante mal incluso en diseños simples:" data-en="Note that it plays quite poorly even on simple layouts:">
+                        Noten que juega bastante mal incluso en diseños simples:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ReflexAgent -l testClassic</span></pre>
+                        </div>
+                    </div>
+
+                    <p>
+                        <span data-es="Inspeccionen su código (en " data-en="Inspect its code (in ">Inspeccionen su código (en </span>
+                        <code>multiAgents.py</code><span data-es=") y asegúrense de entender qué está haciendo." data-en=") and make sure you understand what it's doing.">) y asegúrense de entender qué está haciendo.</span>
+                    </p>
+                </section>
+
+                <!-- Q1: Reflex Agent -->
+                <section id="q1" class="section-anchor">
+                    <h2 data-es="Q1: Agente Reflejo" data-en="Q1: Reflex Agent">Q1: Agente Reflejo</h2>
+                    
+                    <p>
+                        <span data-es="Mejoren el " data-en="Improve the ">Mejoren el </span>
+                        <code>ReflexAgent</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>multiAgents.py</code>
+                        <span data-es=" para jugar respetablemente. El código del agente reflejo proporcionado ofrece algunos ejemplos útiles de métodos que consultan el GameState para obtener información. Un agente reflejo capaz tendrá que considerar tanto las ubicaciones de comida como las ubicaciones de fantasmas para desempeñarse bien. Su agente debería limpiar fácil y confiablemente el diseño testClassic:" data-en=" to play respectably. The provided reflex agent code provides some helpful examples of methods that query the GameState for information. A capable reflex agent will have to consider both food locations and ghost locations to perform well. Your agent should easily and reliably clear the testClassic layout:"> para jugar respetablemente. El código del agente reflejo proporcionado ofrece algunos ejemplos útiles de métodos que consultan el GameState para obtener información. Un agente reflejo capaz tendrá que considerar tanto las ubicaciones de comida como las ubicaciones de fantasmas para desempeñarse bien. Su agente debería limpiar fácil y confiablemente el diseño testClassic:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ReflexAgent -l testClassic</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Prueben su agente reflejo en el diseño mediumClassic predeterminado con uno o dos fantasmas (y animación desactivada para acelerar la visualización):" data-en="Try out your reflex agent on the default mediumClassic layout with one ghost or two (and animation off to speed up the display):">
+                        Prueben su agente reflejo en el diseño mediumClassic predeterminado con uno o dos fantasmas (y animación desactivada para acelerar la visualización):
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py --frameTime 0 -p ReflexAgent -k 1</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py --frameTime 0 -p ReflexAgent -k 2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="¿Cómo le va a su agente? Probablemente morirá a menudo con 2 fantasmas en el tablero predeterminado, a menos que su función de evaluación sea bastante buena." data-en="How does your agent fare? It will likely often die with 2 ghosts on the default board, unless your evaluation function is quite good.">
+                        ¿Cómo le va a su agente? Probablemente morirá a menudo con 2 fantasmas en el tablero predeterminado, a menos que su función de evaluación sea bastante buena.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Recuerden que newFood tiene la función asList()" data-en="Remember that newFood has the function asList()">
+                            Recuerden que newFood tiene la función asList()
+                        </span>
+                    </div>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Como características, intenten el recíproco de valores importantes (como la distancia a la comida) en lugar de solo los valores en sí." data-en="As features, try the reciprocal of important values (such as distance to food) rather than just the values themselves.">
+                            Como características, intenten el recíproco de valores importantes (como la distancia a la comida) en lugar de solo los valores en sí.
+                        </span>
+                    </div>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="La función de evaluación que están escribiendo está evaluando pares estado-acción; en partes posteriores del proyecto, estarán evaluando estados." data-en="The evaluation function you're writing is evaluating state-action pairs; in later parts of the project, you'll be evaluating states.">
+                            La función de evaluación que están escribiendo está evaluando pares estado-acción; en partes posteriores del proyecto, estarán evaluando estados.
+                        </span>
+                    </div>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Puede resultarles útil ver los contenidos internos de varios objetos para depuración. Pueden hacer esto imprimiendo las representaciones de cadena de los objetos. Por ejemplo, pueden imprimir newGhostStates con print(newGhostStates)." data-en="You may find it useful to view the internal contents of various objects for debugging. You can do this by printing the objects' string representations. For example, you can print newGhostStates with print(newGhostStates).">
+                            Puede resultarles útil ver los contenidos internos de varios objetos para depuración. Pueden hacer esto imprimiendo las representaciones de cadena de los objetos. Por ejemplo, pueden imprimir newGhostStates con print(newGhostStates).
+                        </span>
+                    </div>
+
+                    <p>
+                        <strong data-es="Opciones:" data-en="Options:">Opciones:</strong>
+                        <span data-es=" Los fantasmas predeterminados son aleatorios; también pueden jugar por diversión con fantasmas direccionales ligeramente más inteligentes usando -g DirectionalGhost. Si la aleatoriedad les impide determinar si su agente está mejorando, pueden usar -f para ejecutar con una semilla aleatoria fija (mismas elecciones aleatorias en cada juego). También pueden jugar múltiples juegos seguidos con -n. Desactiven los gráficos con -q para ejecutar muchos juegos rápidamente." data-en=" Default ghosts are random; you can also play for fun with slightly smarter directional ghosts using -g DirectionalGhost. If the randomness is preventing you from telling whether your agent is improving, you can use -f to run with a fixed random seed (same random choices every game). You can also play multiple games in a row with -n. Turn off graphics with -q to run lots of games quickly."> Los fantasmas predeterminados son aleatorios; también pueden jugar por diversión con fantasmas direccionales ligeramente más inteligentes usando -g DirectionalGhost. Si la aleatoriedad les impide determinar si su agente está mejorando, pueden usar -f para ejecutar con una semilla aleatoria fija (mismas elecciones aleatorias en cada juego). También pueden jugar múltiples juegos seguidos con -n. Desactiven los gráficos con -q para ejecutar muchos juegos rápidamente.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Ejecutaremos su agente en el diseño openClassic 10 veces. Recibirán 0 puntos si su agente agota el tiempo o nunca gana. Recibirán 1 punto si su agente gana al menos 5 veces, o 2 puntos si su agente gana los 10 juegos. Recibirán un punto adicional si el puntaje promedio de su agente es mayor a 500, o 2 puntos si es mayor a 1000. Pueden probar su agente bajo estas condiciones con:" data-en=" We will run your agent on the openClassic layout 10 times. You will receive 0 points if your agent times out, or never wins. You will receive 1 point if your agent wins at least 5 times, or 2 points if your agent wins all 10 games. You will receive an additional 1 point if your agent's average score is greater than 500, or 2 points if it is greater than 1000. You can try your agent out under these conditions with:"> Ejecutaremos su agente en el diseño openClassic 10 veces. Recibirán 0 puntos si su agente agota el tiempo o nunca gana. Recibirán 1 punto si su agente gana al menos 5 veces, o 2 puntos si su agente gana los 10 juegos. Recibirán un punto adicional si el puntaje promedio de su agente es mayor a 500, o 2 puntos si es mayor a 1000. Pueden probar su agente bajo estas condiciones con:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q1</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Para ejecutarlo sin gráficos, use:" data-en="To run it without graphics, use:">
+                        Para ejecutarlo sin gráficos, use:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q1 --no-graphics</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q2: Minimax -->
+                <section id="q2" class="section-anchor">
+                    <h2 data-es="Q2: Minimax" data-en="Q2: Minimax">Q2: Minimax</h2>
+                    
+                    <p>
+                        <span data-es="Ahora escribirán un agente de búsqueda adversarial en el stub de clase " data-en="Now you will write an adversarial search agent in the provided ">Ahora escribirán un agente de búsqueda adversarial en el stub de clase </span>
+                        <code>MinimaxAgent</code>
+                        <span data-es=" proporcionado en " data-en=" class stub in "> proporcionado en </span>
+                        <code>multiAgents.py</code><span data-es=". Su agente minimax debería funcionar con cualquier número de fantasmas, por lo que tendrán que escribir un algoritmo que sea ligeramente más general de lo que han visto previamente en clase. En particular, su árbol minimax tendrá múltiples capas min (una para cada fantasma) por cada capa max." data-en=". Your minimax agent should work with any number of ghosts, so you'll have to write an algorithm that is slightly more general than what you've previously seen in lecture. In particular, your minimax tree will have multiple min layers (one for each ghost) for every max layer.">. Su agente minimax debería funcionar con cualquier número de fantasmas, por lo que tendrán que escribir un algoritmo que sea ligeramente más general de lo que han visto previamente en clase. En particular, su árbol minimax tendrá múltiples capas min (una para cada fantasma) por cada capa max.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Su código también debería expandir el árbol de juego a una profundidad arbitraria. Puntúen las hojas de su árbol minimax con el " data-en="Your code should also expand the game tree to an arbitrary depth. Score the leaves of your minimax tree with the supplied ">Su código también debería expandir el árbol de juego a una profundidad arbitraria. Puntúen las hojas de su árbol minimax con el </span>
+                        <code>self.evaluationFunction</code><span data-es=" proporcionado, que por defecto es " data-en=" supplied, which defaults to ">, que por defecto es </span>
+                        <code>scoreEvaluationFunction</code><span data-es=". MinimaxAgent extiende MultiAgentSearchAgent, que da acceso a self.depth y self.evaluationFunction. Asegúrense de que su código minimax haga referencia a estas dos variables donde sea apropiado ya que estas variables se llenan en respuesta a opciones de línea de comandos. (No codifiquen llamadas a scoreEvaluationFunction ya que escribiremos una mejor función de evaluación más adelante en el proyecto.)" data-en=". MinimaxAgent extends MultiAgentSearchAgent, which gives access to self.depth and self.evaluationFunction. Make sure your minimax code makes reference to these two variables where appropriate as these variables are populated in response to command line options. (Do not harcode calls to scoreEvaluationFunction since we will be writing a better evaluation function later in the project.)">. MinimaxAgent extiende MultiAgentSearchAgent, que da acceso a self.depth y self.evaluationFunction. Asegúrense de que su código minimax haga referencia a estas dos variables donde sea apropiado ya que estas variables se llenan en respuesta a opciones de línea de comandos. (No codifiquen llamadas a scoreEvaluationFunction ya que escribiremos una mejor función de evaluación más adelante en el proyecto.)</span>
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Importante:" data-en="Important:">Importante:</strong>
+                        <span data-es="Un solo ply de búsqueda se considera un movimiento de Pacman y todas las respuestas de los fantasmas, por lo que la búsqueda de profundidad 2 involucrará a Pacman y cada fantasma moviéndose dos veces (ver diagrama a continuación)." data-en="A single search ply is considered to be one Pacman move and all the ghosts' responses, so depth 2 search will involve Pacman and each ghost moving two times (see diagram below).">
+                            Un solo ply de búsqueda se considera un movimiento de Pacman y todas las respuestas de los fantasmas, por lo que la búsqueda de profundidad 2 involucrará a Pacman y cada fantasma moviéndose dos veces (ver diagrama a continuación).
+                        </span>
+                    </div>
+
+                    <div class="image-placeholder">
+                        <img width="500px" src="minimax_depth.png" alt="">
+                    </div>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Verificaremos su código para determinar si explora el número correcto de estados de juego. Esta es la única forma confiable de detectar algunos errores muy sutiles en implementaciones de minimax. Como resultado, el autograder será muy exigente sobre cuántas veces llaman a GameState.generateSuccessor. Si lo llaman más o menos de lo necesario, el autograder se quejará. Para probar y depurar su código, ejecuten:" data-en=" We will be checking your code to determine whether it explores the correct number of game states. This is the only reliable way to detect some very subtle bugs in implementations of minimax. As a result, the autograder will be very picky about how many times you call GameState.generateSuccessor. If you call it any more or less than necessary, the autograder will complain. To test and debug your code, run:"> Verificaremos su código para determinar si explora el número correcto de estados de juego. Esta es la única forma confiable de detectar algunos errores muy sutiles en implementaciones de minimax. Como resultado, el autograder será muy exigente sobre cuántas veces llaman a GameState.generateSuccessor. Si lo llaman más o menos de lo necesario, el autograder se quejará. Para probar y depurar su código, ejecuten:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Esto mostrará lo que hace su algoritmo en varios árboles pequeños, así como en un juego de pacman. Para ejecutarlo sin gráficos, use:" data-en="This will show what your algorithm does on a number of small trees, as well as a pacman game. To run it without graphics, use:">
+                        Esto mostrará lo que hace su algoritmo en varios árboles pequeños, así como en un juego de pacman. Para ejecutarlo sin gráficos, use:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2 --no-graphics</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="hints-section">
+                        <h4 data-es="Pistas y Observaciones" data-en="Hints and Observations">Pistas y Observaciones</h4>
+                        <ul>
+                            <li data-es="Implementen el algoritmo recursivamente usando función(es) auxiliar(es)." data-en="Implement the algorithm recursively using helper function(s).">Implementen el algoritmo recursivamente usando función(es) auxiliar(es).</li>
+                            <li data-es="La implementación correcta de minimax llevará a que Pacman pierda el juego en algunas pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas." data-en="The correct implementation of minimax will lead to Pacman losing the game in some tests. This is not a problem: as it is correct behaviour, it will pass the tests.">La implementación correcta de minimax llevará a que Pacman pierda el juego en algunas pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas.</li>
+                            <li data-es="La función de evaluación para la prueba de Pacman en esta parte ya está escrita (self.evaluationFunction). No deben cambiar esta función, pero reconozcan que ahora estamos evaluando estados en lugar de acciones, como lo hacíamos para el agente reflejo. Los agentes que miran hacia adelante evalúan estados futuros mientras que los agentes reflejo evalúan acciones desde el estado actual." data-en="The evaluation function for the Pacman test in this part is already written (self.evaluationFunction). You shouldn't change this function, but recognize that now we're evaluating states rather than actions, as we were for the reflex agent. Look-ahead agents evaluate future states whereas reflex agents evaluate actions from the current state.">La función de evaluación para la prueba de Pacman en esta parte ya está escrita (self.evaluationFunction). No deben cambiar esta función, pero reconozcan que ahora estamos evaluando estados en lugar de acciones, como lo hacíamos para el agente reflejo. Los agentes que miran hacia adelante evalúan estados futuros mientras que los agentes reflejo evalúan acciones desde el estado actual.</li>
+                            <li>
+                                <span data-es="Los valores minimax del estado inicial en el diseño minimaxClassic son 9, 8, 7, -492 para profundidades 1, 2, 3 y 4 respectivamente. Noten que su agente minimax a menudo ganará (665/1000 juegos para nosotros) a pesar de la terrible predicción de minimax de profundidad 4." data-en="The minimax values of the initial state in the minimaxClassic layout are 9, 8, 7, -492 for depths 1, 2, 3 and 4 respectively. Note that your minimax agent will often win (665/1000 games for us) despite the dire prediction of depth 4 minimax.">Los valores minimax del estado inicial en el diseño minimaxClassic son 9, 8, 7, -492 para profundidades 1, 2, 3 y 4 respectivamente. Noten que su agente minimax a menudo ganará (665/1000 juegos para nosotros) a pesar de la terrible predicción de minimax de profundidad 4.</span>
+                                <div class="cmd-block">
+                                    <div class="cmd-header">Terminal</div>
+                                    <div class="cmd-content">
+                                        <pre><span class="cmd-prompt">python pacman.py -p MinimaxAgent -l minimaxClassic -a depth=4</span></pre>
+                                    </div>
+                                </div>
+                            </li>
+                            <li data-es="Pacman siempre es el agente 0, y los agentes se mueven en orden de índice de agente creciente." data-en="Pacman is always agent 0, and the agents move in order of increasing agent index.">Pacman siempre es el agente 0, y los agentes se mueven en orden de índice de agente creciente.</li>
+                            <li data-es="Todos los estados en minimax deben ser GameStates, ya sea pasados a getAction o generados a través de GameState.generateSuccessor. En este proyecto, no estarán abstrayendo a estados simplificados." data-en="All states in minimax should be GameStates, either passed in to getAction or generated via GameState.generateSuccessor. In this project, you will not be abstracting to simplified states.">Todos los estados en minimax deben ser GameStates, ya sea pasados a getAction o generados a través de GameState.generateSuccessor. En este proyecto, no estarán abstrayendo a estados simplificados.</li>
+                            <li data-es="En tableros más grandes como openClassic y mediumClassic (el predeterminado), encontrarán que Pacman es bueno para no morir, pero bastante malo para ganar. A menudo se agitará sin hacer progreso. Podría incluso agitarse justo al lado de un punto sin comerlo porque no sabe a dónde iría después de comer ese punto. No se preocupen si ven este comportamiento, la pregunta 5 limpiará todos estos problemas." data-en="On larger boards such as openClassic and mediumClassic (the default), you'll find Pacman to be good at not dying, but quite bad at winning. He'll often thrash around without making progress. He might even thrash around right next to a dot without eating it because he doesn't know where he'd go after eating that dot. Don't worry if you see this behavior, question 5 will clean up all of these issues.">En tableros más grandes como openClassic y mediumClassic (el predeterminado), encontrarán que Pacman es bueno para no morir, pero bastante malo para ganar. A menudo se agitará sin hacer progreso. Podría incluso agitarse justo al lado de un punto sin comerlo porque no sabe a dónde iría después de comer ese punto. No se preocupen si ven este comportamiento, la pregunta 5 limpiará todos estos problemas.</li>
+                            <li>
+                                <span data-es="Cuando Pacman cree que su muerte es inevitable, intentará terminar el juego lo más pronto posible debido a la penalización constante por vivir. A veces, esto es lo incorrecto con fantasmas aleatorios, pero los agentes minimax siempre asumen lo peor:" data-en="When Pacman believes that his death is unavoidable, he will try to end the game as soon as possible because of the constant penalty for living. Sometimes, this is the wrong thing to do with random ghosts, but minimax agents always assume the worst:">Cuando Pacman cree que su muerte es inevitable, intentará terminar el juego lo más pronto posible debido a la penalización constante por vivir. A veces, esto es lo incorrecto con fantasmas aleatorios, pero los agentes minimax siempre asumen lo peor:</span>
+                                <div class="cmd-block">
+                                    <div class="cmd-header">Terminal</div>
+                                    <div class="cmd-content">
+                                        <pre><span class="cmd-prompt">python pacman.py -p MinimaxAgent -l trappedClassic -a depth=3</span></pre>
+                                    </div>
+                                </div>
+                                <p data-es="Asegúrense de entender por qué Pacman se apresura hacia el fantasma más cercano en este caso." data-en="Make sure you understand why Pacman rushes the closest ghost in this case.">Asegúrense de entender por qué Pacman se apresura hacia el fantasma más cercano en este caso.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Q3: Alpha-Beta Pruning -->
+                <section id="q3" class="section-anchor">
+                    <h2 data-es="Q3: Poda Alpha-Beta" data-en="Q3: Alpha-Beta Pruning">Q3: Poda Alpha-Beta</h2>
+                    
+                    <p>
+                        <span data-es="Hagan un nuevo agente que use poda alpha-beta para explorar más eficientemente el árbol minimax, en " data-en="Make a new agent that uses alpha-beta pruning to more efficiently explore the minimax tree, in ">Hagan un nuevo agente que use poda alpha-beta para explorar más eficientemente el árbol minimax, en </span>
+                        <code>AlphaBetaAgent</code><span data-es=". De nuevo, su algoritmo será ligeramente más general que el pseudocódigo de la clase, por lo que parte del desafío es extender la lógica de poda alpha-beta apropiadamente a múltiples agentes minimizadores." data-en=". Again, your algorithm will be slightly more general than the pseudocode from lecture, so part of the challenge is to extend the alpha-beta pruning logic appropriately to multiple minimizer agents.">. De nuevo, su algoritmo será ligeramente más general que el pseudocódigo de la clase, por lo que parte del desafío es extender la lógica de poda alpha-beta apropiadamente a múltiples agentes minimizadores.</span>
+                    </p>
+
+                    <p data-es="Deberían ver una aceleración (quizás la profundidad 3 alpha-beta se ejecutará tan rápido como la profundidad 2 minimax). Idealmente, la profundidad 3 en smallClassic debería ejecutarse en solo unos segundos por movimiento o más rápido." data-en="You should see a speed-up (perhaps depth 3 alpha-beta will run as fast as depth 2 minimax). Ideally, depth 3 on smallClassic should run in just a few seconds per move or faster.">
+                        Deberían ver una aceleración (quizás la profundidad 3 alpha-beta se ejecutará tan rápido como la profundidad 2 minimax). Idealmente, la profundidad 3 en smallClassic debería ejecutarse en solo unos segundos por movimiento o más rápido.
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p AlphaBetaAgent -a depth=3 -l smallClassic</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Los valores minimax de AlphaBetaAgent deberían ser idénticos a los valores minimax de MinimaxAgent, aunque las acciones que selecciona pueden variar debido a diferentes comportamientos de desempate. De nuevo, los valores minimax del estado inicial en el diseño minimaxClassic son 9, 8, 7 y -492 para profundidades 1, 2, 3 y 4 respectivamente." data-en="The AlphaBetaAgent minimax values should be identical to the MinimaxAgent minimax values, although the actions it selects can vary because of different tie-breaking behavior. Again, the minimax values of the initial state in the minimaxClassic layout are 9, 8, 7 and -492 for depths 1, 2, 3 and 4 respectively.">
+                        Los valores minimax de AlphaBetaAgent deberían ser idénticos a los valores minimax de MinimaxAgent, aunque las acciones que selecciona pueden variar debido a diferentes comportamientos de desempate. De nuevo, los valores minimax del estado inicial en el diseño minimaxClassic son 9, 8, 7 y -492 para profundidades 1, 2, 3 y 4 respectivamente.
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Debido a que verificamos su código para determinar si explora el número correcto de estados, es importante que realicen la poda alpha-beta sin reordenar hijos. En otras palabras, los estados sucesores siempre deben procesarse en el orden devuelto por GameState.getLegalActions. De nuevo, no llamen a GameState.generateSuccessor más de lo necesario." data-en=" Because we check your code to determine whether it explores the correct number of states, it is important that you perform alpha-beta pruning without reordering children. In other words, successor states should always be processed in the order returned by GameState.getLegalActions. Again, do not call GameState.generateSuccessor more than necessary."> Debido a que verificamos su código para determinar si explora el número correcto de estados, es importante que realicen la poda alpha-beta sin reordenar hijos. En otras palabras, los estados sucesores siempre deben procesarse en el orden devuelto por GameState.getLegalActions. De nuevo, no llamen a GameState.generateSuccessor más de lo necesario.</span>
+                    </p>
+
+                    <p data-es="No deben podar en igualdad para coincidir con el conjunto de estados explorados por nuestro autograder. (De hecho, alternativamente, pero incompatible con nuestro autograder, sería permitir también la poda en igualdad e invocar alpha-beta una vez en cada hijo del nodo raíz, pero esto no coincidirá con el autograder.)" data-en="You must not prune on equality in order to match the set of states explored by our autograder. (Indeed, alternatively, but incompatible with our autograder, would be to also allow for pruning on equality and invoke alpha-beta once on each child of the root node, but this will not match the autograder.)">
+                        No deben podar en igualdad para coincidir con el conjunto de estados explorados por nuestro autograder. (De hecho, alternativamente, pero incompatible con nuestro autograder, sería permitir también la poda en igualdad e invocar alpha-beta una vez en cada hijo del nodo raíz, pero esto no coincidirá con el autograder.)
+                    </p>
+
+                    <p data-es="El pseudocódigo a continuación representa el algoritmo que deben implementar para esta pregunta." data-en="The pseudo-code below represents the algorithm you should implement for this question.">
+                        El pseudocódigo a continuación representa el algoritmo que deben implementar para esta pregunta.
+                    </p>
+
+                    <div class="image-placeholder">
+                        <img width="500px" src="alpha_beta_implementation.png" alt="">
+                    </div>
+
+                    <p data-es="Para probar y depurar su código, ejecuten:" data-en="To test and debug your code, run:">
+                        Para probar y depurar su código, ejecuten:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q3</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Esto mostrará lo que hace su algoritmo en varios árboles pequeños, así como en un juego de pacman. Para ejecutarlo sin gráficos, use:" data-en="This will show what your algorithm does on a number of small trees, as well as a pacman game. To run it without graphics, use:">
+                        Esto mostrará lo que hace su algoritmo en varios árboles pequeños, así como en un juego de pacman. Para ejecutarlo sin gráficos, use:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q3 --no-graphics</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="La implementación correcta de poda alpha-beta llevará a que Pacman pierda algunas de las pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas." data-en="The correct implementation of alpha-beta pruning will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.">
+                        La implementación correcta de poda alpha-beta llevará a que Pacman pierda algunas de las pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas.
+                    </p>
+                </section>
+
+                <!-- Q4: Expectimax -->
+                <section id="q4" class="section-anchor">
+                    <h2 data-es="Q4: Expectimax" data-en="Q4: Expectimax">Q4: Expectimax</h2>
+                    
+                    <p data-es="Minimax y alpha-beta son excelentes, pero ambos asumen que están jugando contra un adversario que toma decisiones óptimas. Como cualquiera que alguna vez haya ganado al tres en raya puede decirles, este no siempre es el caso. En esta pregunta implementarán el ExpectimaxAgent, que es útil para modelar el comportamiento probabilístico de agentes que pueden tomar decisiones subóptimas." data-en="Minimax and alpha-beta are great, but they both assume that you are playing against an adversary who makes optimal decisions. As anyone who has ever won tic-tac-toe can tell you, this is not always the case. In this question you will implement the ExpectimaxAgent, which is useful for modeling probabilistic behavior of agents who may make suboptimal choices.">
+                        Minimax y alpha-beta son excelentes, pero ambos asumen que están jugando contra un adversario que toma decisiones óptimas. Como cualquiera que alguna vez haya ganado al tres en raya puede decirles, este no siempre es el caso. En esta pregunta implementarán el ExpectimaxAgent, que es útil para modelar el comportamiento probabilístico de agentes que pueden tomar decisiones subóptimas.
+                    </p>
+
+                    <p data-es="Como con los problemas de búsqueda aún por cubrir en esta clase, la belleza de estos algoritmos es su aplicabilidad general. Para acelerar su propio desarrollo, hemos proporcionado algunos casos de prueba basados en árboles genéricos. Pueden depurar su implementación en los árboles de juego pequeños usando el comando:" data-en="As with the search and problems yet to be covered in this class, the beauty of these algorithms is their general applicability. To expedite your own development, we've supplied some test cases based on generic trees. You can debug your implementation on small the game trees using the command:">
+                        Como con los problemas de búsqueda aún por cubrir en esta clase, la belleza de estos algoritmos es su aplicabilidad general. Para acelerar su propio desarrollo, hemos proporcionado algunos casos de prueba basados en árboles genéricos. Pueden depurar su implementación en los árboles de juego pequeños usando el comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q4</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se recomienda depurar en estos casos de prueba pequeños y manejables y les ayudará a encontrar errores rápidamente." data-en="Debugging on these small and manageable test cases is recommended and will help you to find bugs quickly.">
+                        Se recomienda depurar en estos casos de prueba pequeños y manejables y les ayudará a encontrar errores rápidamente.
+                    </p>
+
+                    <p data-es="Una vez que su algoritmo funcione en árboles pequeños, pueden observar su éxito en Pacman. Los fantasmas aleatorios por supuesto no son agentes minimax óptimos, por lo que modelarlos con búsqueda minimax puede no ser apropiado. ExpectimaxAgent ya no tomará el mín sobre todas las acciones de fantasmas, sino la expectativa según el modelo de su agente de cómo actúan los fantasmas. Para simplificar su código, asuman que solo estarán ejecutando contra un adversario que elige entre sus getLegalActions uniformemente al azar." data-en="Once your algorithm is working on small trees, you can observe its success in Pacman. Random ghosts are of course not optimal minimax agents, and so modeling them with minimax search may not be appropriate. ExpectimaxAgent will no longer take the min over all ghost actions, but the expectation according to your agent's model of how the ghosts act. To simplify your code, assume you will only be running against an adversary which chooses amongst their getLegalActions uniformly at random.">
+                        Una vez que su algoritmo funcione en árboles pequeños, pueden observar su éxito en Pacman. Los fantasmas aleatorios por supuesto no son agentes minimax óptimos, por lo que modelarlos con búsqueda minimax puede no ser apropiado. ExpectimaxAgent ya no tomará el mín sobre todas las acciones de fantasmas, sino la expectativa según el modelo de su agente de cómo actúan los fantasmas. Para simplificar su código, asuman que solo estarán ejecutando contra un adversario que elige entre sus getLegalActions uniformemente al azar.
+                    </p>
+
+                    <p data-es="Para ver cómo se comporta el ExpectimaxAgent en Pacman, ejecuten:" data-en="To see how the ExpectimaxAgent behaves in Pacman, run:">
+                        Para ver cómo se comporta el ExpectimaxAgent en Pacman, ejecuten:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ExpectimaxAgent -l minimaxClassic -a depth=3</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Ahora deberían observar un enfoque más temerario en cuartos cercanos con fantasmas. En particular, si Pacman percibe que podría estar atrapado pero podría escapar para agarrar algunas piezas más de comida, al menos lo intentará. Investiguen los resultados de estos dos escenarios:" data-en="You should now observe a more cavalier approach in close quarters with ghosts. In particular, if Pacman perceives that he could be trapped but might escape to grab a few more pieces of food, he'll at least try. Investigate the results of these two scenarios:">
+                        Ahora deberían observar un enfoque más temerario en cuartos cercanos con fantasmas. En particular, si Pacman percibe que podría estar atrapado pero podría escapar para agarrar algunas piezas más de comida, al menos lo intentará. Investiguen los resultados de estos dos escenarios:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p AlphaBetaAgent -l trappedClassic -a depth=3 -q -n 10</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ExpectimaxAgent -l trappedClassic -a depth=3 -q -n 10</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Deberían encontrar que su ExpectimaxAgent gana aproximadamente la mitad del tiempo, mientras que su AlphaBetaAgent siempre pierde. Asegúrense de entender por qué el comportamiento aquí difiere del caso minimax." data-en="You should find that your ExpectimaxAgent wins about half the time, while your AlphaBetaAgent always loses. Make sure you understand why the behavior here differs from the minimax case.">
+                        Deberían encontrar que su ExpectimaxAgent gana aproximadamente la mitad del tiempo, mientras que su AlphaBetaAgent siempre pierde. Asegúrense de entender por qué el comportamiento aquí difiere del caso minimax.
+                    </p>
+
+                    <p data-es="La implementación correcta de expectimax llevará a que Pacman pierda algunas de las pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas." data-en="The correct implementation of expectimax will lead to Pacman losing some of the tests. This is not a problem: as it is correct behaviour, it will pass the tests.">
+                        La implementación correcta de expectimax llevará a que Pacman pierda algunas de las pruebas. Esto no es un problema: como es el comportamiento correcto, pasará las pruebas.
+                    </p>
+                </section>
+
+                <!-- Q5: Evaluation Function -->
+                <section id="q5" class="section-anchor">
+                    <h2 data-es="Q5: Función de Evaluación" data-en="Q5: Evaluation Function">Q5: Función de Evaluación</h2>
+                    
+                    <p>
+                        <span data-es="Escriban una mejor función de evaluación para Pacman en la función " data-en="Write a better evaluation function for Pacman in the provided function ">Escriban una mejor función de evaluación para Pacman en la función </span>
+                        <code>betterEvaluationFunction</code>
+                        <span data-es=" proporcionada. La función de evaluación debería evaluar estados, en lugar de acciones como lo hizo su función de evaluación del agente reflejo. Con búsqueda de profundidad 2, su función de evaluación debería limpiar el diseño smallClassic con un fantasma aleatorio más de la mitad del tiempo y aún ejecutarse a una velocidad razonable (para obtener crédito completo, Pacman debería promediar alrededor de 1000 puntos cuando está ganando)." data-en=" provided. The evaluation function should evaluate states, rather than actions like your reflex agent evaluation function did. With depth 2 search, your evaluation function should clear the smallClassic layout with one random ghost more than half the time and still run at a reasonable rate (to get full credit, Pacman should be averaging around 1000 points when he's winning)."> proporcionada. La función de evaluación debería evaluar estados, en lugar de acciones como lo hizo su función de evaluación del agente reflejo. Con búsqueda de profundidad 2, su función de evaluación debería limpiar el diseño smallClassic con un fantasma aleatorio más de la mitad del tiempo y aún ejecutarse a una velocidad razonable (para obtener crédito completo, Pacman debería promediar alrededor de 1000 puntos cuando está ganando).</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" el autograder ejecutará su agente en el diseño smallClassic 10 veces. Asignaremos puntos a su función de evaluación de la siguiente manera:" data-en=" the autograder will run your agent on the smallClassic layout 10 times. We will assign points to your evaluation function in the following way:"> el autograder ejecutará su agente en el diseño smallClassic 10 veces. Asignaremos puntos a su función de evaluación de la siguiente manera:</span>
+                    </p>
+
+                    <ul>
+                        <li data-es="Si gana al menos una vez sin agotar el tiempo del autograder, recibe 1 punto. Cualquier agente que no satisfaga estos criterios recibirá 0 puntos." data-en="If you win at least once without timing out the autograder, you receive 1 points. Any agent not satisfying these criteria will receive 0 points.">Si gana al menos una vez sin agotar el tiempo del autograder, recibe 1 punto. Cualquier agente que no satisfaga estos criterios recibirá 0 puntos.</li>
+                        <li data-es="+1 por ganar al menos 5 veces, +2 por ganar las 10 veces" data-en="+1 for winning at least 5 times, +2 for winning all 10 times">+1 por ganar al menos 5 veces, +2 por ganar las 10 veces</li>
+                        <li data-es="+1 por un puntaje promedio de al menos 500, +2 por un puntaje promedio de al menos 1000 (incluyendo puntajes en juegos perdidos)" data-en="+1 for an average score of at least 500, +2 for an average score of at least 1000 (including scores on lost games)">+1 por un puntaje promedio de al menos 500, +2 por un puntaje promedio de al menos 1000 (incluyendo puntajes en juegos perdidos)</li>
+                        <li data-es="+1 si sus juegos toman en promedio menos de 30 segundos en la máquina del autograder, cuando se ejecutan con --no-graphics." data-en="+1 if your games take on average less than 30 seconds on the autograder machine, when run with --no-graphics.">+1 si sus juegos toman en promedio menos de 30 segundos en la máquina del autograder, cuando se ejecutan con --no-graphics.</li>
+                        <li data-es="Los puntos adicionales por puntaje promedio y tiempo de cómputo solo se otorgarán si gana al menos 5 veces." data-en="The additional points for average score and computation time will only be awarded if you win at least 5 times.">Los puntos adicionales por puntaje promedio y tiempo de cómputo solo se otorgarán si gana al menos 5 veces.</li>
+                        <li data-es="Por favor, no copien ningún archivo de Lab1 y Lab2, ya que no pasará el autograder en Gradescope." data-en="Please do not copy any files from Lab1 and Lab2, as it will not pass the autograder on Gradescope.">Por favor, no copien ningún archivo de Lab1 y Lab2, ya que no pasará el autograder en Gradescope.</li>
+                    </ul>
+
+                    <p data-es="Pueden probar su agente bajo estas condiciones con:" data-en="You can try your agent out under these conditions with:">
+                        Pueden probar su agente bajo estas condiciones con:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q5</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Para ejecutarlo sin gráficos, use:" data-en="To run it without graphics, use:">
+                        Para ejecutarlo sin gráficos, use:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q5 --no-graphics</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab3-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab3-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">
+                        El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab3-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="FECHA LÍMITE DE ENTREGA:" data-en="ASSIGNMENT DUE DATE:">FECHA LÍMITE DE ENTREGA:</strong>
+                        <span data-es="29/03/2026, 11:55 PM" data-en="29/03/2026, 11:55 PM">29/03/2026, 11:55 PM</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
