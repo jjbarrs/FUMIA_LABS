@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab4 - Aprendizaje por Refuerzo | FUMIA Labs</title>
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Equation/Image container */
+        .equation-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+        }
+
+        .dark-mode .equation-container {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .equation-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* Hints section styling */
+        .hints-section {
+            background: #ddf4ff;
+            border-left: 4px solid #0969da;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .hints-section {
+            background: #1c2d41;
+            border-left-color: #58a6ff;
+        }
+
+        .hints-section h4 {
+            margin-top: 0;
+            color: #0969da;
+        }
+
+        .dark-mode .hints-section h4 {
+            color: #58a6ff;
+        }
+
+        .hints-section ul {
+            margin-bottom: 0;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="../lab1/index.html" class="nav-link" data-es="Lab1 - Búsqueda" data-en="Lab1 - Search">Lab1 - Búsqueda</a></li>
+                            <li><a href="../lab2/index.html" class="nav-link" data-es="Lab2 - Búsqueda Avanzada" data-en="Lab2 - Advanced Search">Lab2 - Búsqueda Avanzada</a></li>
+                            <li><a href="../lab3/index.html" class="nav-link" data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab4 - Aprendizaje por Refuerzo" data-en="Lab4 - Reinforcement Learning">Lab4 - Aprendizaje por Refuerzo</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab4 - Aprendizaje por Refuerzo" data-en="Lab4 - Reinforcement Learning">Lab4 - Aprendizaje por Refuerzo</span>
+            </div>
+            
+            <h1 data-es="Lab4 - Aprendizaje por Refuerzo" data-en="Lab4 - Reinforcement Learning">Lab4 - Aprendizaje por Refuerzo</h1>
+            <br>
+            
+            <p class="subtitle" data-es="Fecha de entrega: Sabado, 23 de mayo, 11:55 PM PT" data-en="Due: Saturday, May 23, 11:55 PM PT">Fecha de entrega: Sabado, 23 de mayo, 11:55 PM PT</p>
+            
+            <div class="lab-content">
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#introduction" data-es="Introducción" data-en="Introduction">Introducción</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#mdps" data-es="MDPs" data-en="MDPs">MDPs</a></li>
+                        <li><a href="#q1" data-es="Q1: Iteración de Valor" data-en="Q1: Value Iteration">Q1: Iteración de Valor</a></li>
+                        <li><a href="#q2" data-es="Q2: Análisis de Cruce de Puente" data-en="Q2: Bridge Crossing Analysis">Q2: Análisis de Cruce de Puente</a></li>
+                        <li><a href="#q3" data-es="Q3: Políticas" data-en="Q3: Policies">Q3: Políticas</a></li>
+                        <li><a href="#q4" data-es="Q4: Iteración de Valor con Barrido Priorizado [Crédito Extra]" data-en="Q4: Prioritized Sweeping Value Iteration [Extra Credit]">Q4: Iteración de Valor con Barrido Priorizado [Crédito Extra]</a></li>
+                        <li><a href="#q5" data-es="Q5: Q-Learning" data-en="Q5: Q-Learning">Q5: Q-Learning</a></li>
+                        <li><a href="#q6" data-es="Q6: Epsilon Greedy" data-en="Q6: Epsilon Greedy">Q6: Epsilon Greedy</a></li>
+                        <li><a href="#q7" data-es="Q7: Cruce de Puente Revisitado" data-en="Q7: Bridge Crossing Revisited">Q7: Cruce de Puente Revisitado</a></li>
+                        <li><a href="#q8" data-es="Q8: Q-Learning y Pacman" data-en="Q8: Q-Learning and Pacman">Q8: Q-Learning y Pacman</a></li>
+                        <li><a href="#q9" data-es="Q9: Q-Learning Aproximado" data-en="Q9: Approximate Q-Learning">Q9: Q-Learning Aproximado</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    
+                    <p data-es="En este laboratorio, deben descargar los archivos base desde este link:" data-en="In this lab, you must download the base files from this link:">
+                        En este laboratorio, deben descargar los archivos base desde este 
+                    </p>
+                    <a href="https://inst.eecs.berkeley.edu/~cs188/fa25/assets/projects/reinforcement.zip" target="_blank" data-es="link" data-en="link">link</a>.
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section-anchor">
+                    <h2 data-es="Introducción" data-en="Introduction">Introducción</h2>
+                    
+                    
+                        <p data-es="En este proyecto, implementarán iteración de valor y Q-learning. Probarán sus agentes primero en Gridworld (de clase), luego los aplicarán a un controlador de robot simulado (Crawler) y Pacman." data-en="In this project, you will implement value iteration and Q-learning. You will test your agents first on Gridworld (from class), then apply them to a simulated robot controller (Crawler) and Pacman.">
+                            En este proyecto, implementarán iteración de valor y Q-learning. Probarán sus agentes primero en Gridworld (de clase), luego los aplicarán a un controlador de robot simulado (Crawler) y Pacman.
+                        </p>
+                    
+
+                    <p data-es="Como en proyectos anteriores, este proyecto incluye un autograder para que califiquen sus soluciones en su máquina. Esto se puede ejecutar en todas las preguntas con el comando:" data-en="As in previous projects, this project includes an autograder for you to grade your solutions on your machine. This can be run on all questions with the command:">
+                        Como en proyectos anteriores, este proyecto incluye un autograder para que califiquen sus soluciones en su máquina. Esto se puede ejecutar en todas las preguntas con el comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una pregunta particular, como q2, con:" data-en="It can be run for one particular question, such as q2, by:">
+                        Se puede ejecutar para una pregunta particular, como q2, con:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una prueba particular con comandos de la forma:" data-en="It can be run for one particular test by commands of the form:">
+                        Se puede ejecutar para una prueba particular con comandos de la forma:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q2/1-bridge-grid</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberán leer y entender para completar la tarea, y algunos de los cuales pueden ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que van a editar" data-en="Files you'll edit">Archivos que van a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">valueIterationAgents.py</span></td>
+                                        <td data-es="Un agente de iteración de valor para resolver MDPs conocidos." data-en="A value iteration agent for solving known MDPs.">Un agente de iteración de valor para resolver MDPs conocidos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">qlearningAgents.py</span></td>
+                                        <td data-es="Agentes de Q-learning para Gridworld, Crawler y Pacman." data-en="Q-learning agents for Gridworld, Crawler and Pacman.">Agentes de Q-learning para Gridworld, Crawler y Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">analysis.py</span></td>
+                                        <td data-es="Un archivo para poner sus respuestas a las preguntas dadas en el proyecto." data-en="A file to put your answers to questions given in the project.">Un archivo para poner sus respuestas a las preguntas dadas en el proyecto.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás quieran revisar" data-en="Files you might want to look at">Archivos que quizás quieran revisar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">mdp.py</span></td>
+                                        <td data-es="Define métodos en MDPs generales." data-en="Defines methods on general MDPs.">Define métodos en MDPs generales.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">learningAgents.py</span></td>
+                                        <td data-es="Define las clases base ValueEstimationAgent y QLearningAgent, que sus agentes extenderán." data-en="Defines the base classes ValueEstimationAgent and QLearningAgent, which your agents will extend.">Define las clases base ValueEstimationAgent y QLearningAgent, que sus agentes extenderán.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Utilidades, incluyendo util.Counter, que es particularmente útil para Q-learners." data-en="Utilities, including util.Counter, which is particularly useful for Q-learners.">Utilidades, incluyendo util.Counter, que es particularmente útil para Q-learners.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">gridworld.py</span></td>
+                                        <td data-es="La implementación de Gridworld." data-en="The Gridworld implementation.">La implementación de Gridworld.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">featureExtractors.py</span></td>
+                                        <td data-es="Clases para extraer características en pares (estado, acción). Usado para el agente de Q-learning aproximado (en qlearningAgents.py)." data-en="Classes for extracting features on (state, action) pairs. Used for the approximate Q-learning agent (in qlearningAgents.py).">Clases para extraer características en pares (estado, acción). Usado para el agente de Q-learning aproximado (en qlearningAgents.py).</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos de soporte que pueden ignorar" data-en="Supporting files you can ignore">Archivos de soporte que pueden ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Support files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">environment.py</span></td>
+                                        <td data-es="Clase abstracta para entornos generales de aprendizaje por refuerzo. Usado por gridworld.py." data-en="Abstract class for general reinforcement learning environments. Used by gridworld.py.">Clase abstracta para entornos generales de aprendizaje por refuerzo. Usado por gridworld.py.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsGridworldDisplay.py</span></td>
+                                        <td data-es="Visualización gráfica de Gridworld." data-en="Gridworld graphical display.">Visualización gráfica de Gridworld.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Utilidades de gráficos." data-en="Graphics utilities.">Utilidades de gráficos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">textGridworldDisplay.py</span></td>
+                                        <td data-es="Plugin para la interfaz de texto de Gridworld." data-en="Plug-in for the Gridworld text interface.">Plugin para la interfaz de texto de Gridworld.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">crawler.py</span></td>
+                                        <td data-es="El código del crawler y el harness de prueba. Lo ejecutarán pero no lo editarán." data-en="The crawler code and test harness. You will run this but not edit it.">El código del crawler y el harness de prueba. Lo ejecutarán pero no lo editarán.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsCrawlerDisplay.py</span></td>
+                                        <td data-es="GUI para el robot crawler." data-en="GUI for the crawler robot.">GUI para el robot crawler.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">autograder.py</span></td>
+                                        <td data-es="Autograder del proyecto" data-en="Project autograder">Autograder del proyecto</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testParser.py</span></td>
+                                        <td data-es="Analiza archivos de prueba y solución del autograder" data-en="Parses autograder test and solution files">Analiza archivos de prueba y solución del autograder</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">testClasses.py</span></td>
+                                        <td data-es="Clases de prueba generales de autograding" data-en="General autograding test classes">Clases de prueba generales de autograding</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">test_cases/</span></td>
+                                        <td data-es="Directorio que contiene los casos de prueba para cada pregunta" data-en="Directory containing the test cases for each question">Directorio que contiene los casos de prueba para cada pregunta</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">reinforcementTestClasses.py</span></td>
+                                        <td data-es="Clases de prueba de autograding específicas del Proyecto 3" data-en="Project 3 specific autograding test classes">Clases de prueba de autograding específicas del Proyecto 3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MDPs -->
+                <section id="mdps" class="section-anchor">
+                    <h2 data-es="MDPs" data-en="MDPs">MDPs</h2>
+                    
+                    <p data-es="Para comenzar, ejecuten Gridworld en modo de control manual, que usa las teclas de flecha:" data-en="To get started, run Gridworld in manual control mode, which uses the arrow keys:">
+                        Para comenzar, ejecuten Gridworld en modo de control manual, que usa las teclas de flecha:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python gridworld.py -m</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Verán el diseño de dos salidas de clase. El punto azul es el agente. Noten que cuando presionan arriba, el agente solo realmente se mueve hacia el norte el 80% del tiempo. ¡Así es la vida de un agente de Gridworld!" data-en="You will see the two-exit layout from class. The blue dot is the agent. Note that when you press up, the agent only actually moves north 80% of the time. Such is the life of a Gridworld agent!">
+                        Verán el diseño de dos salidas de clase. El punto azul es el agente. Noten que cuando presionan arriba, el agente solo realmente se mueve hacia el norte el 80% del tiempo. ¡Así es la vida de un agente de Gridworld!
+                    </p>
+
+                    <p data-es="Pueden controlar muchos aspectos de la simulación. Una lista completa de opciones está disponible ejecutando:" data-en="You can control many aspects of the simulation. A full list of options is available by running:">
+                        Pueden controlar muchos aspectos de la simulación. Una lista completa de opciones está disponible ejecutando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python gridworld.py -h</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="El agente predeterminado se mueve aleatoriamente:" data-en="The default agent moves randomly:">
+                        El agente predeterminado se mueve aleatoriamente:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python gridworld.py -g MazeGrid</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Deberían ver al agente aleatorio rebotar por la cuadrícula hasta que llegue a una salida. No es la mejor hora para un agente de IA." data-en="You should see the random agent bounce around the grid until it happens upon an exit. Not the finest hour for an AI agent.">
+                        Deberían ver al agente aleatorio rebotar por la cuadrícula hasta que llegue a una salida. No es la mejor hora para un agente de IA.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="El MDP de Gridworld es tal que primero debe entrar en un estado pre-terminal (las cajas dobles mostradas en la GUI) y luego tomar la acción especial 'exit' antes de que el episodio realmente termine (en el verdadero estado terminal llamado TERMINAL_STATE, que no se muestra en la GUI). Si ejecuta un episodio manualmente, su retorno total puede ser menor de lo esperado, debido a la tasa de descuento (-d para cambiar; 0.9 por defecto)." data-en="The Gridworld MDP is such that you first must enter a pre-terminal state (the double boxes shown in the GUI) and then take the special 'exit' action before the episode actually ends (in the true terminal state called TERMINAL_STATE, which is not shown in the GUI). If you run an episode manually, your total return may be less than you expected, due to the discount rate (-d to change; 0.9 by default).">
+                            El MDP de Gridworld es tal que primero debe entrar en un estado pre-terminal (las cajas dobles mostradas en la GUI) y luego tomar la acción especial 'exit' antes de que el episodio realmente termine (en el verdadero estado terminal llamado TERMINAL_STATE, que no se muestra en la GUI). Si ejecuta un episodio manualmente, su retorno total puede ser menor de lo esperado, debido a la tasa de descuento (-d para cambiar; 0.9 por defecto).
+                        </span>
+                    </div>
+
+                    <p>
+                        <span data-es="Miren la salida de consola que acompaña la salida gráfica (o usen " data-en="Look at the console output that accompanies the graphical output (or use ">Miren la salida de consola que acompaña la salida gráfica (o usen </span>
+                        <code>-t</code>
+                        <span data-es=" para todo texto). Se les informará sobre cada transición que el agente experimenta (para desactivar esto, usen " data-en=" for all text). You will be told about each transition the agent experiences (to turn this off, use "> para todo texto). Se les informará sobre cada transición que el agente experimenta (para desactivar esto, usen </span>
+                        <code>-q</code>).
+                    </p>
+
+                    <p>
+                        <span data-es="Como en Pacman, las posiciones están representadas por coordenadas cartesianas (x, y) y cualquier arreglo se indexa por [x][y], con 'norte' siendo la dirección de aumento de y, etc. Por defecto, la mayoría de las transiciones recibirán una recompensa de cero, aunque pueden cambiar esto con la opción de recompensa por vivir (" data-en="As in Pacman, positions are represented by (x, y) Cartesian coordinates and any arrays are indexed by [x][y], with 'north' being the direction of increasing y, etc. By default, most transitions will receive a reward of zero, though you can change this with the living reward option (">Como en Pacman, las posiciones están representadas por coordenadas cartesianas (x, y) y cualquier arreglo se indexa por [x][y], con 'norte' siendo la dirección de aumento de y, etc. Por defecto, la mayoría de las transiciones recibirán una recompensa de cero, aunque pueden cambiar esto con la opción de recompensa por vivir (</span>
+                        <code>-r</code>).
+                    </p>
+                </section>
+
+                <!-- Q1: Value Iteration -->
+                <section id="q1" class="section-anchor">
+                    <h2 data-es="Q1: Iteración de Valor" data-en="Q1: Value Iteration">Q1: Iteración de Valor</h2>
+                    
+                    <p data-es="Recuerden la ecuación de actualización de estado de iteración de valor:" data-en="Recall the value iteration state update equation:">
+                        Recuerden la ecuación de actualización de estado de iteración de valor:
+                    </p>
+
+                    <div class="equation-container">
+                        <img width="500px" src="equation1.png" alt="Value iteration equation">
+                    </div>
+
+                    <p>
+                        <span data-es="Escriban un agente de iteración de valor en " data-en="Write a value iteration agent in ">Escriban un agente de iteración de valor en </span>
+                        <code>ValueIterationAgent</code><span data-es=", que ha sido parcialmente especificado para ustedes en " data-en=", which has been partially specified for you in ">, que ha sido parcialmente especificado para ustedes en </span>
+                        <code>valueIterationAgents.py</code><span data-es=". Su agente de iteración de valor es un planificador fuera de línea, no un agente de aprendizaje por refuerzo, y por lo tanto la opción de entrenamiento relevante es el número de iteraciones de iteración de valor que debe ejecutar (opción -i) en su fase de planificación inicial. ValueIterationAgent toma un MDP en construcción y ejecuta iteración de valor para el número especificado de iteraciones antes de que el constructor retorne." data-en=". Your value iteration agent is an offline planner, not a reinforcement learning agent, and so the relevant training option is the number of iterations of value iteration it should run (option -i) in its initial planning phase. ValueIterationAgent takes an MDP on construction and runs value iteration for the specified number of iterations before the constructor returns.">. Su agente de iteración de valor es un planificador fuera de línea, no un agente de aprendizaje por refuerzo, y por lo tanto la opción de entrenamiento relevante es el número de iteraciones de iteración de valor que debe ejecutar (opción -i) en su fase de planificación inicial. ValueIterationAgent toma un MDP en construcción y ejecuta iteración de valor para el número especificado de iteraciones antes de que el constructor retorne.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="La iteración de valor calcula estimaciones de k pasos de los valores óptimos, Vk. Además de runValueIteration, implementen los siguientes métodos para ValueIterationAgent usando Vk:" data-en="Value iteration computes k-step estimates of the optimal values, Vk. In addition to runValueIteration, implement the following methods for ValueIterationAgent using Vk:">La iteración de valor calcula estimaciones de k pasos de los valores óptimos, V<sub>k</sub>. Además de runValueIteration, implementen los siguientes métodos para ValueIterationAgent usando V<sub>k</sub>:</span>
+                    </p>
+
+                    <ul>
+                        <li>
+                            <code>computeActionFromValues(state)</code>
+                            <span data-es=" calcula la mejor acción según la función de valor dada por self.values." data-en=" computes the best action according to the value function given by self.values."> calcula la mejor acción según la función de valor dada por self.values.</span>
+                        </li>
+                        <li>
+                            <code>computeQValueFromValues(state, action)</code>
+                            <span data-es=" devuelve el valor Q del par (estado, acción) dado por la función de valor dada por self.values." data-en=" returns the Q-value of the (state, action) pair given by the value function given by self.values."> devuelve el valor Q del par (estado, acción) dado por la función de valor dada por self.values.</span>
+                        </li>
+                    </ul>
+
+                    <p data-es="Estas cantidades se muestran todas en la GUI: los valores son números en cuadrados, los valores Q son números en cuartos de cuadrado, y las políticas son flechas que salen de cada cuadrado." data-en="These quantities are all displayed in the GUI: values are numbers in squares, Q-values are numbers in square quarters, and policies are arrows out from each square.">
+                        Estas cantidades se muestran todas en la GUI: los valores son números en cuadrados, los valores Q son números en cuartos de cuadrado, y las políticas son flechas que salen de cada cuadrado.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Importante:" data-en="Important:">Importante:</strong>
+                        <span data-es="Use la versión "batch" de iteración de valor donde cada vector Vk se calcula a partir de un vector fijo Vk−1 (como en clase), no la versión "online" donde un solo vector de peso se actualiza en el lugar. Esto significa que cuando el valor de un estado se actualiza en la iteración k basado en los valores de sus estados sucesores, los valores de estado sucesor usados en el cálculo de actualización de valor deben ser aquellos de la iteración k−1 (incluso si algunos de los estados sucesores ya se habían actualizado en la iteración k). La diferencia se discute en " data-en="Use the "batch" version of value iteration where each vector Vk is computed from a fixed vector Vk−1 (like in lecture), not the "online" version where one single weight vector is updated in place. This means that when a state's value is updated in iteration k based on the values of its successor states, the successor state values used in the value update computation should be those from iteration k−1 (even if some of the successor states had already been updated in iteration k). The difference is discussed in ">Use la versión "batch" de iteración de valor donde cada vector V<sub>k</sub> se calcula a partir de un vector fijo V<sub>k−1</sub> (como en clase), no la versión "online" donde un solo vector de peso se actualiza en el lugar. Esto significa que cuando el valor de un estado se actualiza en la iteración k basado en los valores de sus estados sucesores, los valores de estado sucesor usados en el cálculo de actualización de valor deben ser aquellos de la iteración k−1 (incluso si algunos de los estados sucesores ya se habían actualizado en la iteración k). La diferencia se discute en </span>
+                        <a href="https://web.archive.org/web/20230417150626/https://web.stanford.edu/class/psych209/Readings/SuttonBartoIPRLBook2ndEd.pdf" target="_blank">Sutton & Barto</a>
+                        <span data-es=" en el Capítulo 4.1 en la página 91." data-en=" in Chapter 4.1 on page 91."> en el Capítulo 4.1 en la página 91.</span>
+                    </div>
+
+                    <p>
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es=" Un agente de política extrae una política dada una función de valor, calcula valores Q dados una función de valor, y extrae una política dada valores Q. Sin embargo, estos no son los únicos métodos que deben implementar. Revisen " data-en=" A policy extraction agent extracts a policy given a value function, computes Q-values given a value function, and extracts a policy given Q-values. However, these are not the only methods you should implement. Review "> Un agente de política extrae una política dada una función de valor, calcula valores Q dados una función de valor, y extrae una política dada valores Q. Sin embargo, estos no son los únicos métodos que deben implementar. Revisen </span>
+                        <code>ValueIterationAgent</code>
+                        <span data-es=" en " data-en=" in "> en </span>
+                        <code>valueIterationAgents.py</code>
+                        <span data-es=" para otros métodos que deben sobrescribir. Específicamente, deberán implementar el constructor, " data-en=" for other methods you must override. Specifically, you'll need to implement the constructor, "> para otros métodos que deben sobrescribir. Específicamente, deberán implementar el constructor, </span>
+                        <code>runValueIteration</code>
+                        <span data-es=", que ejecuta el algoritmo de iteración de valor." data-en=", which runs the value iteration algorithm.">, que ejecuta el algoritmo de iteración de valor.</span>
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="En estándar de iteración de valor, V1 de un estado terminal debe ser cero. Sin embargo, esta crea una dificultad para convergencia cuando el número de iteraciones es finito. Para arreglar esto, solo usen 0 como el valor de un estado terminal en iteración 0 (es decir, cuando k = 0). Después de la primera iteración de iteración de valor, siempre usen el valor calculado como V(s)." data-en="On standard value iteration, V1 of a terminal state should be zero. However, this creates a difficulty for convergence when the number of iterations is finite. To fix this, only use 0 as the value of a terminal state on iteration 0 (i.e., when k = 0). After the first iteration of value iteration, always use the calculated value as V(s).">
+                            En estándar de iteración de valor, V<sub>1</sub> de un estado terminal debe ser cero. Sin embargo, esta crea una dificultad para convergencia cuando el número de iteraciones es finito. Para arreglar esto, solo usen 0 como el valor de un estado terminal en iteración 0 (es decir, cuando k = 0). Después de la primera iteración de iteración de valor, siempre usen el valor calculado como V(s).
+                        </span>
+                    </div>
+
+                    <p data-es="El siguiente comando carga su agente ValueIterationAgent, que calculará una política y la ejecutará 10 veces. Presiona una tecla para ciclar a través de los valores y valores Q de todos los estados." data-en="The following command loads your ValueIterationAgent, which will compute a policy and execute it 10 times. Press a key to cycle through values and Q-values of all states.">
+                        El siguiente comando carga su agente ValueIterationAgent, que calculará una política y la ejecutará 10 veces. Presiona una tecla para ciclar a través de los valores y valores Q de todos los estados.
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python gridworld.py -a value -i 100 -k 10</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Pista: En el agente estándar de iteración de valor, los valores Q son típicamente no almacenados. En su lugar, son calculados sobre la marcha. Esto ahorra memoria si los valores Q no son necesarios, pero requiere que mantengan una interfaz consistente para que ValueIterationAgent herede métodos de ValueEstimationAgent. Sin embargo, el autograder requiere que almacenen los valores computados: deben retornar el valor de un estado en getValue(state), el valor Q de un par (estado, acción) en getQValue(state, action), y la mejor acción en un estado dado en getPolicy(state). Estos métodos serán llamados por el autograder cuando les den una GridWorld. ValueIterationAgent usa estos métodos también, entonces implementen estos tres métodos usando las funciones computeXXXFromValues que estén aquí a mitad de camino para completar esta pregunta." data-en="Hint: On the standard value iteration agent, Q-values are typically not stored. Instead, they are computed on the fly. This saves memory if Q-values are not needed, but requires that you maintain a consistent interface so that ValueIterationAgent inherits methods from ValueEstimationAgent. However, the autograder requires that you store the computed values: you should return the value of a state in getValue(state), the Q-value of a (state, action) pair in getQValue(state, action), and the best action in a given state in getPolicy(state). These methods will be called by the autograder when you are given a GridWorld. ValueIterationAgent uses these methods too, so implement these three methods using the computeXXXFromValues functions you're halfway through completing this question.">
+                        <strong>Pista:</strong> En el agente estándar de iteración de valor, los valores Q son típicamente no almacenados. En su lugar, son calculados sobre la marcha. Esto ahorra memoria si los valores Q no son necesarios, pero requiere que mantengan una interfaz consistente para que ValueIterationAgent herede métodos de ValueEstimationAgent. Sin embargo, el autograder requiere que almacenen los valores computados: deben retornar el valor de un estado en getValue(state), el valor Q de un par (estado, acción) en getQValue(state, action), y la mejor acción en un estado dado en getPolicy(state). Estos métodos serán llamados por el autograder cuando les den una GridWorld. ValueIterationAgent usa estos métodos también, entonces implementen estos tres métodos usando las funciones computeXXXFromValues que estén aquí a mitad de camino para completar esta pregunta.
+                    </p>
+
+                    <p>
+                        <span data-es="Deberían ver que el agente de iteración de valor converge rápidamente. Compárenlo con el agente de política de extracción más ingenuo que devuelve una acción aleatoria. Presionen " data-en="You should see that the value iteration agent converges quickly. Compare it with the more naive policy extraction agent that returns a random action. Press ">Deberían ver que el agente de iteración de valor converge rápidamente. Compárenlo con el agente de política de extracción más ingenuo que devuelve una acción aleatoria. Presionen </span>
+                        <code>ESC</code>
+                        <span data-es=" para salir de la GUI en cualquier momento." data-en=" to exit the GUI at any time."> para salir de la GUI en cualquier momento.</span>
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Su agente de iteración de valor será calificado en un nuevo grid. Ejecutaremos el autograder:" data-en=" Your value iteration agent will be graded on a new grid. We will run the autograder:"> Su agente de iteración de valor será calificado en un nuevo grid. Ejecutaremos el autograder:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q1</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q2: Bridge Crossing Analysis -->
+                <section id="q2" class="section-anchor">
+                <h2 data-es="Q2: Análisis de Cruce de Puente" data-en="Q2: Bridge Crossing Analysis">Q2: Análisis de Cruce de Puente</h2>
+                
+                <p data-es="BridgeGrid es un mapa de mundo de cuadrícula con un estado terminal de baja recompensa y un estado terminal de alta recompensa separados por un estrecho "puente", a cada lado del cual hay un abismo de alta recompensa negativa. El agente comienza cerca del estado de baja recompensa. Con el descuento predeterminado de 0.9 y el ruido predeterminado de 0.2, la política óptima no cruza el puente. Cambie solo UNO de los parámetros de descuento y ruido para que la política óptima haga que el agente intente cruzar el puente. Ponga su respuesta en question2() de analysis.py. (El ruido se refiere a la frecuencia con que un agente termina en un estado sucesor no intencional cuando realiza una acción.) El valor predeterminado corresponde a:" data-en="BridgeGrid is a grid world map with the a low-reward terminal state and a high-reward terminal state separated by a narrow "bridge", on either side of which is a chasm of high negative reward. The agent starts near the low-reward state. With the default discount of 0.9 and the default noise of 0.2, the optimal policy does not cross the bridge. Change only ONE of the discount and noise parameters so that the optimal policy causes the agent to attempt to cross the bridge. Put your answer in question2() of analysis.py. (Noise refers to how often an agent ends up in an unintended successor state when they perform an action.) The default corresponds to:">
+                BridgeGrid es un mapa de mundo de cuadrícula con un estado terminal de baja recompensa y un estado terminal de alta recompensa separados por un estrecho "puente", a cada lado del cual hay un abismo de alta recompensa negativa. El agente comienza cerca del estado de baja recompensa. Con el descuento predeterminado de 0.9 y el ruido predeterminado de 0.2, la política óptima no cruza el puente. Cambie solo UNO de los parámetros de descuento y ruido para que la política óptima haga que el agente intente cruzar el puente. Ponga su respuesta en question2() de analysis.py. (El ruido se refiere a la frecuencia con que un agente termina en un estado sucesor no intencional cuando realiza una acción.) El valor predeterminado corresponde a:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a value -i 100 -g BridgeGrid --discount 0.9 --noise 0.2</span></pre>
+                </div>
+                </div>
+                
+                <div class="equation-container">
+                <img width="500px" src="valuesA100I.png" alt="BridgeGrid values">
+                </div>
+                
+                <p>
+                <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                <span data-es=" Verificaremos que solo haya cambiado uno de los parámetros dados, y que con este cambio, un agente de iteración de valor correcto debería cruzar el puente. Para verificar su respuesta, ejecute el autograder:" data-en=" We will check that you only changed one of the given parameters, and that with this change, a correct value iteration agent should cross the bridge. To check your answer, run the autograder:"> Verificaremos que solo haya cambiado uno de los parámetros dados, y que con este cambio, un agente de iteración de valor correcto debería cruzar el puente. Para verificar su respuesta, ejecute el autograder:</span>
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                </div>
+                </div>
+                </section>
+                
+                <!-- Q3: Policies -->
+                <section id="q3" class="section-anchor">
+                <h2 data-es="Q3: Políticas" data-en="Q3: Policies">Q3: Políticas</h2>
+                
+                <p data-es="Consideren el diseño DiscountGrid, mostrado a continuación. Esta cuadrícula tiene dos estados terminales con recompensa positiva (en la fila del medio), una salida cercana con recompensa +1 y una salida distante con recompensa +10. La fila inferior de la cuadrícula consiste en estados terminales con recompensa negativa (mostrados en rojo); cada estado en esta región de "acantilado" tiene recompensa -10. El estado inicial es el cuadrado amarillo. Distinguimos entre dos tipos de caminos: (1) caminos que "arriesgan el acantilado" y viajan cerca de la fila inferior de la cuadrícula; estos caminos son más cortos pero arriesgan ganar una gran recompensa negativa, y están representados por la flecha roja en la figura a continuación. (2) caminos que "evitan el acantilado" y viajan a lo largo del borde superior de la cuadrícula. Estos caminos son más largos pero es menos probable que incurran en grandes recompensas negativas. Estos caminos están representados por la flecha verde en la figura a continuación." data-en="Consider the DiscountGrid layout, shown below. This grid has two terminal states with positive payoff (in the middle row), a close exit with payoff +1 and a distant exit with payoff +10. The bottom row of the grid consists of terminal states with negative payoff (shown in red); each state in this "cliff" region has payoff -10. The starting state is the yellow square. We distinguish between two types of paths: (1) paths that "risk the cliff" and travel near the bottom row of the grid; these paths are shorter but risk earning a large negative payoff, and are represented by the red arrow in the figure below. (2) paths that "avoid the cliff" and travel along the top edge of the grid. These paths are longer but are less likely to incur huge negative payoffs. These paths are represented by the green arrow in the figure below.">
+                Consideren el diseño DiscountGrid, mostrado a continuación. Esta cuadrícula tiene dos estados terminales con recompensa positiva (en la fila del medio), una salida cercana con recompensa +1 y una salida distante con recompensa +10. La fila inferior de la cuadrícula consiste en estados terminales con recompensa negativa (mostrados en rojo); cada estado en esta región de "acantilado" tiene recompensa -10. El estado inicial es el cuadrado amarillo. Distinguimos entre dos tipos de caminos: (1) caminos que "arriesgan el acantilado" y viajan cerca de la fila inferior de la cuadrícula; estos caminos son más cortos pero arriesgan ganar una gran recompensa negativa, y están representados por la flecha roja en la figura a continuación. (2) caminos que "evitan el acantilado" y viajan a lo largo del borde superior de la cuadrícula. Estos caminos son más largos pero es menos probable que incurran en grandes recompensas negativas. Estos caminos están representados por la flecha verde en la figura a continuación.
+                </p>
+                
+                <div class="equation-container">
+                <img width="500px" src="value_2_paths.png" alt="DiscountGrid with two paths">
+                </div>
+                
+                <p data-es="En esta pregunta, elegirán configuraciones de los parámetros de descuento, ruido y recompensa por vivir para este MDP para producir políticas óptimas de varios tipos diferentes. Su configuración de los valores de parámetros para cada parte debe tener la propiedad de que, si su agente siguió su política óptima sin estar sujeto a ningún ruido, exhibiría el comportamiento dado. Si un comportamiento particular no se logra para ninguna configuración de los parámetros, afirme que la política es imposible devolviendo la cadena 'NOT POSSIBLE'." data-en="In this question, you will choose settings of the discount, noise, and living reward parameters for this MDP to produce optimal policies of several different types. Your setting of the parameter values for each part should have the property that, if your agent followed its optimal policy without being subject to any noise, it would exhibit the given behavior. If a particular behavior is not achieved for any setting of the parameters, assert that the policy is impossible by returning the string 'NOT POSSIBLE'.">
+                En esta pregunta, elegirán configuraciones de los parámetros de descuento, ruido y recompensa por vivir para este MDP para producir políticas óptimas de varios tipos diferentes. Su configuración de los valores de parámetros para cada parte debe tener la propiedad de que, si su agente siguió su política óptima sin estar sujeto a ningún ruido, exhibiría el comportamiento dado. Si un comportamiento particular no se logra para ninguna configuración de los parámetros, afirme que la política es imposible devolviendo la cadena 'NOT POSSIBLE'.
+                </p>
+                
+                <p data-es="Aquí están los tipos de política óptima que deben intentar producir:" data-en="Here are the optimal policy types you should attempt to produce:">
+                Aquí están los tipos de política óptima que deben intentar producir:
+                </p>
+                
+                <ol>
+                <li data-es="Preferir la salida cercana (+1), arriesgando el acantilado (-10)" data-en="Prefer the close exit (+1), risking the cliff (-10)">Preferir la salida cercana (+1), arriesgando el acantilado (-10)</li>
+                <li data-es="Preferir la salida cercana (+1), pero evitando el acantilado (-10)" data-en="Prefer the close exit (+1), but avoiding the cliff (-10)">Preferir la salida cercana (+1), pero evitando el acantilado (-10)</li>
+                <li data-es="Preferir la salida distante (+10), arriesgando el acantilado (-10)" data-en="Prefer the distant exit (+10), risking the cliff (-10)">Preferir la salida distante (+10), arriesgando el acantilado (-10)</li>
+                <li data-es="Preferir la salida distante (+10), evitando el acantilado (-10)" data-en="Prefer the distant exit (+10), avoiding the cliff (-10)">Preferir la salida distante (+10), evitando el acantilado (-10)</li>
+                <li data-es="Evitar ambas salidas y el acantilado (de modo que un episodio nunca termine)" data-en="Avoid both exits and the cliff (so an episode should never terminate)">Evitar ambas salidas y el acantilado (de modo que un episodio nunca termine)</li>
+                </ol>
+                
+                <p data-es="Para ver qué comportamiento termina un conjunto de números, ejecute el siguiente comando para ver una GUI:" data-en="To see what behavior a set of numbers ends up in, run the following command to see a GUI:">
+                Para ver qué comportamiento termina un conjunto de números, ejecute el siguiente comando para ver una GUI:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -g DiscountGrid -a value --discount [YOUR_DISCOUNT] --noise [YOUR_NOISE] --livingReward [YOUR_LIVING_REWARD]</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Para verificar sus respuestas, ejecute el autograder:" data-en="To check your answers, run the autograder:">
+                Para verificar sus respuestas, ejecute el autograder:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q3</span></pre>
+                </div>
+                </div>
+                
+                <p>
+                <code>question3a()</code>
+                <span data-es=" hasta " data-en=" through "> hasta </span>
+                <code>question3e()</code>
+                <span data-es=" deben devolver cada una una tupla de 3 elementos de (descuento, ruido, recompensa por vivir) en analysis.py." data-en=" should each return a 3-item tuple of (discount, noise, living reward) in analysis.py."> deben devolver cada una una tupla de 3 elementos de (descuento, ruido, recompensa por vivir) en analysis.py.</span>
+                </p>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Puede verificar sus políticas en la GUI. Por ejemplo, usando una respuesta correcta a 3(a), la flecha en (0,1) debe apuntar al este, la flecha en (1,1) también debe apuntar al este, y la flecha en (2,1) debe apuntar al norte." data-en="You can check your policies in the GUI. For example, using a correct answer to 3(a), the arrow in (0,1) should point east, the arrow in (1,1) should also point east, and the arrow in (2,1) should point north.">
+                Puede verificar sus políticas en la GUI. Por ejemplo, usando una respuesta correcta a 3(a), la flecha en (0,1) debe apuntar al este, la flecha en (1,1) también debe apuntar al este, y la flecha en (2,1) debe apuntar al norte.
+                </span>
+                </div>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="En algunas máquinas puede que no vea una flecha. En este caso, presione un botón en el teclado para cambiar a la visualización de qValue, y calcule mentalmente la política tomando el arg max de los qValues disponibles para cada estado." data-en="On some machines you may not see an arrow. In this case, press a button on the keyboard to switch to qValue display, and mentally calculate the policy by taking the arg max of the available qValues for each state.">
+                En algunas máquinas puede que no vea una flecha. En este caso, presione un botón en el teclado para cambiar a la visualización de qValue, y calcule mentalmente la política tomando el arg max de los qValues disponibles para cada estado.
+                </span>
+                </div>
+                
+                <p>
+                <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                <span data-es=" Verificaremos que la política deseada se devuelva en cada caso." data-en=" We will check that the desired policy is returned in each case."> Verificaremos que la política deseada se devuelva en cada caso.</span>
+                </p>
+                </section>
+                
+                <!-- Q4: Prioritized Sweeping Value Iteration -->
+                <section id="q4" class="section-anchor">
+                <h2 data-es="Q4: Iteración de Valor con Barrido Priorizado [Crédito Extra]" data-en="Q4: Prioritized Sweeping Value Iteration [Extra Credit]">Q4: Iteración de Valor con Barrido Priorizado [Crédito Extra]</h2>
+                
+                <p data-es="Esta pregunta es crédito extra. Planeamos priorizar a los estudiantes que tengan preguntas sobre partes requeridas de este proyecto en las Horas de Oficina." data-en="This question is extra credit. We plan to prioritize students who have questions regarding required portions of this project in Office Hours.">
+                Esta pregunta es crédito extra. Planeamos priorizar a los estudiantes que tengan preguntas sobre partes requeridas de este proyecto en las Horas de Oficina.
+                </p>
+                
+                <p>
+                <span data-es="Ahora implementarán " data-en="You will now implement ">Ahora implementarán </span>
+                <code>PrioritizedSweepingValueIterationAgent</code><span data-es=", que ha sido parcialmente especificado para ustedes en valueIterationAgents.py." data-en=", which has been partially specified for you in valueIterationAgents.py.">, que ha sido parcialmente especificado para ustedes en valueIterationAgents.py.</span>
+                </p>
+                
+                <p data-es="El barrido priorizado intenta enfocar las actualizaciones de valores de estado de maneras que probablemente cambien la política." data-en="Prioritized sweeping attempts to focus updates of state values in ways that are likely to change the policy.">
+                El barrido priorizado intenta enfocar las actualizaciones de valores de estado de maneras que probablemente cambien la política.
+                </p>
+                
+                <p>
+                <span data-es="Para este proyecto, implementarán una versión simplificada del algoritmo estándar de barrido priorizado, que se describe en este " data-en="For this project, you will implement a simplified version of the standard prioritized sweeping algorithm, which is described in this ">Para este proyecto, implementarán una versión simplificada del algoritmo estándar de barrido priorizado, que se describe en este </span>
+                <a href="https://proceedings.neurips.cc/paper_files/paper/1992/file/55743cc0393b1cb4b8b37d09ae48d097-Paper.pdf" target="_blank" data-es="paper" data-en="paper">paper</a><span data-es=". Hemos adaptado este algoritmo para nuestra configuración. Primero, definimos los predecesores de un estado s como todos los estados que tienen una probabilidad no cero de alcanzar s al tomar alguna acción a. Además, theta, que se pasa como parámetro, representará nuestra tolerancia al error al decidir si actualizar el valor de un estado. Aquí está el algoritmo que deben seguir en su implementación:" data-en=". We've adapted this algorithm for our setting. First, we define the predecessors of a state s as all states that have a nonzero probability of reaching s by taking some action a. Also, theta, which is passed in as a parameter, will represent our tolerance for error when deciding whether to update the value of a state. Here's the algorithm you should follow in your implementation:">. Hemos adaptado este algoritmo para nuestra configuración. Primero, definimos los predecesores de un estado s como todos los estados que tienen una probabilidad no cero de alcanzar s al tomar alguna acción a. Además, theta, que se pasa como parámetro, representará nuestra tolerancia al error al decidir si actualizar el valor de un estado. Aquí está el algoritmo que deben seguir en su implementación:</span>
+                </p>
+                
+                <ul>
+                <li data-es="Calcular predecesores de todos los estados." data-en="Compute predecessors of all states.">Calcular predecesores de todos los estados.</li>
+                <li data-es="Inicializar una cola de prioridad vacía." data-en="Initialize an empty priority queue.">Inicializar una cola de prioridad vacía.</li>
+                <li data-es="Para cada estado no terminal s, hacer: (nota: para hacer que el autograder funcione para esta pregunta, debe iterar sobre estados en el orden devuelto por self.mdp.getStates())" data-en="For each non-terminal state s, do: (note: to make the autograder work for this question, you must iterate over states in the order returned by self.mdp.getStates())">Para cada estado no terminal s, hacer: (nota: para hacer que el autograder funcione para esta pregunta, debe iterar sobre estados en el orden devuelto por self.mdp.getStates())
+                <ul>
+                <li data-es="Encuentre el valor absoluto de la diferencia entre el valor actual de s en self.values y el valor Q más alto en todas las acciones posibles desde s (esto representa cuál debería ser el valor); llame a este número diff. NO actualice self.values[s] en este paso." data-en="Find the absolute value of the difference between the current value of s in self.values and the highest Q-value across all possible actions from s (this represents what the value should be); call this number diff. Do NOT update self.values[s] in this step.">Encuentre el valor absoluto de la diferencia entre el valor actual de s en self.values y el valor Q más alto en todas las acciones posibles desde s (esto representa cuál debería ser el valor); llame a este número diff. NO actualice self.values[s] en este paso.</li>
+                <li data-es="Empuje s en la cola de prioridad con prioridad -diff (note que esto es negativo). Usamos un negativo porque la cola de prioridad es un heap mínimo, pero queremos priorizar la actualización de estados que tienen un error mayor." data-en="Push s into the priority queue with priority -diff (note that this is negative). We use a negative because the priority queue is a min heap, but we want to prioritize updating states that have a higher error.">Empuje s en la cola de prioridad con prioridad -diff (note que esto es negativo). Usamos un negativo porque la cola de prioridad es un heap mínimo, pero queremos priorizar la actualización de estados que tienen un error mayor.</li>
+                </ul>
+                </li>
+                <li data-es="Para iteración en 0, 1, 2, ..., self.iterations - 1, hacer:" data-en="For iteration in 0, 1, 2, ..., self.iterations - 1, do:">Para iteración en 0, 1, 2, ..., self.iterations - 1, hacer:
+                <ul>
+                <li data-es="Si la cola de prioridad está vacía, entonces terminar." data-en="If the priority queue is empty, then terminate.">Si la cola de prioridad está vacía, entonces terminar.</li>
+                <li data-es="Sacar un estado s de la cola de prioridad." data-en="Pop a state s off the priority queue.">Sacar un estado s de la cola de prioridad.</li>
+                <li data-es="Actualizar el valor de s (si no es un estado terminal) en self.values." data-en="Update the value of s (if it is not a terminal state) in self.values.">Actualizar el valor de s (si no es un estado terminal) en self.values.</li>
+                <li data-es="Para cada predecesor p de s, hacer:" data-en="For each predecessor p of s, do:">Para cada predecesor p de s, hacer:
+                <ul>
+                    <li data-es="Encuentre el valor absoluto de la diferencia entre el valor actual de p en self.values y el valor Q más alto en todas las acciones posibles desde p (esto representa cuál debería ser el valor); llame a este número diff. NO actualice self.values[p] en este paso." data-en="Find the absolute value of the difference between the current value of p in self.values and the highest Q-value across all possible actions from p (this represents what the value should be); call this number diff. Do NOT update self.values[p] in this step.">Encuentre el valor absoluto de la diferencia entre el valor actual de p en self.values y el valor Q más alto en todas las acciones posibles desde p (esto representa cuál debería ser el valor); llame a este número diff. NO actualice self.values[p] en este paso.</li>
+                    <li data-es="Si diff > theta, empuje p en la cola de prioridad con prioridad -diff (note que esto es negativo), siempre que no exista ya en la cola de prioridad con prioridad igual o menor. Como antes, usamos un negativo porque la cola de prioridad es un heap mínimo, pero queremos priorizar la actualización de estados que tienen un error mayor." data-en="If diff > theta, push p into the priority queue with priority -diff (note that this is negative), as long as it does not already exist in the priority queue with equal or lower priority. As before, we use a negative because the priority queue is a min heap, but we want to prioritize updating states that have a higher error.">Si diff > theta, empuje p en la cola de prioridad con prioridad -diff (note que esto es negativo), siempre que no exista ya en la cola de prioridad con prioridad igual o menor. Como antes, usamos un negativo porque la cola de prioridad es un heap mínimo, pero queremos priorizar la actualización de estados que tienen un error mayor.</li>
+                </ul>
+                </li>
+                </ul>
+                </li>
+                </ul>
+                
+                <p data-es="Un par de notas importantes sobre la implementación:" data-en="A couple of important notes on implementation:">
+                Un par de notas importantes sobre la implementación:
+                </p>
+                
+                <ul>
+                <li data-es="Cuando calculen predecesores de un estado, asegúrense de almacenarlos en un conjunto, no en una lista, para evitar duplicados." data-en="When you compute predecessors of a state, make sure to store them in a set, not a list, to avoid duplicates.">Cuando calculen predecesores de un estado, asegúrense de almacenarlos en un conjunto, no en una lista, para evitar duplicados.</li>
+                <li>
+                <span data-es="Por favor use util.PriorityQueue en su implementación. El método update en esta clase probablemente será útil; mire su documentación." data-en="Please use util.PriorityQueue in your implementation. The update method in this class will likely be useful; look at its documentation.">Por favor use </span>
+                <code>util.PriorityQueue</code>
+                <span data-es=" en su implementación. El método update en esta clase probablemente será útil; mire su documentación." data-en=" in your implementation. The update method in this class will likely be useful; look at its documentation."> en su implementación. El método update en esta clase probablemente será útil; mire su documentación.</span>
+                </li>
+                </ul>
+                
+                <p data-es="Para probar su implementación, ejecute el autograder. Debería tomar aproximadamente 1 segundo ejecutarse. Si toma mucho más, puede encontrar problemas más adelante en el proyecto, así que haga su implementación más eficiente ahora." data-en="To test your implementation, run the autograder. It should take about 1 second to run. If it takes much longer, you may run into issues later in the project, so make your implementation more efficient now.">
+                Para probar su implementación, ejecute el autograder. Debería tomar aproximadamente 1 segundo ejecutarse. Si toma mucho más, puede encontrar problemas más adelante en el proyecto, así que haga su implementación más eficiente ahora.
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q4</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Puede ejecutar el PrioritizedSweepingValueIterationAgent en Gridworld usando el siguiente comando." data-en="You can run the PrioritizedSweepingValueIterationAgent in the Gridworld using the following command.">
+                Puede ejecutar el PrioritizedSweepingValueIterationAgent en Gridworld usando el siguiente comando.
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a priosweepvalue -i 1000</span></pre>
+                </div>
+                </div>
+                
+                <p>
+                <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                <span data-es=" Su agente de iteración de valor con barrido priorizado será calificado en una nueva cuadrícula. Verificaremos sus valores, valores Q y políticas después de números fijos de iteraciones y en convergencia (por ejemplo, después de 1000 iteraciones)." data-en=" Your prioritized sweeping value iteration agent will be graded on a new grid. We will check your values, Q-values, and policies after fixed numbers of iterations and at convergence (e.g., after 1000 iterations)."> Su agente de iteración de valor con barrido priorizado será calificado en una nueva cuadrícula. Verificaremos sus valores, valores Q y políticas después de números fijos de iteraciones y en convergencia (por ejemplo, después de 1000 iteraciones).</span>
+                </p>
+                </section>
+                
+                <!-- Q5: Q-Learning -->
+                <section id="q5" class="section-anchor">
+                <h2 data-es="Q5: Q-Learning" data-en="Q5: Q-Learning">Q5: Q-Learning</h2>
+                
+                <p data-es="Noten que su agente de iteración de valor no aprende realmente de la experiencia. Más bien, reflexiona sobre su modelo MDP para llegar a una política completa antes de interactuar con un entorno real. Cuando interactúa con el entorno, simplemente sigue la política precalculada (por ejemplo, se convierte en un agente reflejo). Esta distinción puede ser sutil en un entorno simulado como Gridworld, pero es muy importante en el mundo real, donde el MDP real no está disponible." data-en="Note that your value iteration agent does not actually learn from experience. Rather, it ponders its MDP model to arrive at a complete policy before ever interacting with a real environment. When it does interact with the environment, it simply follows the precomputed policy (e.g. it becomes a reflex agent). This distinction may be subtle in a simulated environment like a Gridword, but it's very important in the real world, where the real MDP is not available.">
+                Noten que su agente de iteración de valor no aprende realmente de la experiencia. Más bien, reflexiona sobre su modelo MDP para llegar a una política completa antes de interactuar con un entorno real. Cuando interactúa con el entorno, simplemente sigue la política precalculada (por ejemplo, se convierte en un agente reflejo). Esta distinción puede ser sutil en un entorno simulado como Gridworld, pero es muy importante en el mundo real, donde el MDP real no está disponible.
+                </p>
+                
+                <p>
+                <span data-es="Ahora escribirán un agente de Q-learning, que hace muy poco en la construcción, pero en su lugar aprende por ensayo y error de las interacciones con el entorno a través de su método " data-en="You will now write a Q-learning agent, which does very little on construction, but instead learns by trial and error from interactions with the environment through its ">Ahora escribirán un agente de Q-learning, que hace muy poco en la construcción, pero en su lugar aprende por ensayo y error de las interacciones con el entorno a través de su método </span>
+                <code>update(state, action, nextState, reward)</code><span data-es=". Un stub de un Q-learner está especificado en QLearningAgent en qlearningAgents.py, y puede seleccionarlo con la opción '-a q'. Para esta pregunta, debe implementar los métodos update, computeValueFromQValues, getQValue y computeActionFromQValues." data-en=". A stub of a Q-learner is specified in QLearningAgent in qlearningAgents.py, and you can select it with the option '-a q'. For this question, you must implement the update, computeValueFromQValues, getQValue, and computeActionFromQValues methods.">. Un stub de un Q-learner está especificado en QLearningAgent en qlearningAgents.py, y puede seleccionarlo con la opción '-a q'. Para esta pregunta, debe implementar los métodos update, computeValueFromQValues, getQValue y computeActionFromQValues.</span>
+                </p>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Para computeActionFromQValues, debe romper empates aleatoriamente para un mejor comportamiento. La función random.choice() ayudará. En un estado particular, las acciones que su agente no ha visto antes todavía tienen un valor Q, específicamente un valor Q de cero, y si todas las acciones que su agente ha visto antes tienen un valor Q negativo, una acción no vista puede ser óptima." data-en="For computeActionFromQValues, you should break ties randomly for better behavior. The random.choice() function will help. In a particular state, actions that your agent hasn't seen before still have a Q-value, specifically a Q-value of zero, and if all of the actions that your agent has seen before have a negative Q-value, an unseen action may be optimal.">
+                Para computeActionFromQValues, debe romper empates aleatoriamente para un mejor comportamiento. La función random.choice() ayudará. En un estado particular, las acciones que su agente no ha visto antes todavía tienen un valor Q, específicamente un valor Q de cero, y si todas las acciones que su agente ha visto antes tienen un valor Q negativo, una acción no vista puede ser óptima.
+                </span>
+                </div>
+                
+                <div class="note-box">
+                <strong data-es="Importante:" data-en="Important:">Importante:</strong>
+                <span data-es="Asegúrese de que en sus funciones computeValueFromQValues y computeActionFromQValues, solo acceda a valores Q llamando a getQValue. Esta abstracción será útil para la pregunta 9 cuando sobrescriba getQValue para usar características de pares estado-acción en lugar de pares estado-acción directamente." data-en="Make sure that in your computeValueFromQValues and computeActionFromQValues functions, you only access Q values by calling getQValue. This abstraction will be useful for question 9 when you override getQValue to use features of state-action pairs rather than state-action pairs directly.">
+                Asegúrese de que en sus funciones computeValueFromQValues y computeActionFromQValues, solo acceda a valores Q llamando a getQValue. Esta abstracción será útil para la pregunta 9 cuando sobrescriba getQValue para usar características de pares estado-acción en lugar de pares estado-acción directamente.
+                </span>
+                </div>
+                
+                <p data-es="Con la actualización de Q-learning en su lugar, puede ver a su Q-learner aprender bajo control manual, usando el teclado:" data-en="With the Q-learning update in place, you can watch your Q-learner learn under manual control, using the keyboard:">
+                Con la actualización de Q-learning en su lugar, puede ver a su Q-learner aprender bajo control manual, usando el teclado:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a q -k 5 -m</span></pre>
+                </div>
+                </div>
+                
+                <p>
+                <span data-es="Recuerden que " data-en="Recall that ">Recuerden que </span>
+                <code>-k</code>
+                <span data-es=" controlará el número de episodios que su agente tiene para aprender. Vean cómo el agente aprende sobre el estado en el que acaba de estar, no en el que se mueve, y "deja el aprendizaje en su estela". Pista: para ayudar con la depuración, puede desactivar el ruido usando el parámetro --noise 0.0 (aunque esto obviamente hace que Q-learning sea menos interesante). Si guían manualmente a Pacman al norte y luego al este a lo largo del camino óptimo durante cuatro episodios, deberían ver los siguientes valores Q:" data-en=" will control the number of episodes your agent gets to learn. Watch how the agent learns about the state it was just in, not the one it moves to, and "leaves learning in its wake." Hint: to help with debugging, you can turn off noise by using the --noise 0.0 parameter (though this obviously makes Q-learning less interesting). If you manually steer Pacman north and then east along the optimal path for four episodes, you should see the following Q-values:"> controlará el número de episodios que su agente tiene para aprender. Vean cómo el agente aprende sobre el estado en el que acaba de estar, no en el que se mueve, y "deja el aprendizaje en su estela". Pista: para ayudar con la depuración, puede desactivar el ruido usando el parámetro --noise 0.0 (aunque esto obviamente hace que Q-learning sea menos interesante). Si guían manualmente a Pacman al norte y luego al este a lo largo del camino óptimo durante cuatro episodios, deberían ver los siguientes valores Q:</span>
+                </p>
+                
+                <div class="equation-container">
+                <img width="500px" src="q_learning.png" alt="Q-learning values">
+                </div>
+                
+                <p>
+                <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                <span data-es=" Ejecutaremos su agente de Q-learning y verificaremos que aprenda los mismos valores Q y política que nuestra implementación de referencia cuando a cada uno se le presente el mismo conjunto de ejemplos. Para calificar su implementación, ejecute el autograder:" data-en=" We will run your Q-learning agent and check that it learns the same Q-values and policy as our reference implementation when each is presented with the same set of examples. To grade your implementation, run the autograder:"> Ejecutaremos su agente de Q-learning y verificaremos que aprenda los mismos valores Q y política que nuestra implementación de referencia cuando a cada uno se le presente el mismo conjunto de ejemplos. Para calificar su implementación, ejecute el autograder:</span>
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q5</span></pre>
+                </div>
+                </div>
+                </section>
+                
+                <!-- Q6: Epsilon Greedy -->
+                <section id="q6" class="section-anchor">
+                <h2 data-es="Q6: Epsilon Greedy" data-en="Q6: Epsilon Greedy">Q6: Epsilon Greedy</h2>
+                
+                <p>
+                <span data-es="Complete su agente de Q-learning implementando selección de acción epsilon-greedy en getAction, lo que significa que elige acciones aleatorias una fracción epsilon del tiempo, y sigue sus mejores valores Q actuales de lo contrario. Tenga en cuenta que elegir una acción aleatoria puede resultar en elegir la mejor acción, es decir, no debe elegir una acción subóptima aleatoria, sino cualquier acción legal aleatoria." data-en="Complete your Q-learning agent by implementing epsilon-greedy action selection in getAction, meaning it chooses random actions an epsilon fraction of the time, and follows its current best Q-values otherwise. Note that choosing a random action may result in choosing the best action - that is, you should not choose a random sub-optimal action, but rather any random legal action.">Complete su agente de Q-learning implementando selección de acción epsilon-greedy en </span>
+                <code>getAction</code><span data-es=", lo que significa que elige acciones aleatorias una fracción epsilon del tiempo, y sigue sus mejores valores Q actuales de lo contrario. Tenga en cuenta que elegir una acción aleatoria puede resultar en elegir la mejor acción, es decir, no debe elegir una acción subóptima aleatoria, sino cualquier acción legal aleatoria." data-en=", meaning it chooses random actions an epsilon fraction of the time, and follows its current best Q-values otherwise. Note that choosing a random action may result in choosing the best action - that is, you should not choose a random sub-optimal action, but rather any random legal action.">, lo que significa que elige acciones aleatorias una fracción epsilon del tiempo, y sigue sus mejores valores Q actuales de lo contrario. Tenga en cuenta que elegir una acción aleatoria puede resultar en elegir la mejor acción, es decir, no debe elegir una acción subóptima aleatoria, sino cualquier acción legal aleatoria.</span>
+                </p>
+                
+                <p>
+                <span data-es="Puede elegir un elemento de una lista uniformemente al azar llamando a la función " data-en="You can choose an element from a list uniformly at random by calling the ">Puede elegir un elemento de una lista uniformemente al azar llamando a la función </span>
+                <code>random.choice</code><span data-es=". Puede simular una variable binaria con probabilidad p de éxito usando " data-en=" function. You can simulate a binary variable with probability p of success by using ">. Puede simular una variable binaria con probabilidad p de éxito usando </span>
+                <code>util.flipCoin(p)</code><span data-es=", que devuelve True con probabilidad p y False con probabilidad 1-p." data-en=", which returns True with probability p and False with probability 1-p.">, que devuelve True con probabilidad p y False con probabilidad 1-p.</span>
+                </p>
+                
+                <p data-es="Después de implementar el método getAction, observe el siguiente comportamiento del agente en GridWorld (con epsilon = 0.3)." data-en="After implementing the getAction method, observe the following behavior of the agent in GridWorld (with epsilon = 0.3).">
+                Después de implementar el método getAction, observe el siguiente comportamiento del agente en GridWorld (con epsilon = 0.3).
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a q -k 100</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Sus valores Q finales deberían parecerse a los de su agente de iteración de valor, especialmente a lo largo de caminos bien transitados. Sin embargo, sus rendimientos promedio serán más bajos que los que predicen los valores Q debido a las acciones aleatorias y la fase de aprendizaje inicial." data-en="Your final Q-values should resemble those of your value iteration agent, especially along well-traveled paths. However, your average returns will be lower than the Q-values predict because of the random actions and the initial learning phase.">
+                Sus valores Q finales deberían parecerse a los de su agente de iteración de valor, especialmente a lo largo de caminos bien transitados. Sin embargo, sus rendimientos promedio serán más bajos que los que predicen los valores Q debido a las acciones aleatorias y la fase de aprendizaje inicial.
+                </p>
+                
+                <p data-es="También puede observar las siguientes simulaciones para diferentes valores de epsilon. ¿El comportamiento del agente coincide con lo que esperan?" data-en="You can also observe the following simulations for different epsilon values. Does that behavior of the agent match what you expect?">
+                También puede observar las siguientes simulaciones para diferentes valores de epsilon. ¿El comportamiento del agente coincide con lo que esperan?
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a q -k 100 --noise 0.0 -e 0.1</span></pre>
+                </div>
+                </div>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a q -k 100 --noise 0.0 -e 0.9</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Para probar su implementación, ejecute el autograder:" data-en="To test your implementation, run the autograder:">
+                Para probar su implementación, ejecute el autograder:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q6</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Sin código adicional, ahora debería poder ejecutar un robot crawler de Q-learning:" data-en="With no additional code, you should now be able to run a Q-learning crawler robot:">
+                Sin código adicional, ahora debería poder ejecutar un robot crawler de Q-learning:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python crawler.py</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Si esto no funciona, probablemente haya escrito algún código demasiado específico para el problema de GridWorld y debería hacerlo más general para todos los MDPs." data-en="If this doesn't work, you've probably written some code too specific to the GridWorld problem and you should make it more general to all MDPs.">
+                Si esto no funciona, probablemente haya escrito algún código demasiado específico para el problema de GridWorld y debería hacerlo más general para todos los MDPs.
+                </p>
+                
+                <p data-es="Esto invocará el robot rastrero de clase usando su Q-learner. Juegue con los diversos parámetros de aprendizaje para ver cómo afectan las políticas y acciones del agente. Tenga en cuenta que el retraso de pasos es un parámetro de la simulación, mientras que la tasa de aprendizaje y epsilon son parámetros de su algoritmo de aprendizaje, y el factor de descuento es una propiedad del entorno." data-en="This will invoke the crawling robot from class using your Q-learner. Play around with the various learning parameters to see how they affect the agent's policies and actions. Note that the step delay is a parameter of the simulation, whereas the learning rate and epsilon are parameters of your learning algorithm, and the discount factor is a property of the environment.">
+                Esto invocará el robot rastrero de clase usando su Q-learner. Juegue con los varios parámetros de aprendizaje para ver cómo afectan las políticas y acciones del agente. Tenga en cuenta que el retraso de pasos es un parámetro de la simulación, mientras que la tasa de aprendizaje y epsilon son parámetros de su algoritmo de aprendizaje, y el factor de descuento es una propiedad del entorno.
+                </p>
+                </section>
+                
+                <!-- Q7: Bridge Crossing Revisited -->
+                <section id="q7" class="section-anchor">
+                <h2 data-es="Q7: Cruce de Puente Revisitado" data-en="Q7: Bridge Crossing Revisited">Q7: Cruce de Puente Revisitado</h2>
+                
+                <p data-es="Primero, entrene un Q-learner completamente aleatorio con la tasa de aprendizaje predeterminada en el BridgeGrid sin ruido durante 50 episodios y observe si encuentra la política óptima." data-en="First, train a completely random Q-learner with the default learning rate on the noiseless BridgeGrid for 50 episodes and observe whether it finds the optimal policy.">
+                Primero, entrene un Q-learner completamente aleatorio con la tasa de aprendizaje predeterminada en el BridgeGrid sin ruido durante 50 episodios y observe si encuentra la política óptima.
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python gridworld.py -a q -k 50 -n 0 -g BridgeGrid -e 1</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Ahora intente el mismo experimento con un epsilon de 0. ¿Hay un epsilon y una tasa de aprendizaje para los cuales es muy probable (mayor al 99%) que la política óptima se aprenda después de 50 iteraciones? question8() en analysis.py debe devolver BIEN una tupla de 2 elementos de (epsilon, tasa de aprendizaje) O la cadena 'NOT POSSIBLE' si no hay ninguno. Epsilon se controla por -e, tasa de aprendizaje por -l." data-en="Now try the same experiment with an epsilon of 0. Is there an epsilon and a learning rate for which it is highly likely (greater than 99%) that the optimal policy will be learned after 50 iterations? question8() in analysis.py should return EITHER a 2-item tuple of (epsilon, learning rate) OR the string 'NOT POSSIBLE' if there is none. Epsilon is controlled by -e, learning rate by -l.">
+                Ahora intente el mismo experimento con un epsilon de 0. ¿Hay un epsilon y una tasa de aprendizaje para los cuales es muy probable (mayor al 99%) que la política óptima se aprenda después de 50 iteraciones? question8() en analysis.py debe devolver BIEN una tupla de 2 elementos de (epsilon, tasa de aprendizaje) O la cadena 'NOT POSSIBLE' si no hay ninguno. Epsilon se controla por -e, tasa de aprendizaje por -l.
+                </p>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Su respuesta no debe depender del mecanismo exacto de ruptura de empates utilizado para elegir acciones. Esto significa que su respuesta debe ser correcta incluso si, por ejemplo, rotamos toda la cuadrícula de puente 90 grados." data-en="Your response should be not depend on the exact tie-breaking mechanism used to choose actions. This means your answer should be correct even if for instance we rotated the entire bridge grid world 90 degrees.">
+                Su respuesta no debe depender del mecanismo exacto de ruptura de empates utilizado para elegir acciones. Esto significa que su respuesta debe ser correcta incluso si, por ejemplo, rotamos toda la cuadrícula de puente 90 grados.
+                </span>
+                </div>
+                
+                <p data-es="Para calificar su respuesta, ejecute el autograder:" data-en="To grade your answer, run the autograder:">
+                Para calificar su respuesta, ejecute el autograder:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q7</span></pre>
+                </div>
+                </div>
+                </section>
+                
+                <!-- Q8: Q-Learning and Pacman -->
+                <section id="q8" class="section-anchor">
+                <h2 data-es="Q8: Q-Learning y Pacman" data-en="Q8: Q-Learning and Pacman">Q8: Q-Learning y Pacman</h2>
+                
+                <p data-es="Es hora de jugar algo de Pacman! Pacman jugará juegos en dos fases. En la primera fase, entrenamiento, Pacman comenzará a aprender sobre los valores de posiciones y acciones. Como toma mucho tiempo aprender valores Q precisos incluso para cuadrículas pequeñas, los juegos de entrenamiento de Pacman se ejecutan en modo silencioso por defecto, sin GUI (o consola). Una vez que el entrenamiento de Pacman esté completo, entrará en modo de prueba. Cuando está probando, self.epsilon y self.alpha de Pacman se establecerán en 0.0, deteniendo efectivamente Q-learning y deshabilitando la exploración, para permitir que Pacman explote su política aprendida. Los juegos de prueba se muestran en la GUI por defecto. Sin ningún cambio de código, debería poder ejecutar Q-learning Pacman para cuadrículas muy pequeñas de la siguiente manera:" data-en="Time to play some Pacman! Pacman will play games in two phases. In the first phase, training, Pacman will begin to learn about the values of positions and actions. Because it takes a very long time to learn accurate Q-values even for tiny grids, Pacman's training games run in quiet mode by default, with no GUI (or console) display. Once Pacman's training is complete, he will enter testing mode. When testing, Pacman's self.epsilon and self.alpha will be set to 0.0, effectively stopping Q-learning and disabling exploration, in order to allow Pacman to exploit his learned policy. Test games are shown in the GUI by default. Without any code changes you should be able to run Q-learning Pacman for very tiny grids as follows:">
+                Es hora de jugar algo de Pacman! Pacman jugará juegos en dos fases. En la primera fase, entrenamiento, Pacman comenzará a aprender sobre los valores de posiciones y acciones. Como toma mucho tiempo aprender valores Q precisos incluso para cuadrículas pequeñas, los juegos de entrenamiento de Pacman se ejecutan en modo silencioso por defecto, sin GUI (o consola). Una vez que el entrenamiento de Pacman esté completo, entrará en modo de prueba. Cuando está probando, self.epsilon y self.alpha de Pacman se establecerán en 0.0, deteniendo efectivamente Q-learning y deshabilitando la exploración, para permitir que Pacman explote su política aprendida. Los juegos de prueba se muestran en la GUI por defecto. Sin ningún cambio de código, debería poder ejecutar Q-learning Pacman para cuadrículas muy pequeñas de la siguiente manera:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python pacman.py -p PacmanQAgent -x 2000 -n 2010 -l smallGrid</span></pre>
+                </div>
+                </div>
+                
+                <p>
+                <span data-es="Tenga en cuenta que " data-en="Note that ">Tenga en cuenta que </span>
+                <code>PacmanQAgent</code>
+                <span data-es=" ya está definido para usted en términos del QLearningAgent que ya ha escrito. PacmanQAgent solo es diferente en que tiene parámetros de aprendizaje predeterminados que son más efectivos para el problema de Pacman (epsilon=0.05, alpha=0.2, gamma=0.8). Recibirá crédito completo para esta pregunta si el comando anterior funciona sin excepciones y su agente gana al menos el 80% del tiempo. El autograder ejecutará 100 juegos de prueba después de los 2000 juegos de entrenamiento." data-en=" is already defined for you in terms of the QLearningAgent you've already written. PacmanQAgent is only different in that it has default learning parameters that are more effective for the Pacman problem (epsilon=0.05, alpha=0.2, gamma=0.8). You will receive full credit for this question if the command above works without exceptions and your agent wins at least 80% of the time. The autograder will run 100 test games after the 2000 training games."> ya está definido para usted en términos del QLearningAgent que ya ha escrito. PacmanQAgent solo es diferente en que tiene parámetros de aprendizaje predeterminados que son más efectivos para el problema de Pacman (epsilon=0.05, alpha=0.2, gamma=0.8). Recibirá crédito completo para esta pregunta si el comando anterior funciona sin excepciones y su agente gana al menos el 80% del tiempo. El autograder ejecutará 100 juegos de prueba después de los 2000 juegos de entrenamiento.</span>
+                </p>
+                
+                <div class="note-box">
+                <strong data-es="Pista:" data-en="Hint:">Pista:</strong>
+                <span data-es="Si su QLearningAgent funciona para gridworld.py y crawler.py pero no parece estar aprendiendo una buena política para Pacman en smallGrid, puede ser porque sus métodos getAction y/o computeActionFromQValues no consideran adecuadamente en algunos casos las acciones no vistas. En particular, porque las acciones no vistas tienen por definición un valor Q de cero, si todas las acciones que se han visto tienen valores Q negativos, una acción no vista puede ser óptima. ¡Cuidado con la función argMax de util.Counter!" data-en="If your QLearningAgent works for gridworld.py and crawler.py but does not seem to be learning a good policy for Pacman on smallGrid, it may be because your getAction and/or computeActionFromQValues methods do not in some cases properly consider unseen actions. In particular, because unseen actions have by definition a Q-value of zero, if all of the actions that have been seen have negative Q-values, an unseen action may be optimal. Beware of the argMax function from util.Counter!">
+                Si su QLearningAgent funciona para gridworld.py y crawler.py pero no parece estar aprendiendo una buena política para Pacman en smallGrid, puede ser porque sus métodos getAction y/o computeActionFromQValues no consideran adecuadamente en algunos casos las acciones no vistas. En particular, porque las acciones no vistas tienen por definición un valor Q de cero, si todas las acciones que se han visto tienen valores Q negativos, una acción no vista puede ser óptima. ¡Cuidado con la función argMax de util.Counter!
+                </span>
+                </div>
+                
+                <p data-es="Para calificar su respuesta, ejecute:" data-en="To grade your answer, run:">
+                Para calificar su respuesta, ejecute:
+                </p>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python autograder.py -q q8</span></pre>
+                </div>
+                </div>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Si quiere experimentar con parámetros de aprendizaje, puede usar la opción -a, por ejemplo -a epsilon=0.1,alpha=0.3,gamma=0.7. Estos valores serán entonces accesibles como self.epsilon, self.gamma y self.alpha dentro del agente." data-en="If you want to experiment with learning parameters, you can use the option -a, for example -a epsilon=0.1,alpha=0.3,gamma=0.7. These values will then be accessible as self.epsilon, self.gamma and self.alpha inside the agent.">
+                Si quiere experimentar con parámetros de aprendizaje, puede usar la opción -a, por ejemplo -a epsilon=0.1,alpha=0.3,gamma=0.7. Estos valores serán entonces accesibles como self.epsilon, self.gamma y self.alpha dentro del agente.
+                </span>
+                </div>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Aunque se jugarán un total de 2010 juegos, los primeros 2000 juegos no se mostrarán debido a la opción -x 2000, que designa los primeros 2000 juegos para entrenamiento (sin salida). Por lo tanto, solo verá a Pacman jugar los últimos 10 de estos juegos. El número de juegos de entrenamiento también se pasa a su agente como la opción numTraining." data-en="While a total of 2010 games will be played, the first 2000 games will not be displayed because of the option -x 2000, which designates the first 2000 games for training (no output). Thus, you will only see Pacman play the last 10 of these games. The number of training games is also passed to your agent as the option numTraining.">
+                Aunque se jugarán un total de 2010 juegos, los primeros 2000 juegos no se mostrarán debido a la opción -x 2000, que designa los primeros 2000 juegos para entrenamiento (sin salida). Por lo tanto, solo verá a Pacman jugar los últimos 10 de estos juegos. El número de juegos de entrenamiento también se pasa a su agente como la opción numTraining.
+                </span>
+                </div>
+                
+                <div class="note-box">
+                <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                <span data-es="Si quiere ver 10 juegos de entrenamiento para ver qué está pasando, use el comando:" data-en="If you want to watch 10 training games to see what's going on, use the command:">
+                Si quiere ver 10 juegos de entrenamiento para ver qué está pasando, use el comando:
+                </span>
+                </div>
+                
+                <div class="cmd-block">
+                <div class="cmd-header">Terminal</div>
+                <div class="cmd-content">
+                <pre><span class="cmd-prompt">python pacman.py -p PacmanQAgent -n 10 -l smallGrid -a numTraining=10</span></pre>
+                </div>
+                </div>
+                
+                <p data-es="Durante el entrenamiento, verá salida cada 100 juegos con estadísticas sobre cómo le está yendo a Pacman. Epsilon es positivo durante el entrenamiento, por lo que Pacman jugará mal incluso después de haber aprendido una buena política: esto es porque ocasionalmente hace un movimiento exploratorio aleatorio en un fantasma. Como punto de referencia, debería tomar entre 1000 y 1400 juegos antes de que las recompensas de Pacman para un segmento de 100 episodios se vuelvan positivas, reflejando que ha comenzado a ganar más que a perder. Al final del entrenamiento, debería permanecer positivo y ser bastante alto (entre 100 y 350)." data-en="During training, you will see output every 100 games with statistics about how Pacman is faring. Epsilon is positive during training, so Pacman will play poorly even after having learned a good policy: this is because he occasionally makes a random exploratory move into a ghost. As a benchmark, it should take between 1000 and 1400 games before Pacman's rewards for a 100 episode segment becomes positive, reflecting that he's started winning more than losing. By the end of training, it should remain positive and be fairly high (between 100 and 350).">
+                Durante el entrenamiento, verá salida cada 100 juegos con estadísticas sobre cómo le está yendo a Pacman. Epsilon es positivo durante el entrenamiento, por lo que Pacman jugará mal incluso después de haber aprendido una buena política: esto es porque ocasionalmente hace un movimiento exploratorio aleatorio en un fantasma. Como punto de referencia, debería tomar entre 1000 y 1400 juegos antes de que las recompensas de Pacman para un segmento de 100 episodios se vuelvan positivas, reflejando que ha comenzado a ganar más que a perder. Al final del entrenamiento, debería permanecer positivo y ser bastante alto (entre 100 y 350).
+                </p>
+                
+                <p data-es="Asegúrese de entender qué está pasando aquí: el estado MDP es la configuración exacta del tablero que enfrenta Pacman, con las transiciones ahora complejas que describen un ply completo de cambio a ese estado. Las configuraciones de juego intermedias en las que Pacman se ha movido pero los fantasmas no han respondido no son estados MDP, sino que están agrupados en las transiciones." data-en="Make sure you understand what is happening here: the MDP state is the exact board configuration facing Pacman, with the now complex transitions describing an entire ply of change to that state. The intermediate game configurations in which Pacman has moved but the ghosts have not replied are not MDP states, but are bundled in to the transitions.">
+                Asegúrese de entender qué está pasando aquí: el estado MDP es la configuración exacta del tablero que enfrenta Pacman, con las transiciones ahora complejas que describen un ply completo de cambio a ese estado. Las configuraciones de juego intermedias en las que Pacman se ha movido pero los fantasmas no han respondido no son estados MDP, sino que están agrupados en las transiciones.
+                </p>
+                
+                <p data-es="Una vez que Pacman haya terminado de entrenar, debería ganar muy confiablemente en juegos de prueba (al menos el 90% del tiempo), ya que ahora está explotando su política aprendida." data-en="Once Pacman is done training, he should win very reliably in test games (at least 90% of the time), since now he is exploiting his learned policy.">
+                Una vez que Pacman haya terminado de entrenar, debería ganar muy confiablemente en juegos de prueba (al menos el 90% del tiempo), ya que ahora está explotando su política aprendida.
+                </p>
+                
+                <p data-es="Sin embargo, encontrará que entrenar el mismo agente en mediumGrid aparentemente simple no funciona bien. En nuestra implementación, las recompensas promedio de entrenamiento de Pacman permanecen negativas durante todo el entrenamiento. En el momento de la prueba, juega mal, probablemente perdiendo todos sus juegos de prueba. El entrenamiento también tomará mucho tiempo, a pesar de su ineficacia." data-en="However, you will find that training the same agent on the seemingly simple mediumGrid does not work well. In our implementation, Pacman's average training rewards remain negative throughout training. At test time, he plays badly, probably losing all of his test games. Training will also take a long time, despite its ineffectiveness.">
+                Sin embargo, encontrará que entrenar el mismo agente en mediumGrid aparentemente simple no funciona bien. En nuestra implementación, las recompensas promedio de entrenamiento de Pacman permanecen negativas durante todo el entrenamiento. En el momento de la prueba, juega mal, probablemente perdiendo todos sus juegos de prueba. El entrenamiento también tomará mucho tiempo, a pesar de su ineficacia.
+                </p>
+                
+                <p data-es="Pacman no logra ganar en diseños más grandes porque cada configuración de tablero es un estado separado con valores Q separados. No tiene forma de generalizar que correr hacia un fantasma es malo para todas las posiciones. Obviamente, este enfoque no escalará." data-en="Pacman fails to win on larger layouts because each board configuration is a separate state with separate Q-values. He has no way to generalize that running into a ghost is bad for all positions. Obviously, this approach will not scale.">
+                Pacman no logra ganar en diseños más grandes porque cada configuración de tablero es un estado separado con valores Q separados. No tiene forma de generalizar que correr hacia un fantasma es malo para todas las posiciones. Obviamente, este enfoque no escalará.
+                </p>
+            </section>
+
+                <!-- Q9: Approximate Q-Learning -->
+                <section id="q9" class="section-anchor">
+                    <h2 data-es="Q9: Q-Learning Aproximado" data-en="Q9: Approximate Q-Learning">Q9: Q-Learning Aproximado</h2>
+                    
+                    <p>
+                        <span data-es="Implemente un agente de Q-learning aproximado que aprenda pesos para características de estados, donde muchos estados pueden compartir las mismas características. Escriba su implementación en la clase " data-en="Implement an approximate Q-learning agent that learns weights for features of states, where many states might share the same features. Write your implementation in ">Implemente un agente de Q-learning aproximado que aprenda pesos para características de estados, donde muchos estados pueden compartir las mismas características. Escriba su implementación en la clase </span>
+                        <code>ApproximateQAgent</code>
+                        <span data-es=" en " data-en=" class in "> en </span>
+                        <code>qlearningAgents.py</code><span data-es=", que es una subclase de PacmanQAgent." data-en=", which is a subclass of PacmanQAgent.">, que es una subclase de PacmanQAgent.</span>
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="Nota:" data-en="Note:">Nota:</strong>
+                        <span data-es="Q-learning aproximado asume la existencia de una función de características f(s,a) sobre pares de estado y acción, que produce un vector [f1(s,a),…,fi(s,a),…,fn(s,a)] de valores de características. Proporcionamos funciones de características para usted en featureExtractors.py. Los vectores de características son objetos util.Counter (como un diccionario) que contienen los pares no cero de características y valores; todas las características omitidas tienen valor cero. Entonces, en lugar de un vector donde el índice en el vector define qué característica es cuál, tenemos las claves en el diccionario que definen la identidad de la característica." data-en="Approximate Q-learning assumes the existence of a feature function f(s,a) over state and action pairs, which yields a vector [f1(s,a),…,fi(s,a),…,fn(s,a)] of feature values. We provide feature functions for you in featureExtractors.py. Feature vectors are util.Counter (like a dictionary) objects containing the non-zero pairs of features and values; all omitted features have value zero. So, instead of an vector where the index in the vector defines which feature is which, we have the keys in the dictionary define the idenity of the feature.">
+                            Q-learning aproximado asume la existencia de una función de características f(s,a) sobre pares de estado y acción, que produce un vector [f<sub>1</sub>(s,a),…,f<sub>i</sub>(s,a),…,f<sub>n</sub>(s,a)] de valores de características. Proporcionamos funciones de características para usted en featureExtractors.py. Los vectores de características son objetos util.Counter (como un diccionario) que contienen los pares no cero de características y valores; todas las características omitidas tienen valor cero. Entonces, en lugar de un vector donde el índice en el vector define qué característica es cuál, tenemos las claves en el diccionario que definen la identidad de la característica.
+                        </span>
+                    </div>
+
+                    <p data-es="La función Q aproximada toma la siguiente forma:" data-en="The approximate Q-function takes the following form:">
+                        La función Q aproximada toma la siguiente forma:
+                    </p>
+
+                    <div class="equation-container">
+                        <img width="500px" src="eq1Q9.png" alt="Approximate Q-function equation">
+                    </div>
+
+                    <p>
+                        <span data-es="donde cada peso w" data-en="where each weight w">donde cada peso w<sub>i</sub></span>
+                        <span data-es=" está asociado con una característica particular f" data-en=" is associated with a particular feature f"> está asociado con una característica particular f<sub>i</sub>(s,a)</span><span data-es=". En su código, debe implementar el vector de pesos como un diccionario que mapea características (que los extractores de características devolverán) a valores de peso. Actualizará sus vectores de peso de manera similar a cómo actualizó los valores Q:" data-en=". In your code, you should implement the weight vector as a dictionary mapping features (which the feature extractors will return) to weight values. You will update your weight vectors similarly to how you updated Q-values:">. En su código, debe implementar el vector de pesos como un diccionario que mapea características (que los extractores de características devolverán) a valores de peso. Actualizará sus vectores de peso de manera similar a cómo actualizó los valores Q:</span>
+                    </p>
+
+                    <div class="equation-container">
+                        <img width="500px" src="eq2Q9.png" alt="Weight update equation">
+                    </div>
+
+                    <p data-es="Tenga en cuenta que el término de diferencia es el mismo que en el Q-learning normal, y r es la recompensa experimentada." data-en="Note that the difference term is the same as in normal Q-learning, and r is the experienced reward.">
+                        Tenga en cuenta que el término de diferencia es el mismo que en el Q-learning normal, y r es la recompensa experimentada.
+                    </p>
+
+                    <p>
+                        <span data-es="Por defecto, ApproximateQAgent usa el IdentityExtractor, que asigna una sola característica a cada par (estado, acción). Con este extractor de características, su agente de Q-learning aproximado debería funcionar de manera idéntica a PacmanQAgent. Puede probar esto con el siguiente comando:" data-en="By default, ApproximateQAgent uses the IdentityExtractor, which assigns a single feature to every (state,action) pair. With this feature extractor, your approximate Q-learning agent should work identically to PacmanQAgent. You can test this with the following command:">Por defecto, ApproximateQAgent usa el </span>
+                        <code>IdentityExtractor</code><span data-es=", que asigna una sola característica a cada par (estado, acción). Con este extractor de características, su agente de Q-learning aproximado debería funcionar de manera idéntica a PacmanQAgent. Puede probar esto con el siguiente comando:" data-en=", which assigns a single feature to every (state,action) pair. With this feature extractor, your approximate Q-learning agent should work identically to PacmanQAgent. You can test this with the following command:">, que asigna una sola característica a cada par (estado, acción). Con este extractor de características, su agente de Q-learning aproximado debería funcionar de manera idéntica a PacmanQAgent. Puede probar esto con el siguiente comando:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ApproximateQAgent -x 2000 -n 2010 -l smallGrid</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="note-box">
+                        <strong data-es="Importante:" data-en="Important:">Importante:</strong>
+                        <span data-es="ApproximateQAgent es una subclase de QLearningAgent, y por lo tanto comparte varios métodos como getAction. Asegúrese de que sus métodos en QLearningAgent llamen a getQValue en lugar de acceder a los valores Q directamente, para que cuando sobrescriba getQValue en su agente aproximado, los nuevos valores q aproximados se usen para calcular acciones." data-en="ApproximateQAgent is a subclass of QLearningAgent, and it therefore shares several methods like getAction. Make sure that your methods in QLearningAgent call getQValue instead of accessing Q-values directly, so that when you override getQValue in your approximate agent, the new approximate q-values are used to compute actions.">
+                            ApproximateQAgent es una subclase de QLearningAgent, y por lo tanto comparte varios métodos como getAction. Asegúrese de que sus métodos en QLearningAgent llamen a getQValue en lugar de acceder a los valores Q directamente, para que cuando sobrescriba getQValue en su agente aproximado, los nuevos valores q aproximados se usen para calcular acciones.
+                        </span>
+                    </div>
+
+                    <p data-es="Una vez que esté seguro de que su aprendiz aproximado funciona correctamente con las características de identidad, ejecute su agente de Q-learning aproximado con nuestro extractor de características personalizado, que puede aprender a ganar con facilidad:" data-en="Once you're confident that your approximate learner works correctly with the identity features, run your approximate Q-learning agent with our custom feature extractor, which can learn to win with ease:">
+                        Una vez que esté seguro de que su aprendiz aproximado funciona correctamente con las características de identidad, ejecute su agente de Q-learning aproximado con nuestro extractor de características personalizado, que puede aprender a ganar con facilidad:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumGrid</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Incluso diseños mucho más grandes no deberían ser un problema para su ApproximateQAgent (advertencia: esto puede tomar unos minutos para entrenar):" data-en="Even much larger layouts should be no problem for your ApproximateQAgent (warning: this may take a few minutes to train):">
+                        Incluso diseños mucho más grandes no deberían ser un problema para su ApproximateQAgent (advertencia: esto puede tomar unos minutos para entrenar):
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python pacman.py -p ApproximateQAgent -a extractor=SimpleExtractor -x 50 -n 60 -l mediumClassic</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si no tiene errores, su agente de Q-learning aproximado debería ganar casi siempre con estas características simples, incluso con solo 50 juegos de entrenamiento." data-en="If you have no errors, your approximate Q-learning agent should win almost every time with these simple features, even with only 50 training games.">
+                        Si no tiene errores, su agente de Q-learning aproximado debería ganar casi siempre con estas características simples, incluso con solo 50 juegos de entrenamiento.
+                    </p>
+
+                    <p>
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong>
+                        <span data-es=" Ejecutaremos su agente de Q-learning aproximado y verificaremos que aprenda los mismos valores Q y pesos de características que nuestra implementación de referencia cuando a cada uno se le presente el mismo conjunto de ejemplos. Para calificar su implementación, ejecute el autograder:" data-en=" We will run your approximate Q-learning agent and check that it learns the same Q-values and feature weights as our reference implementation when each is presented with the same set of examples. To grade your implementation, run the autograder:"> Ejecutaremos su agente de Q-learning aproximado y verificaremos que aprenda los mismos valores Q y pesos de características que nuestra implementación de referencia cuando a cada uno se le presente el mismo conjunto de ejemplos. Para calificar su implementación, ejecute el autograder:</span>
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q9</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="¡Felicitaciones! ¡Tiene un agente Pacman que aprende!" data-en="Congratulations! You have a learning Pacman agent!">
+                        <strong data-es="¡Felicitaciones! ¡Tiene un agente Pacman que aprende!" data-en="Congratulations! You have a learning Pacman agent!">¡Felicitaciones! ¡Tiene un agente Pacman que aprende!</strong>
+                    </p>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab4-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab4-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">
+                        El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab4-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="FECHA LÍMITE DE ENTREGA:" data-en="ASSIGNMENT DUE DATE:">FECHA LÍMITE DE ENTREGA:</strong>
+                        <span data-es="23/05/2026, 11:55 PM" data-en="23/05/2026, 11:55 PM">23/05/2026, 11:55 PM</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
