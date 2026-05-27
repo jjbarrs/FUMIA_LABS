@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab5 - Ghostbusters | FUMIA Labs</title>
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Image placeholder */
+        .image-placeholder {
+            background: #f6f8fa;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #57606a;
+        }
+
+        .dark-mode .image-placeholder {
+            background: #161b22;
+            border-color: #30363d;
+            color: #8b949e;
+        }
+
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Hints section styling */
+        .hints-section {
+            background: #ddf4ff;
+            border-left: 4px solid #0969da;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .hints-section {
+            background: #1c2d41;
+            border-left-color: #58a6ff;
+        }
+
+        .hints-section h4 {
+            margin-top: 0;
+            color: #0969da;
+        }
+
+        .dark-mode .hints-section h4 {
+            color: #58a6ff;
+        }
+
+        .hints-section ul {
+            margin-bottom: 0;
+        }
+
+        /* Poem / haiku styling */
+        .poem-block {
+            font-style: italic;
+            color: #57606a;
+            margin: 1rem 0 1.5rem 0;
+            line-height: 2;
+        }
+
+        .dark-mode .poem-block {
+            color: #8b949e;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="../lab1/index.html" class="nav-link" data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</a></li>
+                            <li><a href="../lab2/index.html" class="nav-link" data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</a></li>
+                            <li><a href="../lab3/index.html" class="nav-link" data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</a></li>
+                            <li><a href="../lab4/index.html" class="nav-link" data-es="Lab4 - Aprendizaje por Refuerzo" data-en="Lab4 - Reinforcement Learning">Lab4 - Aprendizaje por Refuerzo</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab5 - Ghostbusters" data-en="Lab5 - Ghostbusters">Lab5 - Ghostbusters</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab5 - Ghostbusters" data-en="Lab5 - Ghostbusters">Lab5 - Ghostbusters</span>
+            </div>
+            
+            <h1 data-es="Lab5 - Ghostbusters" data-en="Lab5 - Ghostbusters">Lab5 - Ghostbusters</h1>
+            <br>
+            
+            <p class="subtitle" data-es="Fecha de entrega: sabado, 6 de junio, 11:55 PM PT" data-en="Due: Saturday, June 6, 11:55 PM PT">
+                Fecha de entrega: sabado, 6 de junio, 11:55 PM PT
+            </p>
+            
+            <div class="lab-content">
+                <!-- Hero Image -->
+                <div class="image-placeholder">
+                    <img width="500px" src="busters.png" alt="">
+                </div>
+
+                <!-- Poem -->
+                <div class="poem-block">
+                    <p data-es="Puedo escucharte, fantasma.<br>Correr no te salvará de mi<br>¡Filtro de partículas!" data-en="I can hear you, ghost.<br>Running won't save you from my<br>Particle filter!">
+                        Puedo escucharte, fantasma.<br>
+                        Correr no te salvará de mi<br>
+                        ¡Filtro de partículas!
+                    </p>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#introduction" data-es="Introducción" data-en="Introduction">Introducción</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#ghostbusters-bayes" data-es="Ghostbusters y Redes de Bayes" data-en="Ghostbusters and Bayes Nets">Ghostbusters y Redes de Bayes</a></li>
+                        <li><a href="#q1" data-es="Q1: Estructura de la Red de Bayes" data-en="Q1: Bayes Net Structure">Q1: Estructura de la Red de Bayes</a></li>
+                        <li><a href="#q2" data-es="Q2: Unión de Factores" data-en="Q2: Join Factors">Q2: Unión de Factores</a></li>
+                        <li><a href="#q3" data-es="Q3: Eliminar (aún no fantasmas)" data-en="Q3: Eliminate (not ghosts yet)">Q3: Eliminar (aún no fantasmas)</a></li>
+                        <li><a href="#q4" data-es="Q4: Eliminación de Variables" data-en="Q4: Variable Elimination">Q4: Eliminación de Variables</a></li>
+                        <li><a href="#q5a" data-es="Q5a: Clase DiscreteDistribution" data-en="Q5a: DiscreteDistribution Class">Q5a: Clase DiscreteDistribution</a></li>
+                        <li><a href="#q5b" data-es="Q5b: Probabilidad de Observación" data-en="Q5b: Observation Probability">Q5b: Probabilidad de Observación</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    
+                    <p>
+                        <span data-es="En este laboratorio, debes descargar los archivos base desde este " data-en="In this lab, you must download the base files from this ">En este laboratorio, debes descargar los archivos base desde este </span><a href="https://inst.eecs.berkeley.edu/~cs188/fa25/assets/projects/tracking.zip" target="_blank" data-es="link" data-en="link">link</a>.
+                    </p>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section-anchor">
+                    <h2 data-es="Introducción" data-en="Introduction">Introducción</h2>
+                    
+                    <p data-es="Pacman pasa su vida huyendo de los fantasmas, pero las cosas no siempre fueron así. La leyenda dice que hace muchos años, el bisabuelo de Pacman, Grandpac, aprendió a cazar fantasmas por deporte. Sin embargo, fue cegado por su poder y solo podía rastrear a los fantasmas por sus ruidos y estruendos." data-en="Pacman spends his life running from ghosts, but things were not always so. Legend has it that many years ago, Pacman's great grandfather Grandpac learned to hunt ghosts for sport. However, he was blinded by his power and could only track ghosts by their banging and clanging.">
+                        Pacman pasa su vida huyendo de los fantasmas, pero las cosas no siempre fueron así. La leyenda dice que hace muchos años, el bisabuelo de Pacman, Grandpac, aprendió a cazar fantasmas por deporte. Sin embargo, fue cegado por su poder y solo podía rastrear a los fantasmas por sus ruidos y estruendos.
+                    </p>
+
+                    <p data-es="En este proyecto, diseñarás agentes Pacman que usan sensores para localizar y comer fantasmas invisibles. Avanzarás desde la localización de fantasmas individuales estacionarios hasta la caza de grupos de múltiples fantasmas en movimiento con eficiencia implacable." data-en="In this project, you will design Pacman agents that use sensors to locate and eat invisible ghosts. You'll advance from locating single, stationary ghosts to hunting packs of multiple moving ghosts with ruthless efficiency.">
+                        En este proyecto, diseñarás agentes Pacman que usan sensores para localizar y comer fantasmas invisibles. Avanzarás desde la localización de fantasmas individuales estacionarios hasta la caza de grupos de múltiples fantasmas en movimiento con eficiencia implacable.
+                    </p>
+
+                    <p data-es="Este proyecto incluye un autograder para que califiques tus respuestas en tu máquina. Se puede ejecutar en todas las preguntas con el comando:" data-en="This project includes an autograder for you to grade your answers on your machine. This can be run on all questions with the command:">
+                        Este proyecto incluye un autograder para que califiques tus respuestas en tu máquina. Se puede ejecutar en todas las preguntas con el comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una pregunta particular, como q2, con:" data-en="It can be run for one particular question, such as q2, by:">
+                        Se puede ejecutar para una pregunta particular, como q2, con:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una prueba particular con comandos de la forma:" data-en="It can be run for one particular test by commands of the form:">
+                        Se puede ejecutar para una prueba particular con comandos de la forma:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q2/1-bridge-grid</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberás leer y entender para completar la tarea, y algunos de los cuales puedes ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberás leer y entender para completar la tarea, y algunos de los cuales puedes ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que vas a editar" data-en="Files you'll edit">Archivos que vas a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">bustersAgents.py</span></td>
+                                        <td data-es="Agentes para jugar la variante Ghostbusters de Pacman." data-en="Agents for playing the Ghostbusters variant of Pacman.">Agentes para jugar la variante Ghostbusters de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">inference.py</span></td>
+                                        <td data-es="Código para rastrear fantasmas a lo largo del tiempo usando sus sonidos." data-en="Code for tracking ghosts over time using their sounds.">Código para rastrear fantasmas a lo largo del tiempo usando sus sonidos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">factorOperations.py</span></td>
+                                        <td data-es="Operaciones para calcular nuevas tablas de probabilidad conjunta o marginalizada." data-en="Operations to compute new joint or marginalized probability tables.">Operaciones para calcular nuevas tablas de probabilidad conjunta o marginalizada.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás quieras revisar" data-en="Files you might want to look at">Archivos que quizás quieras revisar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">bayesNet.py</span></td>
+                                        <td data-es="Las clases BayesNet y Factor." data-en="The BayesNet and Factor classes.">Las clases BayesNet y Factor.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos de soporte que puedes ignorar" data-en="Supporting files you can ignore">Archivos de soporte que puedes ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Supporting files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">busters.py</span></td>
+                                        <td data-es="La entrada principal a Ghostbusters (reemplaza Pacman.py)." data-en="The main entry to Ghostbusters (replacing Pacman.py).">La entrada principal a Ghostbusters (reemplaza Pacman.py).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">bustersGhostAgents.py</span></td>
+                                        <td data-es="Nuevos agentes fantasma para Ghostbusters." data-en="New ghost agents for Ghostbusters.">Nuevos agentes fantasma para Ghostbusters.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">distanceCalculator.py</span></td>
+                                        <td data-es="Calcula distancias en el laberinto, almacena los resultados en caché para evitar recalcularlos." data-en="Computes maze distances, caches results to avoid re-computing.">Calcula distancias en el laberinto, almacena los resultados en caché para evitar recalcularlos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">game.py</span></td>
+                                        <td data-es="Funcionamiento interno y clases auxiliares para Pacman." data-en="Inner workings and helper classes for Pacman.">Funcionamiento interno y clases auxiliares para Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">ghostAgents.py</span></td>
+                                        <td data-es="Agentes para controlar los fantasmas." data-en="Agents to control ghosts.">Agentes para controlar los fantasmas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsDisplay.py</span></td>
+                                        <td data-es="Gráficos para Pacman." data-en="Graphics for Pacman.">Gráficos para Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Soporte para los gráficos de Pacman." data-en="Support for Pacman graphics.">Soporte para los gráficos de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">keyboardAgents.py</span></td>
+                                        <td data-es="Interfaces de teclado para controlar a Pacman." data-en="Keyboard interfaces to control Pacman.">Interfaces de teclado para controlar a Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">layout.py</span></td>
+                                        <td data-es="Código para leer archivos de diseño y almacenar su contenido." data-en="Code for reading layout files and storing their contents.">Código para leer archivos de diseño y almacenar su contenido.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Funciones de utilidad." data-en="Utility functions.">Funciones de utilidad.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Temas necesarios para este proyecto" data-en="Topics needed for this project">Temas necesarios para este proyecto</h3>
+                    <ul>
+                        <li data-es="Probabilidad" data-en="Probability">Probabilidad</li>
+                        <li data-es="Representación de Redes de Bayes" data-en="Bayes Nets Representation">Representación de Redes de Bayes</li>
+                        <li data-es="Inferencia en Redes de Bayes" data-en="Bayes Nets Inference">Inferencia en Redes de Bayes</li>
+                        <li data-es="HMMs (Modelos Ocultos de Markov)" data-en="HMMs">HMMs (Modelos Ocultos de Markov)</li>
+                        <li data-es="Filtrado de Partículas" data-en="Particle Filtering">Filtrado de Partículas</li>
+                    </ul>
+                </section>
+
+                <!-- Ghostbusters and Bayes Nets -->
+                <section id="ghostbusters-bayes" class="section-anchor">
+                    <h2 data-es="Ghostbusters y Redes de Bayes" data-en="Ghostbusters and Bayes Nets">Ghostbusters y Redes de Bayes</h2>
+
+                    <p data-es="En la versión CS 188 de Ghostbusters, el objetivo es cazar fantasmas asustados pero invisibles. Pacman, siempre ingenioso, está equipado con sonar (oídos) que proporciona lecturas ruidosas de la distancia de Manhattan a cada fantasma. El juego termina cuando Pacman ha comido a todos los fantasmas. Para comenzar, intenta jugar un juego tú mismo usando el teclado." data-en="In the CS 188 version of Ghostbusters, the goal is to hunt down scared but invisible ghosts. Pacman, ever resourceful, is equipped with sonar (ears) that provides noisy readings of the Manhattan distance to each ghost. The game ends when Pacman has eaten all the ghosts. To start, try playing a game yourself using the keyboard.">
+                        En la versión CS 188 de Ghostbusters, el objetivo es cazar fantasmas asustados pero invisibles. Pacman, siempre ingenioso, está equipado con sonar (oídos) que proporciona lecturas ruidosas de la distancia de Manhattan a cada fantasma. El juego termina cuando Pacman ha comido a todos los fantasmas. Para comenzar, intenta jugar un juego tú mismo usando el teclado.
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python busters.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Los bloques de color indican dónde podría estar cada fantasma, dadas las lecturas de distancia ruidosas proporcionadas a Pacman. Las distancias ruidosas en la parte inferior de la pantalla son siempre no negativas y siempre están dentro de 7 de la distancia real. La probabilidad de una lectura de distancia disminuye exponencialmente con su diferencia respecto a la distancia real." data-en="The blocks of color indicate where the each ghost could possibly be, given the noisy distance readings provided to Pacman. The noisy distances at the bottom of the display are always non-negative, and always within 7 of the true distance. The probability of a distance reading decreases exponentially with its difference from the true distance.">
+                        Los bloques de color indican dónde podría estar cada fantasma, dadas las lecturas de distancia ruidosas proporcionadas a Pacman. Las distancias ruidosas en la parte inferior de la pantalla son siempre no negativas y siempre están dentro de 7 de la distancia real. La probabilidad de una lectura de distancia disminuye exponencialmente con su diferencia respecto a la distancia real.
+                    </p>
+
+                    <p data-es="Tu tarea principal en este proyecto es implementar inferencia para rastrear a los fantasmas. Para el juego basado en teclado anterior, se implementó una forma rudimentaria de inferencia por defecto: todos los cuadrados en los que un fantasma podría estar se sombrean con el color del fantasma. Naturalmente, queremos una mejor estimación de la posición del fantasma. Afortunadamente, las Redes de Bayes nos proporcionan herramientas poderosas para aprovechar al máximo la información que tenemos. A lo largo del resto de este proyecto, implementarás algoritmos para realizar inferencia exacta y aproximada usando Redes de Bayes. El proyecto es desafiante, por lo que te animamos a comenzar temprano y buscar ayuda cuando sea necesario." data-en="Your primary task in this project is to implement inference to track the ghosts. For the keyboard based game above, a crude form of inference was implemented for you by default: all squares in which a ghost could possibly be are shaded by the color of the ghost. Naturally, we want a better estimate of the ghost's position. Fortunately, Bayes Nets provide us with powerful tools for making the most of the information we have. Throughout the rest of this project, you will implement algorithms for performing both exact and approximate inference using Bayes Nets. The project is challenging, so we do encourage you to start early and seek help when necessary.">
+                        Tu tarea principal en este proyecto es implementar inferencia para rastrear a los fantasmas. Para el juego basado en teclado anterior, se implementó una forma rudimentaria de inferencia por defecto: todos los cuadrados en los que un fantasma podría estar se sombrean con el color del fantasma. Naturalmente, queremos una mejor estimación de la posición del fantasma. Afortunadamente, las Redes de Bayes nos proporcionan herramientas poderosas para aprovechar al máximo la información que tenemos. A lo largo del resto de este proyecto, implementarás algoritmos para realizar inferencia exacta y aproximada usando Redes de Bayes. El proyecto es desafiante, por lo que te animamos a comenzar temprano y buscar ayuda cuando sea necesario.
+                    </p>
+
+                    <p data-es="Mientras observas y depuras tu código con el autograder, será útil tener cierta comprensión de lo que hace el autograder. Hay 2 tipos de pruebas en este proyecto, diferenciados por sus archivos .test que se encuentran en los subdirectorios de la carpeta test_cases. Para pruebas de clase DoubleInferenceAgentTest, verás visualizaciones de las distribuciones de inferencia generadas por tu código, pero todas las acciones de Pacman se seleccionarán previamente según las acciones de la implementación del equipo docente. Esto es necesario para permitir la comparación de tus distribuciones con las del equipo. El segundo tipo de prueba es GameScoreTest, en el que tu BustersAgent seleccionará acciones para Pacman y observarás cómo tu Pacman juega y gana partidas." data-en="While watching and debugging your code with the autograder, it will be helpful to have some understanding of what the autograder is doing. There are 2 types of tests in this project, as differentiated by their .test files found in the subdirectories of the test_cases folder. For tests of class DoubleInferenceAgentTest, you will see visualizations of the inference distributions generated by your code, but all Pacman actions will be pre-selected according to the actions of the staff implementation. This is necessary to allow comparison of your distributions with the staff's distributions. The second type of test is GameScoreTest, in which your BustersAgent will actually select actions for Pacman and you will watch your Pacman play and win games.">
+                        Mientras observas y depuras tu código con el autograder, será útil tener cierta comprensión de lo que hace el autograder. Hay 2 tipos de pruebas en este proyecto, diferenciados por sus archivos .test que se encuentran en los subdirectorios de la carpeta test_cases. Para pruebas de clase DoubleInferenceAgentTest, verás visualizaciones de las distribuciones de inferencia generadas por tu código, pero todas las acciones de Pacman se seleccionarán previamente según las acciones de la implementación del equipo docente. Esto es necesario para permitir la comparación de tus distribuciones con las del equipo. El segundo tipo de prueba es GameScoreTest, en el que tu BustersAgent seleccionará acciones para Pacman y observarás cómo tu Pacman juega y gana partidas.
+                    </p>
+
+                    <p data-es="Para este proyecto, es posible que el autograder se agote si se ejecutan las pruebas con gráficos. Para determinar con precisión si tu código es lo suficientemente eficiente, debes ejecutar las pruebas con la bandera --no-graphics. Si el autograder pasa con esta bandera, recibirás puntos completos, incluso si el autograder se agota con gráficos." data-en="For this project, it is possible sometimes for the autograder to time out if running the tests with graphics. To accurately determine whether or not your code is efficient enough, you should run the tests with the --no-graphics flag. If the autograder passes with this flag, then you will receive full points, even if the autograder times out with graphics.">
+                        Para este proyecto, es posible que el autograder se agote si se ejecutan las pruebas con gráficos. Para determinar con precisión si tu código es lo suficientemente eficiente, debes ejecutar las pruebas con la bandera <code>--no-graphics</code>. Si el autograder pasa con esta bandera, recibirás puntos completos, incluso si el autograder se agota con gráficos.
+                    </p>
+
+                    <h3 data-es="Redes de Bayes y Factores" data-en="Bayes Nets and Factors">Redes de Bayes y Factores</h3>
+
+                    <p>
+                        <span data-es="Primero, revisa " data-en="First, take a look at ">Primero, revisa </span>
+                        <code>bayesNet.py</code>
+                        <span data-es=" para ver las clases con las que trabajarás: BayesNet y Factor. También puedes ejecutar este archivo para ver un ejemplo de BayesNet y Factores asociados: " data-en=" to see the classes you'll be working with – BayesNet and Factor. You can also run this file to see an example BayesNet and associated Factors: "> para ver las clases con las que trabajarás: BayesNet y Factor. También puedes ejecutar este archivo para ver un ejemplo de BayesNet y Factores asociados: </span>
+                        <code>python bayesNet.py</code>.
+                    </p>
+
+                    <p>
+                        <span data-es="Debes revisar la función " data-en="You should look at the ">Debes revisar la función </span>
+                        <code>printStarterBayesNet</code>
+                        <span data-es=" – hay comentarios útiles que pueden facilitarte el trabajo más adelante." data-en=" function – there are helpful comments that can make your life much easier later on."> – hay comentarios útiles que pueden facilitarte el trabajo más adelante.</span>
+                    </p>
+
+                    <p data-es="La Red de Bayes creada en esta función se muestra a continuación:" data-en="The Bayes Net created in this function is shown below:">
+                        La Red de Bayes creada en esta función se muestra a continuación:
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">Estructura</div>
+                        <div class="code-content">
+                            <pre>Raining –> Traffic &lt;– Ballgame</pre>
+                        </div>
+                    </div>
+
+                    <p data-es="A continuación se presenta un resumen de la terminología:" data-en="A summary of the terminology is given below:">
+                        A continuación se presenta un resumen de la terminología:
+                    </p>
+
+                    <ul>
+                        <li>
+                            <strong data-es="Red de Bayes:" data-en="Bayes Net:">Red de Bayes:</strong>
+                            <span data-es=" Es una representación de un modelo probabilístico como un grafo acíclico dirigido y un conjunto de tablas de probabilidad condicional, una para cada variable, tal como se muestra en clase. La Red de Bayes de Tráfico anterior es un ejemplo." data-en=" This is a representation of a probabilistic model as a directed acyclic graph and a set of conditional probability tables, one for each variable, as shown in lecture. The Traffic Bayes Net above is an example."> Es una representación de un modelo probabilístico como un grafo acíclico dirigido y un conjunto de tablas de probabilidad condicional, una para cada variable, tal como se muestra en clase. La Red de Bayes de Tráfico anterior es un ejemplo.</span>
+                        </li>
+                        <li>
+                            <strong data-es="Factor:" data-en="Factor:">Factor:</strong>
+                            <span data-es=" Almacena una tabla de probabilidades, aunque la suma de las entradas en la tabla no es necesariamente 1. Un factor tiene la forma general f(X₁,...,Xₘ,Y₁,...,Yₙ∣Z₁,...,Zₚ,w₁,...,wq). Recuerda que las variables en minúscula ya han sido asignadas. Para cada posible asignación de valores a las variables Xᵢ y Zⱼ, el factor almacena un único número. Las variables Zⱼ y wₖ se dicen condicionadas, mientras que las variables Xᵢ y Yₗ son no condicionadas." data-en=" This stores a table of probabilities, although the sum of the entries in the table is not necessarily 1. A factor is of the general form f(X₁,...,Xₘ,Y₁,...,Yₙ∣Z₁,...,Zₚ,w₁,...,wq). Recall that lower case variables have already been assigned. For each possible assignment of values to the Xᵢ and Zⱼ variables, the factor stores a single number. The Zⱼ and wₖ variables are said to be conditioned while the Xᵢ and Yₗ variables are unconditioned."> Almacena una tabla de probabilidades, aunque la suma de las entradas en la tabla no es necesariamente 1. Un factor tiene la forma general f(X₁,...,Xₘ,Y₁,...,Yₙ∣Z₁,...,Zₚ,w₁,...,wq). Recuerda que las variables en minúscula ya han sido asignadas. Para cada posible asignación de valores a las variables Xᵢ y Zⱼ, el factor almacena un único número. Las variables Zⱼ y wₖ se dicen condicionadas, mientras que las variables Xᵢ y Yₗ son no condicionadas.</span>
+                        </li>
+                        <li>
+                            <strong data-es="Tabla de Probabilidad Condicional (CPT):" data-en="Conditional Probability Table (CPT):">Tabla de Probabilidad Condicional (CPT):</strong>
+                            <span data-es=" Es un factor que satisface dos propiedades: (1) Sus entradas deben sumar 1 para cada asignación de las variables condicionales. (2) Hay exactamente una variable no condicionada. La Red de Bayes de Tráfico almacena las siguientes CPTs: P(Raining), P(Ballgame), P(Traffic∣Ballgame, Raining)." data-en=" This is a factor satisfying two properties: (1) Its entries must sum to 1 for each assignment of the conditional variables. (2) There is exactly one unconditioned variable. The Traffic Bayes Net stores the following CPTs: P(Raining), P(Ballgame), P(Traffic∣Ballgame, Raining)."> Es un factor que satisface dos propiedades: (1) Sus entradas deben sumar 1 para cada asignación de las variables condicionales. (2) Hay exactamente una variable no condicionada. La Red de Bayes de Tráfico almacena las siguientes CPTs: P(Raining), P(Ballgame), P(Traffic∣Ballgame, Raining).</span>
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Q1 -->
+                <section id="q1" class="section-anchor">
+                    <h2 data-es="Q1: Estructura de la Red de Bayes" data-en="Q1: Bayes Net Structure">Q1: Estructura de la Red de Bayes</h2>
+
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>constructBayesNet</code>
+                        <span data-es=" en inference.py. Construye una Red de Bayes vacía con la estructura descrita a continuación. Una Red de Bayes está incompleta sin las probabilidades reales, pero los factores son definidos y asignados por el código del equipo docente por separado; no necesitas preocuparte por eso. Si tienes curiosidad, puedes ver un ejemplo de cómo funciona en printStarterBayesNet en bayesNet.py. Leer esta función también puede ser útil para hacer esta pregunta." data-en=" function in inference.py. It constructs an empty Bayes Net with the structure described below. A Bayes Net is incomplete without the actual probabilities, but factors are defined and assigned by staff code separately; you don't need to worry about it. If you are curious, you can take a look at an example of how it works in printStarterBayesNet in bayesNet.py. Reading this function can also be helpful for doing this question."> en <code>inference.py</code>. Construye una Red de Bayes vacía con la estructura descrita a continuación. Una Red de Bayes está incompleta sin las probabilidades reales, pero los factores son definidos y asignados por el código del equipo docente por separado; no necesitas preocuparte por eso. Si tienes curiosidad, puedes ver un ejemplo de cómo funciona en <code>printStarterBayesNet</code> en <code>bayesNet.py</code>. Leer esta función también puede ser útil para esta pregunta.</span>
+                    </p>
+
+                    <p data-es="El mundo simplificado de caza de fantasmas se genera según la siguiente Red de Bayes:" data-en="The simplified ghost hunting world is generated according to the following Bayes net:">
+                        El mundo simplificado de caza de fantasmas se genera según la siguiente Red de Bayes:
+                    </p>
+
+                    <div class="image-placeholder">
+                        <img width="500px" src="busters_bayes_net_simplified.png" alt="">
+                    </div>
+
+                    <p data-es="No te preocupes si esto parece complicado. Lo abordaremos paso a paso. Como se describe en el código de constructBayesNet, construimos la estructura vacía listando todas las variables, sus valores y los bordes entre ellas. Esta figura muestra las variables y los bordes, ¿pero qué hay de sus dominios?" data-en="Don't worry if this looks complicated! We'll take it step by step. As described in the code for constructBayesNet, we build the empty structure by listing all of the variables, their values, and the edges between them. This figure shows the variables and the edges, but what about their domains?">
+                        No te preocupes si esto parece complicado. Lo abordaremos paso a paso. Como se describe en el código de <code>constructBayesNet</code>, construimos la estructura vacía listando todas las variables, sus valores y los bordes entre ellas. Esta figura muestra las variables y los bordes, ¿pero qué hay de sus dominios?
+                    </p>
+
+                    <ul>
+                        <li data-es="Agrega variables y bordes basándote en el diagrama." data-en="Add variables and edges based on the diagram.">Agrega variables y bordes basándote en el diagrama.</li>
+                        <li data-es="Pacman y los dos fantasmas pueden estar en cualquier lugar del tablero (ignoramos las paredes para esto). Agrega todas las tuplas de posición posibles para estos." data-en="Pacman and the two ghosts can be anywhere in the grid (we ignore walls for this). Add all possible position tuples for these.">Pacman y los dos fantasmas pueden estar en cualquier lugar del tablero (ignoramos las paredes para esto). Agrega todas las tuplas de posición posibles para estos.</li>
+                        <li data-es="Las observaciones aquí son no negativas, iguales a las distancias de Manhattan de Pacman a los fantasmas ± ruido." data-en="Observations here are non-negative, equal to Manhattan distances of Pacman to ghosts ± noise.">Las observaciones aquí son no negativas, iguales a las distancias de Manhattan de Pacman a los fantasmas ± ruido.</li>
+                    </ul>
+
+                    <p data-es="Calificación: Para probar y depurar tu código, ejecuta:" data-en="Grading: To test and debug your code, run:">
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> Para probar y depurar tu código, ejecuta:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q1</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q2 -->
+                <section id="q2" class="section-anchor">
+                    <h2 data-es="Q2: Unión de Factores" data-en="Q2: Join Factors">Q2: Unión de Factores</h2>
+
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>joinFactors</code>
+                        <span data-es=" en factorOperations.py. Toma una lista de Factores y devuelve un nuevo Factor cuyas entradas de probabilidad son el producto de las filas correspondientes de los Factores de entrada." data-en=" function in factorOperations.py. It takes in a list of Factors and returns a new Factor whose probability entries are the product of the corresponding rows of the input Factors."> en <code>factorOperations.py</code>. Toma una lista de Factores y devuelve un nuevo Factor cuyas entradas de probabilidad son el producto de las filas correspondientes de los Factores de entrada.</span>
+                    </p>
+
+                    <p>
+                        <code>joinFactors</code>
+                        <span data-es=" se puede usar como la regla del producto; por ejemplo, si tenemos un factor de la forma P(X∣Y) y otro factor de la forma P(Y), entonces unir estos factores producirá P(X,Y). Por lo tanto, joinFactors nos permite incorporar probabilidades para variables condicionadas (en este caso, Y). Sin embargo, no debes asumir que joinFactors se llama con tablas de probabilidad — es posible llamar a joinFactors con Factores cuyas filas no suman 1." data-en=" can be used as the product rule, for example, if we have a factor of the form P(X∣Y) and another factor of the form P(Y), then joining these factors will yield P(X,Y). So, joinFactors allows us to incorporate probabilities for conditioned variables (in this case, Y). However, you should not assume that joinFactors is called on probability tables – it is possible to call joinFactors on Factors whose rows do not sum to 1."> se puede usar como la regla del producto; por ejemplo, si tenemos un factor de la forma P(X∣Y) y otro factor de la forma P(Y), entonces unir estos factores producirá P(X,Y). Por lo tanto, <code>joinFactors</code> nos permite incorporar probabilidades para variables condicionadas. Sin embargo, no debes asumir que <code>joinFactors</code> se llama con tablas de probabilidad — es posible llamarlo con Factores cuyas filas no suman 1.</span>
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para probar y depurar tu código, ejecuta:" data-en="To test and debug your code, run:">Para probar y depurar tu código, ejecuta:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Puede ser útil ejecutar pruebas específicas durante la depuración, para ver solo un conjunto de factores impresos. Por ejemplo, para ejecutar solo la primera prueba:" data-en="It may be useful to run specific tests during debugging, to see only one set of factors print out. For example, to only run the first test, run:">
+                        Puede ser útil ejecutar pruebas específicas durante la depuración, para ver solo un conjunto de factores impresos. Por ejemplo, para ejecutar solo la primera prueba:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q2/1-product-rule</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="hints-section">
+                        <h4 data-es="Sugerencias y Observaciones" data-en="Hints and Observations">Sugerencias y Observaciones</h4>
+                        <ul>
+                            <li data-es="Tu joinFactors debe devolver un nuevo Factor." data-en="Your joinFactors should return a new Factor.">Tu <code>joinFactors</code> debe devolver un nuevo Factor.</li>
+                            <li data-es="Algunos ejemplos de lo que joinFactors puede hacer:" data-en="Here are some examples of what joinFactors can do:">Algunos ejemplos de lo que <code>joinFactors</code> puede hacer:
+                                <ul>
+                                    <li><code>joinFactors(P(X∣Y), P(Y)) = P(X,Y)</code></li>
+                                    <li><code>joinFactors(P(V,W∣X,Y,Z), P(X,Y∣Z)) = P(V,W,X,Y∣Z)</code></li>
+                                    <li><code>joinFactors(P(X∣Y,Z), P(Y)) = P(X,Y∣Z)</code></li>
+                                    <li><code>joinFactors(P(V∣W), P(X∣Y), P(Z)) = P(V,X,Z∣W,Y)</code></li>
+                                </ul>
+                            </li>
+                            <li data-es="Para una operación joinFactors general, ¿qué variables no están condicionadas en el Factor devuelto? ¿Cuáles están condicionadas?" data-en="For a general joinFactors operation, which variables are unconditioned in the returned Factor? Which variables are conditioned?">Para una operación <code>joinFactors</code> general, ¿qué variables no están condicionadas en el Factor devuelto? ¿Cuáles están condicionadas?</li>
+                            <li data-es="Los Factores almacenan un variableDomainsDict, que mapea cada variable a una lista de valores que puede tomar (su dominio). Un Factor obtiene su variableDomainsDict de la BayesNet de la que fue instanciado. Como resultado, contiene todas las variables de la BayesNet, no solo las variables condicionadas y no condicionadas usadas en el Factor. Para este problema, puedes asumir que todos los Factores de entrada provienen de la misma BayesNet, por lo que sus variableDomainsDicts son todos iguales." data-en="Factors store a variableDomainsDict, which maps each variable to a list of values that it can take on (its domain). A Factor gets its variableDomainsDict from the BayesNet from which it was instantiated. As a result, it contains all the variables of the BayesNet, not only the unconditioned and conditioned variables used in the Factor. For this problem, you may assume that all the input Factors have come from the same BayesNet, and so their variableDomainsDicts are all the same.">Los Factores almacenan un <code>variableDomainsDict</code>, que mapea cada variable a una lista de valores que puede tomar (su dominio). Para este problema, puedes asumir que todos los Factores de entrada provienen de la misma BayesNet, por lo que sus <code>variableDomainsDicts</code> son todos iguales.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Q3 -->
+                <section id="q3" class="section-anchor">
+                    <h2 data-es="Q3: Eliminar (aún no fantasmas)" data-en="Q3: Eliminate (not ghosts yet)">Q3: Eliminar (aún no fantasmas)</h2>
+
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>eliminate</code>
+                        <span data-es=" en factorOperations.py. Toma un Factor y una variable a eliminar y devuelve un nuevo Factor que no contiene esa variable. Esto corresponde a sumar todas las entradas del Factor que solo difieren en el valor de la variable que se está eliminando." data-en=" function in factorOperations.py. It takes a Factor and a variable to eliminate and returns a new Factor that does not contain that variable. This corresponds to summing all of the entries in the Factor which only differ in the value of the variable being eliminated."> en <code>factorOperations.py</code>. Toma un Factor y una variable a eliminar y devuelve un nuevo Factor que no contiene esa variable. Esto corresponde a sumar todas las entradas del Factor que solo difieren en el valor de la variable que se está eliminando.</span>
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para probar y depurar tu código, ejecuta:" data-en="To test and debug your code, run:">Para probar y depurar tu código, ejecuta:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q3</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Puede ser útil ejecutar pruebas específicas durante la depuración. Por ejemplo, para ejecutar solo la primera prueba:" data-en="It may be useful to run specific tests during debugging. For example, to only run the first test, run:">
+                        Puede ser útil ejecutar pruebas específicas durante la depuración. Por ejemplo, para ejecutar solo la primera prueba:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q3/1-simple-eliminate</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="hints-section">
+                        <h4 data-es="Sugerencias y Observaciones" data-en="Hints and Observations">Sugerencias y Observaciones</h4>
+                        <ul>
+                            <li data-es="Tu eliminate debe devolver un nuevo Factor." data-en="Your eliminate should return a new Factor.">Tu <code>eliminate</code> debe devolver un nuevo Factor.</li>
+                            <li data-es="eliminate se puede usar para marginalizar variables de tablas de probabilidad. Por ejemplo:" data-en="eliminate can be used to marginalize variables from probability tables. For example:"><code>eliminate</code> se puede usar para marginalizar variables de tablas de probabilidad. Por ejemplo:
+                                <ul>
+                                    <li><code>eliminate(P(X,Y∣Z), Y) = P(X∣Z)</code></li>
+                                    <li><code>eliminate(P(X,Y∣Z), X) = P(Y∣Z)</code></li>
+                                </ul>
+                            </li>
+                            <li data-es="Para una operación eliminate general, ¿qué variables no están condicionadas en el Factor devuelto? ¿Cuáles están condicionadas?" data-en="For a general eliminate operation, which variables are unconditioned in the returned Factor? Which variables are conditioned?">Para una operación <code>eliminate</code> general, ¿qué variables no están condicionadas en el Factor devuelto? ¿Cuáles están condicionadas?</li>
+                            <li data-es="Recuerda que los Factores almacenan el variableDomainsDict de la BayesNet original, y no solo las variables condicionadas y no condicionadas que usan. Como resultado, el Factor devuelto debe tener el mismo variableDomainsDict que el Factor de entrada." data-en="Remember that Factors store the variableDomainsDict of the original BayesNet, and not only the unconditioned and conditioned variables that they use. As a result, the returned Factor should have the same variableDomainsDict as the input Factor.">Recuerda que los Factores almacenan el <code>variableDomainsDict</code> de la BayesNet original. Como resultado, el Factor devuelto debe tener el mismo <code>variableDomainsDict</code> que el Factor de entrada.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Q4 -->
+                <section id="q4" class="section-anchor">
+                    <h2 data-es="Q4: Eliminación de Variables" data-en="Q4: Variable Elimination">Q4: Eliminación de Variables</h2>
+
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>inferenceByVariableElimination</code>
+                        <span data-es=" en inference.py. Responde a una consulta probabilística, que se representa usando una BayesNet, una lista de variables de consulta y la evidencia." data-en=" function in inference.py. It answers a probabilistic query, which is represented using a BayesNet, a list of query variables, and the evidence."> en <code>inference.py</code>. Responde a una consulta probabilística, que se representa usando una BayesNet, una lista de variables de consulta y la evidencia.</span>
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para probar y depurar tu código, ejecuta:" data-en="To test and debug your code, run:">Para probar y depurar tu código, ejecuta:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q4</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Puede ser útil ejecutar pruebas específicas durante la depuración. Por ejemplo, para ejecutar solo la primera prueba:" data-en="It may be useful to run specific tests during debugging. For example, to only run the first test, run:">
+                        Puede ser útil ejecutar pruebas específicas durante la depuración. Por ejemplo, para ejecutar solo la primera prueba:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q4/1-disconnected-eliminate</span></pre>
+                        </div>
+                    </div>
+
+                    <div class="hints-section">
+                        <h4 data-es="Sugerencias y Observaciones" data-en="Hints and Observations">Sugerencias y Observaciones</h4>
+                        <ul>
+                            <li data-es="El algoritmo debe iterar sobre las variables ocultas en orden de eliminación, realizando la unión y eliminación de esa variable, hasta que solo queden las variables de consulta y evidencia." data-en="The algorithm should iterate over hidden variables in elimination order, performing joining over and eliminating that variable, until only the query and evidence variables remain.">El algoritmo debe iterar sobre las variables ocultas en orden de eliminación, realizando la unión y eliminación de esa variable, hasta que solo queden las variables de consulta y evidencia.</li>
+                            <li data-es="La suma de las probabilidades en tu factor de salida debe sumar 1 (para que sea una verdadera probabilidad condicional, condicionada a la evidencia)." data-en="The sum of the probabilities in your output factor should sum to 1 (so that it is a true conditional probability, conditioned on the evidence).">La suma de las probabilidades en tu factor de salida debe sumar 1.</li>
+                            <li>
+                                <span data-es="Observa la función " data-en="Look at the ">Observa la función </span>
+                                <code>inferenceByEnumeration</code>
+                                <span data-es=" en inference.py como ejemplo de cómo usar las funciones deseadas. (Recordatorio: la inferencia por enumeración primero une sobre todas las variables y luego elimina todas las variables ocultas. En contraste, la eliminación de variables intercala unión y eliminación iterando sobre todas las variables ocultas y realizando una unión y eliminación en una sola variable oculta antes de pasar a la siguiente.)" data-en=" function in inference.py for an example on how to use the desired functions. (Reminder: Inference by enumeration first joins over all the variables and then eliminates all the hidden variables. In contrast, variable elimination interleaves join and eliminate by iterating over all the hidden variables and perform a join and eliminate on a single hidden variable before moving on to the next hidden variable.)"> en <code>inference.py</code> como ejemplo de cómo usar las funciones deseadas.</span>
+                            </li>
+                            <li data-es="Deberás manejar el caso especial donde un factor que has unido solo tiene una variable no condicionada (el docstring especifica qué hacer en mayor detalle)." data-en="You will need to take care of the special case where a factor you have joined only has one unconditioned variable (the docstring specifies what to do in greater detail).">Deberás manejar el caso especial donde un factor unido solo tiene una variable no condicionada.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Q5a -->
+                <section id="q5a" class="section-anchor">
+                    <h2 data-es="Q5a: Clase DiscreteDistribution" data-en="Q5a: DiscreteDistribution Class">Q5a: Clase DiscreteDistribution</h2>
+
+                    <p data-es="Desafortunadamente, tener pasos de tiempo hará que nuestro grafo crezca demasiado para que la eliminación de variables sea viable. En cambio, usaremos el Algoritmo de Avance para HMMs para inferencia exacta, y Filtrado de Partículas para inferencia más rápida pero aproximada." data-en="Unfortunately, having timesteps will grow our graph far too much for variable elimination to be viable. Instead, we will use the Forward Algorithm for HMM's for exact inference, and Particle Filtering for even faster but approximate inference.">
+                        Desafortunadamente, tener pasos de tiempo hará que nuestro grafo crezca demasiado para que la eliminación de variables sea viable. En cambio, usaremos el Algoritmo de Avance para HMMs para inferencia exacta, y Filtrado de Partículas para inferencia más rápida pero aproximada.
+                    </p>
+
+                    <p>
+                        <span data-es="Para el resto del proyecto, usaremos la clase " data-en="For the rest of the project, we will be using the ">Para el resto del proyecto, usaremos la clase </span>
+                        <code>DiscreteDistribution</code>
+                        <span data-es=" definida en inference.py para modelar distribuciones de creencia y de peso. Esta clase es una extensión del diccionario integrado de Python, donde las claves son los diferentes elementos discretos de nuestra distribución, y los valores correspondientes son proporcionales a la creencia o peso que la distribución asigna a ese elemento. Esta pregunta te pide completar las partes faltantes de esta clase, que serán cruciales para preguntas posteriores (aunque esta pregunta en sí no vale puntos)." data-en=" class defined in inference.py to model belief distributions and weight distributions. This class is an extension of the built-in Python dictionary class, where the keys are the different discrete elements of our distribution, and the corresponding values are proportional to the belief or weight that the distribution assigns that element. This question asks you to fill in the missing parts of this class, which will be crucial for later questions (even though this question itself is worth no points)."> definida en <code>inference.py</code> para modelar distribuciones de creencia y de peso. Esta clase es una extensión del diccionario integrado de Python. Esta pregunta te pide completar las partes faltantes de esta clase, que serán cruciales para preguntas posteriores (aunque esta pregunta en sí no vale puntos).</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Primero, completa el método " data-en="First, fill in the ">Primero, completa el método </span>
+                        <code>normalize</code>
+                        <span data-es=", que normaliza los valores en la distribución para que sumen uno, pero mantiene las proporciones de los valores iguales. Usa el método total para encontrar la suma de los valores en la distribución. Para una distribución vacía o una distribución donde todos los valores son cero, no hagas nada. Ten en cuenta que este método modifica la distribución directamente, en lugar de devolver una nueva distribución." data-en=", which normalizes the values in the distribution to sum to one, but keeps the proportions of the values the same. Use the total method to find the sum of the values in the distribution. For an empty distribution or a distribution where all of the values are zero, do nothing. Note that this method modifies the distribution directly, rather than returning a new distribution.">, que normaliza los valores en la distribución para que sumen uno, manteniendo las proporciones iguales. Para una distribución vacía o con todos valores en cero, no hagas nada. Ten en cuenta que este método modifica la distribución directamente.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Segundo, completa el método " data-en="Second, fill in the ">Segundo, completa el método </span>
+                        <code>sample</code>
+                        <span data-es=", que extrae una muestra de la distribución, donde la probabilidad de que se muestree una clave es proporcional a su valor correspondiente. Asume que la distribución no está vacía y que no todos los valores son cero. Ten en cuenta que la distribución no necesariamente tiene que estar normalizada antes de llamar a este método. Puede ser útil la función Python integrada random.random() para esta pregunta." data-en=", which draws a sample from the distribution, where the probability that a key is sampled is proportional to its corresponding value. Assume that the distribution is not empty, and not all of the values are zero. Note that the distribution does not necessarily have to be normalized prior to calling this method. You may find Python's built-in random.random() function useful for this question.">, que extrae una muestra de la distribución, donde la probabilidad de que se muestree una clave es proporcional a su valor correspondiente. Asume que la distribución no está vacía y que no todos los valores son cero. Puede ser útil la función <code>random.random()</code> de Python para esta pregunta.</span>
+                    </p>
+                </section>
+
+                <!-- Q5b -->
+                <section id="q5b" class="section-anchor">
+                    <h2 data-es="Q5b: Probabilidad de Observación" data-en="Q5b: Observation Probability">Q5b: Probabilidad de Observación</h2>
+
+                    <p>
+                        <span data-es="En esta pregunta, implementarás el método " data-en="In this question, you will implement the ">En esta pregunta, implementarás el método </span>
+                        <code>getObservationProb</code>
+                        <span data-es=" en la clase base InferenceModule en inference.py. Este método toma una observación (que es una lectura ruidosa de la distancia al fantasma), la posición de Pacman, la posición del fantasma y la posición de la cárcel del fantasma, y devuelve la probabilidad de la lectura de distancia ruidosa dada la posición de Pacman y la posición del fantasma. En otras palabras, queremos devolver P(noisyDistance∣pacmanPosition, ghostPosition)." data-en=" method in the InferenceModule base class in inference.py. This method takes in an observation (which is a noisy reading of the distance to the ghost), Pacman's position, the ghost's position, and the position of the ghost's jail, and returns the probability of the noisy distance reading given Pacman's position and the ghost's position. In other words, we want to return P(noisyDistance∣pacmanPosition, ghostPosition)."> en la clase base <code>InferenceModule</code> en <code>inference.py</code>. Este método devuelve la probabilidad de la lectura de distancia ruidosa dada la posición de Pacman y la posición del fantasma: P(noisyDistance∣pacmanPosition, ghostPosition).</span>
+                    </p>
+
+                    <p>
+                        <span data-es="El sensor de distancia tiene una distribución de probabilidad sobre las lecturas de distancia dada la distancia real de Pacman al fantasma. Esta distribución está modelada por la función " data-en="The distance sensor has a probability distribution over distance readings given the true distance from Pacman to the ghost. This distribution is modeled by the function ">El sensor de distancia tiene una distribución de probabilidad sobre las lecturas de distancia. Esta distribución está modelada por la función </span>
+                        <code>busters.getObservationProbability(noisyDistance, trueDistance)</code>
+                        <span data-es=", que devuelve P(noisyDistance∣trueDistance) y se proporciona para ti. Debes usar esta función para resolver el problema, y usar la función manhattanDistance proporcionada para encontrar la distancia entre la ubicación de Pacman y la del fantasma." data-en=", which returns P(noisyDistance∣trueDistance) and is provided for you. You should use this function to help you solve the problem, and use the provided manhattanDistance function to find the distance between Pacman's location and the ghost's location.">, que devuelve P(noisyDistance∣trueDistance) y se proporciona para ti. Debes usar la función <code>manhattanDistance</code> proporcionada para encontrar la distancia entre Pacman y el fantasma.</span>
+                    </p>
+
+                    <p data-es="Sin embargo, también hay el caso especial de la cárcel que debes manejar. Específicamente, cuando capturamos un fantasma y lo enviamos a la cárcel, nuestro sensor de distancia devuelve None de manera determinista, y nada más (observación = None si y solo si el fantasma está en la cárcel). Una consecuencia de esto es que si la posición del fantasma es la posición de la cárcel, entonces la observación es None con probabilidad 1, y todo lo demás con probabilidad 0. Asegúrate de manejar este caso especial en tu implementación." data-en="However, there is the special case of jail that we have to handle as well. Specifically, when we capture a ghost and send it to the jail location, our distance sensor deterministically returns None, and nothing else (observation = None if and only if ghost is in jail). One consequence of this is that if the ghost's position is the jail position, then the observation is None with probability 1, and everything else with probability 0. Make sure you handle this special case in your implementation.">
+                        Sin embargo, también hay el caso especial de la cárcel que debes manejar. Cuando capturamos un fantasma y lo enviamos a la cárcel, nuestro sensor de distancia devuelve <code>None</code> de manera determinista. Si la posición del fantasma es la posición de la cárcel, la observación es <code>None</code> con probabilidad 1, y todo lo demás con probabilidad 0.
+                    </p>
+
+                    <p data-es="Para probar tu código y ejecutar el autograder para esta pregunta:" data-en="To test your code and run the autograder for this question:">
+                        <strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> Para probar tu código y ejecutar el autograder para esta pregunta:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q5</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab5-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab5-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">
+                        El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab5-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="FECHA LÍMITE DE ENTREGA:" data-en="ASSIGNMENT DUE DATE:">FECHA LÍMITE DE ENTREGA:</strong>
+                        <span data-es="07/06/2026, 11:55 PM" data-en="06/07/2026, 11:55 PM">06/07/2026, 11:55 PM</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
