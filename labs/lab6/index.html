@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab6 - Ghostbusters Part 2 | FUMIA Labs</title>
+    <link rel="icon" href="../../images/icono.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        /* Additional styles for code blocks, CMD, and file listings */
+        .code-block,
+        .cmd-block,
+        .files-block {
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .code-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .code-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .code-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .code-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #24292f;
+        }
+
+        .dark-mode .code-content pre {
+            color: #c9d1d9;
+        }
+
+        /* CMD Block styling */
+        .cmd-block {
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+        }
+
+        .cmd-header {
+            background: #2d2d30;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #cccccc;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .cmd-content {
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .cmd-content pre {
+            margin: 0;
+            white-space: pre;
+            color: #00ff00;
+        }
+
+        .cmd-prompt {
+            color: #00ff00;
+        }
+
+        /* Files Block styling - Table format */
+        .files-block {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-block {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .files-header {
+            background: #e6e9ec;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #57606a;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-header {
+            background: #0d1117;
+            color: #8b949e;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-content {
+            padding: 0;
+        }
+
+        .files-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .files-table th,
+        .files-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #d0d7de;
+        }
+
+        .dark-mode .files-table th,
+        .dark-mode .files-table td {
+            border-bottom: 1px solid #30363d;
+        }
+
+        .files-table th {
+            background: #f6f8fa;
+            font-weight: 600;
+            color: #24292f;
+        }
+
+        .dark-mode .files-table th {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        .files-table td {
+            color: #57606a;
+        }
+
+        .dark-mode .files-table td {
+            color: #8b949e;
+        }
+
+        .files-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .file-name {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #0969da;
+            font-weight: 500;
+        }
+
+        .dark-mode .file-name {
+            color: #58a6ff;
+        }
+
+        /* Table of Contents styling */
+        .toc {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dark-mode .toc {
+            background: #161b22;
+            border: 1px solid #30363d;
+        }
+
+        .toc h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            color: #24292f;
+        }
+
+        .dark-mode .toc h2 {
+            color: #c9d1d9;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: #0969da;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .toc a:hover {
+            color: #0550ae;
+            text-decoration: underline;
+        }
+
+        .dark-mode .toc a {
+            color: #58a6ff;
+        }
+
+        .dark-mode .toc a:hover {
+            color: #79c0ff;
+        }
+
+        /* Subtitle styling */
+        .subtitle {
+            color: #57606a;
+            font-size: 0.95rem;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+        }
+
+        .dark-mode .subtitle {
+            color: #8b949e;
+        }
+
+        /* Section anchors */
+        .section-anchor {
+            scroll-margin-top: 2rem;
+        }
+
+        /* Inline code */
+        .lab-content code {
+            background: #f6f8fa;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #24292f;
+        }
+
+        .dark-mode .lab-content code {
+            background: #161b22;
+            color: #c9d1d9;
+        }
+
+        /* Link styling in content */
+        .lab-content a {
+            color: #0969da;
+            text-decoration: none;
+        }
+
+        .lab-content a:hover {
+            text-decoration: underline;
+        }
+
+        .dark-mode .lab-content a {
+            color: #58a6ff;
+        }
+
+        /* Note/Warning boxes */
+        .note-box {
+            background: #fff8c5;
+            border-left: 4px solid #d4a72c;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .note-box {
+            background: #3d3000;
+            border-left-color: #d4a72c;
+        }
+
+        .note-box strong {
+            color: #d4a72c;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Image placeholder */
+        .image-placeholder {
+            background: #f6f8fa;
+            border: 2px dashed #d0d7de;
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 2rem 0;
+            color: #57606a;
+        }
+
+        .dark-mode .image-placeholder {
+            background: #161b22;
+            border-color: #30363d;
+            color: #8b949e;
+        }
+
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Intro section styling */
+        .intro-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Hints section styling */
+        .hints-section {
+            background: #ddf4ff;
+            border-left: 4px solid #0969da;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .dark-mode .hints-section {
+            background: #1c2d41;
+            border-left-color: #58a6ff;
+        }
+
+        .hints-section h4 {
+            margin-top: 0;
+            color: #0969da;
+        }
+
+        .dark-mode .hints-section h4 {
+            color: #58a6ff;
+        }
+
+        .hints-section ul {
+            margin-bottom: 0;
+        }
+
+        /* Poem / haiku styling */
+        .poem-block {
+            font-style: italic;
+            color: #57606a;
+            margin: 1rem 0 1.5rem 0;
+            line-height: 2;
+        }
+
+        .dark-mode .poem-block {
+            color: #8b949e;
+        }
+    </style>
+    <script>
+        // Set theme immediately to prevent flash
+        (function() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.classList.add(theme === 'dark' ? 'dark-mode' : 'light-mode');
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">IA</div>
+            <h1>FUMIA Labs</h1>
+            <span class="year">2026</span>
+        </div>
+        <div class="controls">
+            <!-- Language Toggle -->
+            <div class="toggle-container">
+                <button class="toggle-btn" id="langToggle">
+                    <span class="toggle-option active" data-lang="es">ESP</span>
+                    <span class="toggle-option" data-lang="en">ENG</span>
+                </button>
+            </div>
+            <!-- Theme Toggle -->
+            <button class="icon-btn" id="themeToggle" aria-label="Toggle theme">
+                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="../../index.html" class="nav-link" data-es="Inicio" data-en="Home">Inicio</a></li>
+                    
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Laboratorios" data-en="Laboratories">Laboratorios</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../lab0/index.html" class="nav-link" data-es="Lab0 - Tutorial de configuración y autocalificación" data-en="Lab0 - Setup and Autograder Tutorial">Lab0 - Tutorial de configuración y autocalificación</a></li>
+                            <li><a href="../lab1/index.html" class="nav-link" data-es="Lab1 - Búsqueda parte 1" data-en="Lab1 - Search part 1">Lab1 - Búsqueda parte 1</a></li>
+                            <li><a href="../lab2/index.html" class="nav-link" data-es="Lab2 - Búsqueda parte 2" data-en="Lab2 - Search part 2">Lab2 - Búsqueda parte 2</a></li>
+                            <li><a href="../lab3/index.html" class="nav-link" data-es="Lab3 - Agentes Multi-Agente" data-en="Lab3 - Multi-Agent">Lab3 - Agentes Multi-Agente</a></li>
+                            <li><a href="../lab4/index.html" class="nav-link" data-es="Lab4 - Aprendizaje por Refuerzo" data-en="Lab4 - Reinforcement Learning">Lab4 - Aprendizaje por Refuerzo</a></li>
+                            <li><a href="../lab5/index.html" class="nav-link" data-es="Lab5 - Ghostbusters parte 1" data-en="Lab5 - Ghostbusters part 1">Lab5 - Ghostbusters parte 1</a></li>
+                            <li><a href="" class="nav-link active" data-es="Lab6 - Ghostbusters parte 2" data-en="Lab6 - Ghostbusters Part 2">Lab6 - Ghostbusters parte 2</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-section">
+                        <span class="nav-section-title" data-es="Tutoriales" data-en="Tutorials">Tutoriales</span>
+                        <ul class="nav-submenu">
+                            <li><a href="../../tutorials/materials/index.html" class="nav-link" data-es="Instalación de Material" data-en="Material Installation">Instalación de Material</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="breadcrumb">
+                <a href="../../index.html" data-es="Documentación" data-en="Documentation">Documentación</a>
+                <span> > </span>
+                <span data-es="Lab6 - Ghostbusters parte 2" data-en="Lab6 - Ghostbusters Part 2">Lab6 - Ghostbusters parte 2</span>
+            </div>
+            
+            <h1 data-es="Lab6 - Ghostbusters parte 2" data-en="Lab6 - Ghostbusters Part 2">Lab6 - Ghostbusters parte 2</h1>
+            <br>
+            
+            <p class="subtitle" data-es="Fecha de entrega: jueves, 25 de junio, 11:55 PM PT" data-en="Due: Thursday, June 25, 11:55 PM PT">
+                Fecha de entrega: jueves, 25 de junio, 11:55 PM PT
+            </p>
+            
+            <div class="lab-content">
+                <!-- Hero Image -->
+                <div class="image-placeholder">
+                    <img width="500px" src="busters.png" alt="">
+                </div>
+
+                <!-- Poem -->
+                <div class="poem-block">
+                    <p data-es="Puedo escucharte, fantasma. Correr no te salvará de mi ¡Filtro de partículas!" data-en="I can hear you, ghost. Running won't save you from my Particle filter!">
+                        Puedo escucharte, fantasma.
+                        Correr no te salvará de mi
+                        ¡Filtro de partículas!
+                    </p>
+                </div>
+
+                <!-- Table of Contents -->
+                <div class="toc">
+                    <h2 data-es="Tabla de Contenidos" data-en="Table of Contents">Tabla de Contenidos</h2>
+                    <ul>
+                        <li><a href="#necessary-files" data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</a></li>
+                        <li><a href="#introduction" data-es="Introducción" data-en="Introduction">Introducción</a></li>
+                        <li><a href="#files-exploration" data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</a></li>
+                        <li><a href="#q6" data-es="Q6: Inferencia Exacta - Observación" data-en="Q6: Exact Inference Observation">Q6: Inferencia Exacta - Observación</a></li>
+                        <li><a href="#q7" data-es="Q7: Inferencia Exacta con Paso de Tiempo" data-en="Q7: Exact Inference with Time Elapse">Q7: Inferencia Exacta con Paso de Tiempo</a></li>
+                        <li><a href="#q8" data-es="Q8: Prueba Completa de Inferencia Exacta" data-en="Q8: Exact Inference Full Test">Q8: Prueba Completa de Inferencia Exacta</a></li>
+                        <li><a href="#q9" data-es="Q9: Inicialización y Creencias de Inferencia Aproximada" data-en="Q9: Approximate Inference Initialization and Beliefs">Q9: Inicialización y Creencias de Inferencia Aproximada</a></li>
+                        <li><a href="#q10" data-es="Q10: Observación de Inferencia Aproximada" data-en="Q10: Approximate Inference Observation">Q10: Observación de Inferencia Aproximada</a></li>
+                        <li><a href="#q11" data-es="Q11: Inferencia Aproximada con Paso de Tiempo" data-en="Q11: Approximate Inference with Time Elapse">Q11: Inferencia Aproximada con Paso de Tiempo</a></li>
+                        <li><a href="#submission" data-es="Entrega" data-en="Submission">Entrega</a></li>
+                    </ul>
+                </div>
+
+                <!-- Necessary Files -->
+                <section id="necessary-files" class="section-anchor">
+                    <h2 data-es="Archivos necesarios" data-en="Necessary files">Archivos necesarios</h2>
+                    
+                    <p data-es="Este laboratorio es una continuación directa del Lab 5: Ghostbusters Parte 1, por lo que debes continuar con los archivos de ese laboratorio. Si no has completado ese laboratorio, debes hacerlo antes de entregar este." data-en="This lab is a direct continuation of Lab 5: Ghostbusters Part 1, so you should continue with your files from that lab. If you haven't completed that lab, you must do so before submitting this one.">
+                        Este laboratorio es una continuación directa del Lab 5: Ghostbusters Parte 1, por lo que debes continuar con los archivos de ese laboratorio. Si no has completado ese laboratorio, debes hacerlo antes de entregar este.
+                    </p>
+                </section>
+
+                <!-- Introduction -->
+                <section id="introduction" class="section-anchor">
+                    <h2 data-es="Introducción" data-en="Introduction">Introducción</h2>
+                    
+                    <p data-es="Pacman pasa su vida huyendo de los fantasmas, pero las cosas no siempre fueron así. La leyenda dice que hace muchos años, el bisabuelo de Pacman, Grandpac, aprendió a cazar fantasmas por deporte. Sin embargo, fue cegado por su poder y solo podía rastrear a los fantasmas por sus ruidos y estruendos." data-en="Pacman spends his life running from ghosts, but things were not always so. Legend has it that many years ago, Pacman's great grandfather Grandpac learned to hunt ghosts for sport. However, he was blinded by his power and could only track ghosts by their banging and clanging.">
+                        Pacman pasa su vida huyendo de los fantasmas, pero las cosas no siempre fueron así. La leyenda dice que hace muchos años, el bisabuelo de Pacman, Grandpac, aprendió a cazar fantasmas por deporte. Sin embargo, fue cegado por su poder y solo podía rastrear a los fantasmas por sus ruidos y estruendos.
+                    </p>
+
+                    <p data-es="En este proyecto, diseñarás agentes Pacman que usan sensores para localizar y comer fantasmas invisibles. Avanzarás desde la localización de fantasmas individuales estacionarios hasta la caza de grupos de múltiples fantasmas en movimiento con eficiencia implacable." data-en="In this project, you will design Pacman agents that use sensors to locate and eat invisible ghosts. You'll advance from locating single, stationary ghosts to hunting packs of multiple moving ghosts with ruthless efficiency.">
+                        En este proyecto, diseñarás agentes Pacman que usan sensores para localizar y comer fantasmas invisibles. Avanzarás desde la localización de fantasmas individuales estacionarios hasta la caza de grupos de múltiples fantasmas en movimiento con eficiencia implacable.
+                    </p>
+
+                    <p data-es="Este proyecto incluye un autograder para que califiques tus respuestas en tu máquina. Se puede ejecutar en todas las preguntas con el comando:" data-en="This project includes an autograder for you to grade your answers on your machine. This can be run on all questions with the command:">
+                        Este proyecto incluye un autograder para que califiques tus respuestas en tu máquina. Se puede ejecutar en todas las preguntas con el comando:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una pregunta particular, como q2, con:" data-en="It can be run for one particular question, such as q2, by:">
+                        Se puede ejecutar para una pregunta particular, como q2, con:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q2</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se puede ejecutar para una prueba particular con comandos de la forma:" data-en="It can be run for one particular test by commands of the form:">
+                        Se puede ejecutar para una prueba particular con comandos de la forma:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -t test_cases/q2/1-bridge-grid</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Files Exploration -->
+                <section id="files-exploration" class="section-anchor">
+                    <h2 data-es="Exploración de archivos" data-en="Files exploration">Exploración de archivos</h2>
+                    
+                    <p data-es="El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberás leer y entender para completar la tarea, y algunos de los cuales puedes ignorar." data-en="The code for this project consists of several Python files, some of which you will need to read and understand to complete the assignment, and some of which you can ignore.">
+                        El código de este proyecto consiste en varios archivos de Python, algunos de los cuales deberás leer y entender para completar la tarea, y algunos de los cuales puedes ignorar.
+                    </p>
+
+                    <h3 data-es="Archivos que vas a editar" data-en="Files you'll edit">Archivos que vas a editar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos para editar" data-en="Files to edit">Archivos para editar</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">bustersAgents.py</span></td>
+                                        <td data-es="Agentes para jugar la variante Ghostbusters de Pacman." data-en="Agents for playing the Ghostbusters variant of Pacman.">Agentes para jugar la variante Ghostbusters de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">inference.py</span></td>
+                                        <td data-es="Código para rastrear fantasmas a lo largo del tiempo usando sus sonidos." data-en="Code for tracking ghosts over time using their sounds.">Código para rastrear fantasmas a lo largo del tiempo usando sus sonidos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">factorOperations.py</span></td>
+                                        <td data-es="Operaciones para calcular nuevas tablas de probabilidad conjunta o marginalizada." data-en="Operations to compute new joint or marginalized probability tables.">Operaciones para calcular nuevas tablas de probabilidad conjunta o marginalizada.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos que quizás quieras revisar" data-en="Files you might want to look at">Archivos que quizás quieras revisar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de referencia" data-en="Reference files">Archivos de referencia</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">bayesNet.py</span></td>
+                                        <td data-es="Las clases BayesNet y Factor." data-en="The BayesNet and Factor classes.">Las clases BayesNet y Factor.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Archivos de soporte que puedes ignorar" data-en="Supporting files you can ignore">Archivos de soporte que puedes ignorar</h3>
+                    <div class="files-block">
+                        <div class="files-header" data-es="Archivos de soporte" data-en="Supporting files">Archivos de soporte</div>
+                        <div class="files-content">
+                            <table class="files-table">
+                                <thead>
+                                    <tr>
+                                        <th data-es="Archivo" data-en="File">Archivo</th>
+                                        <th data-es="Descripción" data-en="Description">Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="file-name">busters.py</span></td>
+                                        <td data-es="La entrada principal a Ghostbusters (reemplaza Pacman.py)." data-en="The main entry to Ghostbusters (replacing Pacman.py).">La entrada principal a Ghostbusters (reemplaza Pacman.py).</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">bustersGhostAgents.py</span></td>
+                                        <td data-es="Nuevos agentes fantasma para Ghostbusters." data-en="New ghost agents for Ghostbusters.">Nuevos agentes fantasma para Ghostbusters.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">distanceCalculator.py</span></td>
+                                        <td data-es="Calcula distancias en el laberinto, almacena los resultados en caché para evitar recalcularlos." data-en="Computes maze distances, caches results to avoid re-computing.">Calcula distancias en el laberinto, almacena los resultados en caché para evitar recalcularlos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">game.py</span></td>
+                                        <td data-es="Funcionamiento interno y clases auxiliares para Pacman." data-en="Inner workings and helper classes for Pacman.">Funcionamiento interno y clases auxiliares para Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">ghostAgents.py</span></td>
+                                        <td data-es="Agentes para controlar los fantasmas." data-en="Agents to control ghosts.">Agentes para controlar los fantasmas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsDisplay.py</span></td>
+                                        <td data-es="Gráficos para Pacman." data-en="Graphics for Pacman.">Gráficos para Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">graphicsUtils.py</span></td>
+                                        <td data-es="Soporte para los gráficos de Pacman." data-en="Support for Pacman graphics.">Soporte para los gráficos de Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">keyboardAgents.py</span></td>
+                                        <td data-es="Interfaces de teclado para controlar a Pacman." data-en="Keyboard interfaces to control Pacman.">Interfaces de teclado para controlar a Pacman.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">layout.py</span></td>
+                                        <td data-es="Código para leer archivos de diseño y almacenar su contenido." data-en="Code for reading layout files and storing their contents.">Código para leer archivos de diseño y almacenar su contenido.</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="file-name">util.py</span></td>
+                                        <td data-es="Funciones de utilidad." data-en="Utility functions.">Funciones de utilidad.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <h3 data-es="Temas necesarios para este proyecto" data-en="Topics needed for this project">Temas necesarios para este proyecto</h3>
+                    <ul>
+                        <li data-es="Probabilidad" data-en="Probability">Probabilidad</li>
+                        <li data-es="Representación de Redes de Bayes" data-en="Bayes Nets Representation">Representación de Redes de Bayes</li>
+                        <li data-es="Inferencia en Redes de Bayes" data-en="Bayes Nets Inference">Inferencia en Redes de Bayes</li>
+                        <li data-es="HMMs (Modelos Ocultos de Markov)" data-en="HMMs">HMMs (Modelos Ocultos de Markov)</li>
+                        <li data-es="Filtrado de Partículas" data-en="Particle Filtering">Filtrado de Partículas</li>
+                    </ul>
+                </section>
+
+                <!-- Q6 -->
+                <section id="q6" class="section-anchor">
+                    <h2 data-es="Q6: Inferencia Exacta - Observación" data-en="Q6: Exact Inference Observation">Q6: Inferencia Exacta - Observación</h2>
+
+                    <p>
+                        <span data-es="En esta pregunta, implementarás el método " data-en="In this question, you will implement the ">En esta pregunta, implementarás el método </span>
+                        <code>observeUpdate</code>
+                        <span data-es=" en la clase ExactInference de inference.py para actualizar correctamente la distribución de creencia del agente sobre las posiciones de los fantasmas dada una observación de los sensores de Pacman. Estás implementando la actualización de creencia en línea al observar nueva evidencia. El método observeUpdate debe, para este problema, actualizar la creencia en cada posición del mapa después de recibir una lectura del sensor. Debes iterar tus actualizaciones sobre la variable self.allPositions que incluye todas las posiciones legales más la posición especial de la cárcel. Las creencias representan la probabilidad de que el fantasma esté en una ubicación particular, y se almacenan como un objeto DiscreteDistribution en un campo llamado self.beliefs, que debes actualizar." data-en=" in the ExactInference class of inference.py to correctly update the agent's belief distribution over ghost positions given an observation from Pacman's sensors. You are implementing the online belief update for observing new evidence. The observeUpdate method should, for this problem, update the belief at every position on the map after receiving a sensor reading. You should iterate your updates over the variable self.allPositions which includes all legal positions plus the special jail position. Beliefs represent the probability that the ghost is at a particular location, and are stored as a DiscreteDistribution object in a field called self.beliefs, which you should update."> en la clase <code>ExactInference</code> de <code>inference.py</code> para actualizar correctamente la distribución de creencia del agente sobre las posiciones de los fantasmas dada una observación de los sensores de Pacman. Estás implementando la actualización de creencia en línea al observar nueva evidencia. El método <code>observeUpdate</code> debe actualizar la creencia en cada posición del mapa después de recibir una lectura del sensor, iterando sobre <code>self.allPositions</code>. Las creencias se almacenan como un objeto <code>DiscreteDistribution</code> en <code>self.beliefs</code>, que debes actualizar.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Antes de escribir cualquier código, escribe la ecuación del problema de inferencia que estás tratando de resolver. Debes usar la función " data-en="Before typing any code, write down the equation of the inference problem you are trying to solve. You should use the function ">Antes de escribir cualquier código, escribe la ecuación del problema de inferencia que estás tratando de resolver. Debes usar la función </span>
+                        <code>self.getObservationProb</code>
+                        <span data-es=" que escribiste en la última pregunta, que devuelve la probabilidad de una observación dada la posición de Pacman, una posición potencial del fantasma y la posición de la cárcel. Puedes obtener la posición de Pacman usando gameState.getPacmanPosition(), y la posición de la cárcel usando self.getJailPosition()." data-en=" that you wrote in the last question, which returns the probability of an observation given Pacman's position, a potential ghost position, and the jail position. You can obtain Pacman's position using gameState.getPacmanPosition(), and the jail position using self.getJailPosition().">, que devuelve la probabilidad de una observación dada la posición de Pacman, una posición potencial del fantasma y la posición de la cárcel. Puedes obtener la posición de Pacman usando <code>gameState.getPacmanPosition()</code>, y la posición de la cárcel usando <code>self.getJailPosition()</code>.</span>
+                    </p>
+
+                    <p data-es="En la visualización de Pacman, las creencias posteriores altas se representan con colores brillantes, mientras que las creencias bajas se representan con colores tenues. Debes comenzar con una gran nube de creencia que se reduce con el tiempo a medida que se acumula más evidencia. Al observar los casos de prueba, asegúrate de entender cómo los cuadrados convergen a su coloración final." data-en="In the Pacman display, high posterior beliefs are represented by bright colors, while low beliefs are represented by dim colors. You should start with a large cloud of belief that shrinks over time as more evidence accumulates. As you watch the test cases, be sure that you understand how the squares converge to their final coloring.">
+                        En la visualización de Pacman, las creencias posteriores altas se representan con colores brillantes, mientras que las creencias bajas se representan con colores tenues. Debes comenzar con una gran nube de creencia que se reduce con el tiempo a medida que se acumula más evidencia. Al observar los casos de prueba, asegúrate de entender cómo los cuadrados convergen a su coloración final.
+                    </p>
+
+                    <div class="hints-section">
+                        <h4 data-es="Nota" data-en="Note">Nota</h4>
+                        <p data-es="Tus agentes busters tienen un módulo de inferencia separado para cada fantasma que están rastreando. Por eso, si imprimes una observación dentro de la función observeUpdate, solo verás un número aunque pueda haber múltiples fantasmas en el tablero." data-en="Your busters agents have a separate inference module for each ghost they are tracking. That's why if you print an observation inside the observeUpdate function, you'll only see a single number even though there may be multiple ghosts on the board.">
+                            Tus agentes busters tienen un módulo de inferencia separado para cada fantasma que están rastreando. Por eso, si imprimes una observación dentro de la función <code>observeUpdate</code>, solo verás un número aunque pueda haber múltiples fantasmas en el tablero.
+                        </p>
+                    </div>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para ejecutar el autograder para esta pregunta y visualizar la salida:" data-en="To run the autograder for this question and visualize the output:">Para ejecutar el autograder para esta pregunta y visualizar la salida:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q6</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:" data-en="If you want to run this test (or any of the other tests) without graphics you can add the following flag:">
+                        Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q6 --no-graphics</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q7 -->
+                <section id="q7" class="section-anchor">
+                    <h2 data-es="Q7: Inferencia Exacta con Paso de Tiempo" data-en="Q7: Exact Inference with Time Elapse">Q7: Inferencia Exacta con Paso de Tiempo</h2>
+
+                    <p data-es="En la pregunta anterior implementaste actualizaciones de creencia para Pacman basadas en sus observaciones. Afortunadamente, las observaciones de Pacman no son su única fuente de conocimiento sobre dónde puede estar un fantasma. Pacman también tiene conocimiento sobre las formas en que un fantasma puede moverse; concretamente, que el fantasma no puede atravesar paredes ni moverse más de un espacio en un paso de tiempo." data-en="In the previous question you implemented belief updates for Pacman based on his observations. Fortunately, Pacman's observations are not his only source of knowledge about where a ghost may be. Pacman also has knowledge about the ways that a ghost may move; namely that the ghost can not move through a wall or more than one space in one time step.">
+                        En la pregunta anterior implementaste actualizaciones de creencia para Pacman basadas en sus observaciones. Afortunadamente, las observaciones de Pacman no son su única fuente de conocimiento sobre dónde puede estar un fantasma. Pacman también tiene conocimiento sobre las formas en que un fantasma puede moverse; concretamente, que el fantasma no puede atravesar paredes ni moverse más de un espacio en un paso de tiempo.
+                    </p>
+
+                    <p data-es="Para entender por qué esto es útil para Pacman, considera el siguiente escenario en el que hay Pacman y un Fantasma. Pacman recibe muchas observaciones que indican que el fantasma está muy cerca, pero luego una que indica que el fantasma está muy lejos. La lectura que indica que el fantasma está muy lejos probablemente sea el resultado de un sensor defectuoso. El conocimiento previo de Pacman sobre cómo puede moverse el fantasma disminuirá el impacto de esta lectura ya que Pacman sabe que el fantasma no podría haberse movido tan lejos en un solo movimiento." data-en="To understand why this is useful to Pacman, consider the following scenario in which there is Pacman and one Ghost. Pacman receives many observations which indicate the ghost is very near, but then one which indicates the ghost is very far. The reading indicating the ghost is very far is likely to be the result of a buggy sensor. Pacman's prior knowledge of how the ghost may move will decrease the impact of this reading since Pacman knows the ghost could not move so far in only one move.">
+                        Para entender por qué esto es útil para Pacman, considera el siguiente escenario en el que hay Pacman y un Fantasma. Pacman recibe muchas observaciones que indican que el fantasma está muy cerca, pero luego una que indica que el fantasma está muy lejos. La lectura que indica que el fantasma está muy lejos probablemente sea el resultado de un sensor defectuoso. El conocimiento previo de Pacman sobre cómo puede moverse el fantasma disminuirá el impacto de esta lectura ya que Pacman sabe que el fantasma no podría haberse movido tan lejos en un solo movimiento.
+                    </p>
+
+                    <p>
+                        <span data-es="En esta pregunta, implementarás el método " data-en="In this question, you will implement the ">En esta pregunta, implementarás el método </span>
+                        <code>elapseTime</code>
+                        <span data-es=" en ExactInference. El paso elapseTime debe, para este problema, actualizar la creencia en cada posición del mapa después de que transcurra un paso de tiempo. Tu agente tiene acceso a la distribución de acción para el fantasma a través de self.getPositionDistribution. Para obtener la distribución sobre nuevas posiciones para el fantasma, dada su posición anterior, usa esta línea de código:" data-en=" in ExactInference. The elapseTime step should, for this problem, update the belief at every position on the map after one time step elapsing. Your agent has access to the action distribution for the ghost through self.getPositionDistribution. In order to obtain the distribution over new positions for the ghost, given its previous position, use this line of code:"> en <code>ExactInference</code>. El paso <code>elapseTime</code> debe actualizar la creencia en cada posición del mapa después de que transcurra un paso de tiempo. Tu agente tiene acceso a la distribución de acción del fantasma a través de <code>self.getPositionDistribution</code>. Para obtener la distribución sobre nuevas posiciones para el fantasma, dada su posición anterior, usa esta línea de código:</span>
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">Python</div>
+                        <div class="code-content">
+                            <pre>newPosDist = self.getPositionDistribution(gameState, oldPos)</pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Donde oldPos se refiere a la posición anterior del fantasma. newPosDist es un objeto DiscreteDistribution, donde para cada posición p en self.allPositions, newPosDist[p] es la probabilidad de que el fantasma esté en la posición p en el tiempo t+1, dado que el fantasma está en la posición oldPos en el tiempo t. Ten en cuenta que esta llamada puede ser bastante costosa, por lo que si tu código se agota el tiempo, una cosa en la que pensar es si puedes reducir el número de llamadas a self.getPositionDistribution." data-en="Where oldPos refers to the previous ghost position. newPosDist is a DiscreteDistribution object, where for each position p in self.allPositions, newPosDist[p] is the probability that the ghost is at position p at time t+1, given that the ghost is at position oldPos at time t. Note that this call can be fairly expensive, so if your code is timing out, one thing to think about is whether or not you can reduce the number of calls to self.getPositionDistribution.">
+                        Donde <code>oldPos</code> se refiere a la posición anterior del fantasma. <code>newPosDist</code> es un objeto <code>DiscreteDistribution</code>, donde para cada posición <code>p</code> en <code>self.allPositions</code>, <code>newPosDist[p]</code> es la probabilidad de que el fantasma esté en la posición <code>p</code> en el tiempo t+1, dado que el fantasma está en la posición <code>oldPos</code> en el tiempo t. Ten en cuenta que esta llamada puede ser bastante costosa, por lo que si tu código se agota el tiempo, considera si puedes reducir el número de llamadas a <code>self.getPositionDistribution</code>.
+                    </p>
+
+                    <p data-es="Antes de escribir cualquier código, escribe la ecuación del problema de inferencia que estás tratando de resolver. Para probar tu implementación de predict de forma independiente a tu implementación de update en la pregunta anterior, esta pregunta no hará uso de tu implementación de update." data-en="Before typing any code, write down the equation of the inference problem you are trying to solve. In order to test your predict implementation separately from your update implementation in the previous question, this question will not make use of your update implementation.">
+                        Antes de escribir cualquier código, escribe la ecuación del problema de inferencia que estás tratando de resolver. Para probar tu implementación de <code>predict</code> de forma independiente a tu implementación de <code>update</code> en la pregunta anterior, esta pregunta no hará uso de tu implementación de <code>update</code>.
+                    </p>
+
+                    <p data-es="Dado que Pacman no está observando las acciones del fantasma, estas acciones no impactarán las creencias de Pacman. Con el tiempo, las creencias de Pacman vendrán a reflejar lugares en el tablero donde cree que es más probable que estén los fantasmas dada la geometría del tablero y los posibles movimientos legales de los fantasmas, que Pacman ya conoce." data-en="Since Pacman is not observing the ghost's actions, these actions will not impact Pacman's beliefs. Over time, Pacman's beliefs will come to reflect places on the board where he believes ghosts are most likely to be given the geometry of the board and ghosts' possible legal moves, which Pacman already knows.">
+                        Dado que Pacman no está observando las acciones del fantasma, estas acciones no impactarán las creencias de Pacman. Con el tiempo, las creencias de Pacman vendrán a reflejar lugares en el tablero donde cree que es más probable que estén los fantasmas dada la geometría del tablero y los posibles movimientos legales de los fantasmas, que Pacman ya conoce.
+                    </p>
+
+                    <p data-es="Para las pruebas en esta pregunta, a veces usaremos un fantasma con movimientos aleatorios y otras veces usaremos el GoSouthGhost. Este fantasma tiende a moverse hacia el sur, por lo que con el tiempo y sin observaciones, la distribución de creencia de Pacman debería comenzar a enfocarse alrededor de la parte inferior del tablero. Para ver qué fantasma se usa en cada caso de prueba, puedes mirar los archivos .test." data-en="For the tests in this question we will sometimes use a ghost with random movements and other times we will use the GoSouthGhost. This ghost tends to move south so over time, and without any observations, Pacman's belief distribution should begin to focus around the bottom of the board. To see which ghost is used for each test case you can look in the .test files.">
+                        Para las pruebas en esta pregunta, a veces usaremos un fantasma con movimientos aleatorios y otras veces usaremos el <code>GoSouthGhost</code>. Este fantasma tiende a moverse hacia el sur, por lo que con el tiempo y sin observaciones, la distribución de creencia de Pacman debería comenzar a enfocarse alrededor de la parte inferior del tablero. Para ver qué fantasma se usa en cada caso de prueba, puedes mirar los archivos <code>.test</code>.
+                    </p>
+
+                    <p data-es="El siguiente diagrama muestra la Red de Bayes / Modelo Oculto de Markov para lo que está ocurriendo. Aun así, debes basarte en la descripción anterior para la implementación porque algunas partes están implementadas para ti (es decir, getPositionDistribution está abstraído para ser P(G_(t+1) | gameState, G_t))." data-en="The below diagram shows what the Bayes Net / Hidden Markov model for what is happening. Still, you should rely on the above description for implementation because some parts are implemented for you (i.e. getPositionDistribution is abstracted to be P(G_(t+1) ∣ gameState, G_t)).">
+                        El siguiente diagrama muestra la Red de Bayes / Modelo Oculto de Markov para lo que está ocurriendo. Aun así, debes basarte en la descripción anterior para la implementación porque algunas partes están implementadas para ti (es decir, <code>getPositionDistribution</code> está abstraído para ser P(G<sub>t+1</sub> ∣ gameState, G<sub>t</sub>)).
+                    </p>
+
+                    <div class="image-placeholder">
+                        <img width="500px" src="busters_hmm_time_elapse.png" alt="">
+                    </div>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para ejecutar el autograder para esta pregunta y visualizar la salida:" data-en="To run the autograder for this question and visualize the output:">Para ejecutar el autograder para esta pregunta y visualizar la salida:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q7</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:" data-en="If you want to run this test (or any of the other tests) without graphics you can add the following flag:">
+                        Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q7 --no-graphics</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Mientras observas la salida del autograder, recuerda que los cuadrados más claros indican que Pacman cree que es más probable que un fantasma ocupe esa ubicación, y los cuadrados más oscuros indican que es menos probable que un fantasma ocupe esa ubicación. ¿Para cuáles de los casos de prueba notas diferencias que emergen en el sombreado de los cuadrados? ¿Puedes explicar por qué algunos cuadrados se vuelven más claros y otros más oscuros?" data-en="As you watch the autograder output, remember that lighter squares indicate that pacman believes a ghost is more likely to occupy that location, and darker squares indicate a ghost is less likely to occupy that location. For which of the test cases do you notice differences emerging in the shading of the squares? Can you explain why some squares get lighter and some squares get darker?">
+                        Mientras observas la salida del autograder, recuerda que los cuadrados más claros indican que Pacman cree que es más probable que un fantasma ocupe esa ubicación, y los cuadrados más oscuros indican que es menos probable que un fantasma ocupe esa ubicación. ¿Para cuáles de los casos de prueba notas diferencias que emergen en el sombreado de los cuadrados? ¿Puedes explicar por qué algunos cuadrados se vuelven más claros y otros más oscuros?
+                    </p>
+                </section>
+
+                <!-- Q8 -->
+                <section id="q8" class="section-anchor">
+                    <h2 data-es="Q8: Prueba Completa de Inferencia Exacta" data-en="Q8: Exact Inference Full Test">Q8: Prueba Completa de Inferencia Exacta</h2>
+
+                    <p data-es="Ahora que Pacman sabe cómo usar tanto su conocimiento previo como sus observaciones para determinar dónde está un fantasma, está listo para cazar fantasmas por su cuenta. Usaremos tus implementaciones de observeUpdate y elapseTime juntas para mantener una distribución de creencia actualizada, y tu agente codicioso simple elegirá una acción basada en las últimas distribuciones en cada paso de tiempo. En la estrategia codiciosa simple, Pacman asume que cada fantasma está en su posición más probable según sus creencias, luego se mueve hacia el fantasma más cercano. Hasta este punto, Pacman se ha movido seleccionando aleatoriamente una acción válida." data-en="Now that Pacman knows how to use both his prior knowledge and his observations when figuring out where a ghost is, he is ready to hunt down ghosts on his own. We will use your observeUpdate and elapseTime implementations together to keep an updated belief distribution, and your simple greedy agent will choose an action based on the latest distributions at each time step. In the simple greedy strategy, Pacman assumes that each ghost is in its most likely position according to his beliefs, then moves toward the closest ghost. Up to this point, Pacman has moved by randomly selecting a valid action.">
+                        Ahora que Pacman sabe cómo usar tanto su conocimiento previo como sus observaciones para determinar dónde está un fantasma, está listo para cazar fantasmas por su cuenta. Usaremos tus implementaciones de <code>observeUpdate</code> y <code>elapseTime</code> juntas para mantener una distribución de creencia actualizada, y tu agente codicioso simple elegirá una acción basada en las últimas distribuciones en cada paso de tiempo. En la estrategia codiciosa simple, Pacman asume que cada fantasma está en su posición más probable según sus creencias, luego se mueve hacia el fantasma más cercano. Hasta este punto, Pacman se ha movido seleccionando aleatoriamente una acción válida.
+                    </p>
+
+                    <p>
+                        <span data-es="Implementa el método " data-en="Implement the ">Implementa el método </span>
+                        <code>chooseAction</code>
+                        <span data-es=" en GreedyBustersAgent en bustersAgents.py. Tu agente primero debe encontrar la posición más probable de cada fantasma no capturado restante, luego elegir una acción que minimice la distancia del laberinto al fantasma más cercano." data-en=" method in GreedyBustersAgent in bustersAgents.py. Your agent should first find the most likely position of each remaining uncaptured ghost, then choose an action that minimizes the maze distance to the closest ghost."> en <code>GreedyBustersAgent</code> en <code>bustersAgents.py</code>. Tu agente primero debe encontrar la posición más probable de cada fantasma no capturado restante, luego elegir una acción que minimice la distancia del laberinto al fantasma más cercano.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Para encontrar la distancia del laberinto entre dos posiciones pos1 y pos2, usa " data-en="To find the maze distance between any two positions pos1 and pos2, use ">Para encontrar la distancia del laberinto entre dos posiciones pos1 y pos2, usa </span>
+                        <code>self.distancer.getDistance(pos1, pos2)</code>
+                        <span data-es=". Para encontrar la posición sucesora de una posición después de una acción:" data-en=". To find the successor position of a position after an action:">. Para encontrar la posición sucesora de una posición después de una acción:</span>
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">Python</div>
+                        <div class="code-content">
+                            <pre>successorPosition = Actions.getSuccessor(position, action)</pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Se te proporciona livingGhostPositionDistributions, una lista de objetos DiscreteDistribution que representan las distribuciones de creencia de posición para cada uno de los fantasmas que aún no han sido capturados." data-en="You are provided with livingGhostPositionDistributions, a list of DiscreteDistribution objects representing the position belief distributions for each of the ghosts that are still uncaptured.">
+                        Se te proporciona <code>livingGhostPositionDistributions</code>, una lista de objetos <code>DiscreteDistribution</code> que representan las distribuciones de creencia de posición para cada uno de los fantasmas que aún no han sido capturados.
+                    </p>
+
+                    <p data-es="Si está implementado correctamente, tu agente debería ganar el juego en q8/3-gameScoreTest con una puntuación mayor a 700 al menos 8 de cada 10 veces. Nota: el autograder también verificará la corrección de tu inferencia directamente, pero el resultado de los juegos es una verificación de cordura razonable." data-en="If correctly implemented, your agent should win the game in q8/3-gameScoreTest with a score greater than 700 at least 8 out of 10 times. Note: the autograder will also check the correctness of your inference directly, but the outcome of games is a reasonable sanity check.">
+                        Si está implementado correctamente, tu agente debería ganar el juego en <code>q8/3-gameScoreTest</code> con una puntuación mayor a 700 al menos 8 de cada 10 veces. Nota: el autograder también verificará la corrección de tu inferencia directamente, pero el resultado de los juegos es una verificación de cordura razonable.
+                    </p>
+
+                    <p data-es="Podemos representar cómo funciona nuestro agente codicioso con la siguiente modificación al diagrama anterior:" data-en="We can represent how our greedy agent works with the following modification to the previous diagram:">
+                        Podemos representar cómo funciona nuestro agente codicioso con la siguiente modificación al diagrama anterior:
+                    </p>
+
+                    <div class="image-placeholder">
+                        <img width="500px" src="busters_greedy_pacman.png" alt="">
+                    </div>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para ejecutar el autograder para esta pregunta y visualizar la salida:" data-en="To run the autograder for this question and visualize the output:">Para ejecutar el autograder para esta pregunta y visualizar la salida:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q8</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:" data-en="If you want to run this test (or any of the other tests) without graphics you can add the following flag:">
+                        Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q8 --no-graphics</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q9 -->
+                <section id="q9" class="section-anchor">
+                    <h2 data-es="Q9: Inicialización y Creencias de Inferencia Aproximada" data-en="Q9: Approximate Inference Initialization and Beliefs">Q9: Inicialización y Creencias de Inferencia Aproximada</h2>
+
+                    <p data-es="La inferencia aproximada está muy de moda entre los cazadores de fantasmas esta temporada. Para las siguientes preguntas, implementarás un algoritmo de filtrado de partículas para rastrear un solo fantasma." data-en="Approximate inference is very trendy among ghost hunters this season. For the next few questions, you will implement a particle filtering algorithm for tracking a single ghost.">
+                        La inferencia aproximada está muy de moda entre los cazadores de fantasmas esta temporada. Para las siguientes preguntas, implementarás un algoritmo de filtrado de partículas para rastrear un solo fantasma.
+                    </p>
+
+                    <p>
+                        <span data-es="Primero, implementa las funciones " data-en="First, implement the functions ">Primero, implementa las funciones </span>
+                        <code>initializeUniformly</code>
+                        <span data-es=" y " data-en=" and "> y </span>
+                        <code>getBeliefDistribution</code>
+                        <span data-es=" en la clase ParticleFilter en inference.py. Una partícula (muestra) es una posición del fantasma en este problema de inferencia. Ten en cuenta que, para la inicialización, las partículas deben distribuirse uniformemente (no aleatoriamente) en las posiciones legales para garantizar una distribución previa uniforme. Recomendamos pensar en cómo el operador módulo es útil para initializeUniformly." data-en=" in the ParticleFilter class in inference.py. A particle (sample) is a ghost position in this inference problem. Note that, for initialization, particles should be evenly (not randomly) distributed across legal positions in order to ensure a uniform prior. We recommend thinking about how the mod operator is useful for initializeUniformly."> en la clase <code>ParticleFilter</code> en <code>inference.py</code>. Una partícula (muestra) es una posición del fantasma en este problema de inferencia. Ten en cuenta que, para la inicialización, las partículas deben distribuirse uniformemente (no aleatoriamente) en las posiciones legales para garantizar una distribución previa uniforme. Recomendamos pensar en cómo el operador módulo es útil para <code>initializeUniformly</code>.</span>
+                    </p>
+
+                    <p data-es="Ten en cuenta que la variable donde almacenas tus partículas debe ser una lista. Una lista es simplemente una colección de variables sin peso (posiciones en este caso). Almacenar tus partículas en cualquier otro tipo de dato, como un diccionario, es incorrecto y producirá errores. El método getBeliefDistribution luego toma la lista de partículas y la convierte en un objeto DiscreteDistribution." data-en="Note that the variable you store your particles in must be a list. A list is simply a collection of unweighted variables (positions in this case). Storing your particles as any other data type, such as a dictionary, is incorrect and will produce errors. The getBeliefDistribution method then takes the list of particles and converts it into a DiscreteDistribution object.">
+                        Ten en cuenta que la variable donde almacenas tus partículas debe ser una lista. Una lista es simplemente una colección de variables sin peso (posiciones en este caso). Almacenar tus partículas en cualquier otro tipo de dato, como un diccionario, es incorrecto y producirá errores. El método <code>getBeliefDistribution</code> luego toma la lista de partículas y la convierte en un objeto <code>DiscreteDistribution</code>.
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para probar tu código y ejecutar el autograder para esta pregunta:" data-en="To test your code and run the autograder for this question:">Para probar tu código y ejecutar el autograder para esta pregunta:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q9</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q10 -->
+                <section id="q10" class="section-anchor">
+                    <h2 data-es="Q10: Observación de Inferencia Aproximada" data-en="Q10: Approximate Inference Observation">Q10: Observación de Inferencia Aproximada</h2>
+
+                    <p>
+                        <span data-es="A continuación, implementaremos el método " data-en="Next, we will implement the ">A continuación, implementaremos el método </span>
+                        <code>observeUpdate</code>
+                        <span data-es=" en la clase ParticleFilter en inference.py. Este método construye una distribución de peso sobre self.particles donde el peso de una partícula es la probabilidad de la observación dada la posición de Pacman y la ubicación de esa partícula. Luego, re-muestreamos de esta distribución ponderada para construir nuestra nueva lista de partículas." data-en=" method in the ParticleFilter class in inference.py. This method constructs a weight distribution over self.particles where the weight of a particle is the probability of the observation given Pacman's position and that particle location. Then, we resample from this weighted distribution to construct our new list of particles."> en la clase <code>ParticleFilter</code> en <code>inference.py</code>. Este método construye una distribución de peso sobre <code>self.particles</code> donde el peso de una partícula es la probabilidad de la observación dada la posición de Pacman y la ubicación de esa partícula. Luego, re-muestreamos de esta distribución ponderada para construir nuestra nueva lista de partículas.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Debes volver a usar la función " data-en="You should again use the function ">Debes volver a usar la función </span>
+                        <code>self.getObservationProb</code>
+                        <span data-es=" para encontrar la probabilidad de una observación dada la posición de Pacman, una posición potencial del fantasma y la posición de la cárcel. El método sample de la clase DiscreteDistribution también será útil. Como recordatorio, puedes obtener la posición de Pacman usando gameState.getPacmanPosition(), y la posición de la cárcel usando self.getJailPosition()." data-en=" to find the probability of an observation given Pacman's position, a potential ghost position, and the jail position. The sample method of the DiscreteDistribution class will also be useful. As a reminder, you can obtain Pacman's position using gameState.getPacmanPosition(), and the jail position using self.getJailPosition()."> para encontrar la probabilidad de una observación dada la posición de Pacman, una posición potencial del fantasma y la posición de la cárcel. El método <code>sample</code> de la clase <code>DiscreteDistribution</code> también será útil. Como recordatorio, puedes obtener la posición de Pacman usando <code>gameState.getPacmanPosition()</code>, y la posición de la cárcel usando <code>self.getJailPosition()</code>.</span>
+                    </p>
+
+                    <p>
+                        <span data-es="Hay un caso especial que una implementación correcta debe manejar. Cuando todas las partículas reciben peso cero, la lista de partículas debe reiniciarse llamando a " data-en="There is one special case that a correct implementation must handle. When all particles receive zero weight, the list of particles should be reinitialized by calling ">Hay un caso especial que una implementación correcta debe manejar. Cuando todas las partículas reciben peso cero, la lista de partículas debe reiniciarse llamando a </span>
+                        <code>initializeUniformly</code>
+                        <span data-es=". El método total de DiscreteDistribution puede ser útil." data-en=". The total method of the DiscreteDistribution may be useful.">. El método <code>total</code> de <code>DiscreteDistribution</code> puede ser útil.</span>
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para ejecutar el autograder para esta pregunta y visualizar la salida:" data-en="To run the autograder for this question and visualize the output:">Para ejecutar el autograder para esta pregunta y visualizar la salida:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q10</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:" data-en="If you want to run this test (or any of the other tests) without graphics you can add the following flag:">
+                        Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q10 --no-graphics</span></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Q11 -->
+                <section id="q11" class="section-anchor">
+                    <h2 data-es="Q11: Inferencia Aproximada con Paso de Tiempo" data-en="Q11: Approximate Inference with Time Elapse">Q11: Inferencia Aproximada con Paso de Tiempo</h2>
+
+                    <p>
+                        <span data-es="Implementa la función " data-en="Implement the ">Implementa la función </span>
+                        <code>elapseTime</code>
+                        <span data-es=" en la clase ParticleFilter en inference.py. Esta función debe construir una nueva lista de partículas que corresponda a cada partícula existente en self.particles avanzando un paso de tiempo, y luego asignar esta nueva lista a self.particles. Cuando esté completa, deberías poder rastrear fantasmas casi tan efectivamente como con la inferencia exacta." data-en=" function in the ParticleFilter class in inference.py. This function should construct a new list of particles that corresponds to each existing particle in self.particles advancing a time step, and then assign this new list back to self.particles. When complete, you should be able to track ghosts nearly as effectively as with exact inference."> en la clase <code>ParticleFilter</code> en <code>inference.py</code>. Esta función debe construir una nueva lista de partículas que corresponda a cada partícula existente en <code>self.particles</code> avanzando un paso de tiempo, y luego asignar esta nueva lista de vuelta a <code>self.particles</code>. Cuando esté completa, deberías poder rastrear fantasmas casi tan efectivamente como con la inferencia exacta.</span>
+                    </p>
+
+                    <p data-es="Ten en cuenta que en esta pregunta, probaremos tanto la función elapseTime de forma aislada, como la implementación completa del filtro de partículas combinando elapseTime y observe." data-en="Note that in this question, we will test both the elapseTime function in isolation, as well as the full implementation of the particle filter combining elapseTime and observe.">
+                        Ten en cuenta que en esta pregunta, probaremos tanto la función <code>elapseTime</code> de forma aislada, como la implementación completa del filtro de partículas combinando <code>elapseTime</code> y <code>observe</code>.
+                    </p>
+
+                    <p>
+                        <span data-es="Al igual que en el método elapseTime de la clase ExactInference, debes usar:" data-en="As in the elapseTime method of the ExactInference class, you should use:">Al igual que en el método <code>elapseTime</code> de la clase <code>ExactInference</code>, debes usar:</span>
+                    </p>
+
+                    <div class="code-block">
+                        <div class="code-header">Python</div>
+                        <div class="code-content">
+                            <pre>newPosDist = self.getPositionDistribution(gameState, oldPos)</pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Esta línea de código obtiene la distribución sobre nuevas posiciones para el fantasma, dada su posición anterior (oldPos). El método sample de la clase DiscreteDistribution también será útil." data-en="This line of code obtains the distribution over new positions for the ghost, given its previous position (oldPos). The sample method of the DiscreteDistribution class will also be useful.">
+                        Esta línea de código obtiene la distribución sobre nuevas posiciones para el fantasma, dada su posición anterior (<code>oldPos</code>). El método <code>sample</code> de la clase <code>DiscreteDistribution</code> también será útil.
+                    </p>
+
+                    <p><strong data-es="Calificación:" data-en="Grading:">Calificación:</strong> <span data-es="Para ejecutar el autograder para esta pregunta y visualizar la salida:" data-en="To run the autograder for this question and visualize the output:">Para ejecutar el autograder para esta pregunta y visualizar la salida:</span></p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q11</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:" data-en="If you want to run this test (or any of the other tests) without graphics you can add the following flag:">
+                        Si deseas ejecutar esta prueba (o cualquiera de las otras pruebas) sin gráficos, puedes agregar la siguiente bandera:
+                    </p>
+
+                    <div class="cmd-block">
+                        <div class="cmd-header">Terminal</div>
+                        <div class="cmd-content">
+                            <pre><span class="cmd-prompt">python autograder.py -q q11 --no-graphics</span></pre>
+                        </div>
+                    </div>
+
+                    <p data-es="Ten en cuenta que incluso sin gráficos, esta prueba puede tardar varios minutos en ejecutarse." data-en="Note that even with no graphics, this test may take several minutes to run.">
+                        Ten en cuenta que incluso sin gráficos, esta prueba puede tardar varios minutos en ejecutarse.
+                    </p>
+                </section>
+
+                <!-- Submission -->
+                <section id="submission" class="section-anchor">
+                    <h2 data-es="Entrega" data-en="Submission">Entrega</h2>
+                    <p data-es="El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab6-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio." data-en="The deliverable will be a zip file with the lab number followed by your ID (example: Lab6-20123456.zip) containing all your successfully completed lab files. Don't forget to verify that you completed the lab correctly using the autograder tool provided for this lab.">
+                        El entregable será un archivo zip con el número de laboratorio seguido de tu ID (ejemplo: Lab6-20123456.zip) que contenga todos los archivos del laboratorio completados exitosamente. No olvides verificar que completaste el laboratorio correctamente usando la herramienta de autograder proporcionada para este laboratorio.
+                    </p>
+
+                    <div class="note-box">
+                        <strong data-es="FECHA LÍMITE DE ENTREGA:" data-en="ASSIGNMENT DUE DATE:">FECHA LÍMITE DE ENTREGA:</strong>
+                        <span data-es="25/06/2026, 11:55 PM" data-en="06/25/2026, 11:55 PM">25/06/2026, 11:55 PM</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
